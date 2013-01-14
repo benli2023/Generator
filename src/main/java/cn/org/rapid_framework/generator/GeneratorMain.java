@@ -22,6 +22,7 @@ public class GeneratorMain {
 		 
 //		g.deleteByTable("table_name", "template"); //删除生成的文件
 		//打开文件夹
+		//Test
 		Runtime.getRuntime().exec("cmd.exe /c start "+GeneratorProperties.getRequiredProperty("outRoot"));
 	}
 }
