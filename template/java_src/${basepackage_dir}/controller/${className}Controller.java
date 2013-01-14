@@ -7,6 +7,7 @@
 
 package ${basepackage}.controller;
 
+import java.util.List;
 import java.util.Map;
 
 import java.text.SimpleDateFormat;
@@ -30,6 +31,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import com.company.project.vo.query.StaffQuery;
 
 import cn.org.rapid_framework.page.Page;
 import cn.org.rapid_framework.web.scope.Flash;
@@ -74,6 +78,15 @@ public class ${className}Controller extends BaseRestSpringController<${className
 		model.addAllAttributes(toModelMap(page, query));
 		return "/${classNameLowerCase}/index";
 	}
+	
+	/**Json列表*/
+	@RequestMapping(value="/index.json")
+	@ResponseBody
+	public List indexJson(${className}Query query) {
+		Page page =  this.${classNameFirstLower}Manager.findPage(query);
+		return page.getResult();
+	}
+	
 	
 	/** 显示 */
 	@RequestMapping(value="/{id}")
