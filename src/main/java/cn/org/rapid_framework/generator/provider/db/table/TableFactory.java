@@ -317,6 +317,8 @@ public class TableFactory {
 	         int decimalDigits = columnRs.getInt("DECIMAL_DIGITS");
 
 	         boolean isPk = primaryKeys.contains(columnName);
+	         boolean manual=true;
+	         if(isPk) manual=false;
 	         boolean isIndexed = indices.contains(columnName);
 	         String uniqueIndex = (String)uniqueIndices.get(columnName);
 	         List columnsInUniqueIndex = null;
@@ -339,6 +341,7 @@ public class TableFactory {
 	               isNullable,
 	               isIndexed,
 	               isUnique,
+	               manual,
 	               columnDefaultValue,
 	               remarks);
 	         BeanHelper.copyProperties(column,TableOverrideValuesProvider.getColumnOverrideValues(table,column));

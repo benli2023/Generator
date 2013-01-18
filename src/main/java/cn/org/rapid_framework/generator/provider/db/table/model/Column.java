@@ -85,6 +85,20 @@ public class Column implements java.io.Serializable,Cloneable{
 	 * The comments of column
 	 */
 	private String _remarks;
+	
+	
+	private boolean manual=true;
+	
+	
+	
+	/**
+	 * Foreign Info
+	 * 
+	 */
+	
+	private ForeignInfo foreignInfo=null;
+	
+	
 			
 	/**
 	 * @param table
@@ -102,7 +116,7 @@ public class Column implements java.io.Serializable,Cloneable{
 	 */
 	public Column(Table table, int sqlType, String sqlTypeName,
 			String sqlName, int size, int decimalDigits, boolean isPk,
-			boolean isNullable, boolean isIndexed, boolean isUnique,
+			boolean isNullable, boolean isIndexed, boolean isUnique, boolean manual,
 			String defaultValue,String remarks) {
 		if(sqlName == null) throw new NullPointerException();
 		_table = table;
@@ -117,6 +131,7 @@ public class Column implements java.io.Serializable,Cloneable{
 		_isUnique = isUnique;
 		_defaultValue = defaultValue;
 		_remarks = remarks;
+		this.manual=manual;
 		
 		GLogger.trace(sqlName + " isPk -> " + _isPk);
 		
@@ -134,6 +149,7 @@ public class Column implements java.io.Serializable,Cloneable{
            c.isNullable(),
            c.isIndexed(),
            c.isUnique(),
+           c.isManual(),
            c.getDefaultValue(),
            c.getRemarks());
 	}
@@ -240,6 +256,18 @@ public class Column implements java.io.Serializable,Cloneable{
 	 */
 	public boolean isUnique() {
 		return _isUnique;
+	}
+	
+	
+	
+	
+
+	public boolean isManual() {
+		return manual;
+	}
+
+	public void setManual(boolean manual) {
+		this.manual = manual;
 	}
 
 	/**
@@ -581,6 +609,8 @@ public class Column implements java.io.Serializable,Cloneable{
 	}
 	
 	
+	
+	
 
 //	public void setBelongsTo(String foreignKey) {
 //		ReferenceKey ref = ReferenceKey.fromString(foreignKey);
@@ -591,6 +621,18 @@ public class Column implements java.io.Serializable,Cloneable{
 //	
 //	public void setHasAndBelongsToMany(String foreignKey) {
 //	}
+
+	public ForeignInfo getForeignInfo() {
+		return foreignInfo;
+	}
+
+	public void setForeignInfo(ForeignInfo foreignInfo) {
+		this.foreignInfo = foreignInfo;
+	}
+
+
+
+
 
 	private ReferenceKey hasOne;
 	public String getHasOne() {
