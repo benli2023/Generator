@@ -1,32 +1,47 @@
 package cn.org.rapid_framework.generator.provider.db.table.model;
 
-import cn.org.rapid_framework.generator.provider.db.table.TableFactory;
+import com.thoughtworks.xstream.annotations.XStreamAlias;
+import com.thoughtworks.xstream.annotations.XStreamAsAttribute;
 
-public class ForeignColumn extends Column {
+
+
+public class ForeignColumn  {
 	
 	private static final long serialVersionUID = 1568565694691647451L;
 
-	private Table parentTable;
-
+	
+	@XStreamAlias("searchable")
+   	@XStreamAsAttribute
 	private boolean searchable = false;
-
+	
+	@XStreamAlias("pk")
+   	@XStreamAsAttribute
+	private boolean pk=false;
+	
+	@XStreamAlias("columnName")
+   	@XStreamAsAttribute
+	private String columnName=null;
+	
+	@XStreamAlias("columnAlias")
+   	@XStreamAsAttribute
+	private String columnAlias=null;
+	
+	
+	
 	public ForeignColumn() {
 		super();
 	}
-
-	public ForeignColumn(Column c, String parentTable, boolean searchable) {
-		super(c);
-		this.parentTable = TableFactory.getInstance().getTable(parentTable);
+	
+	
+	public ForeignColumn(boolean searchable, boolean pk, String columnName,
+			String columnAlias) {
+		super();
 		this.searchable = searchable;
+		this.pk = pk;
+		this.columnName = columnName;
+		this.columnAlias = columnAlias;
 	}
 
-	public Table getParentTable() {
-		return parentTable;
-	}
-
-	public void setParentTable(Table parentTable) {
-		this.parentTable = parentTable;
-	}
 
 	public boolean isSearchable() {
 		return searchable;
@@ -35,5 +50,32 @@ public class ForeignColumn extends Column {
 	public void setSearchable(boolean searchable) {
 		this.searchable = searchable;
 	}
+
+	public boolean isPk() {
+		return pk;
+	}
+
+	public void setPk(boolean pk) {
+		this.pk = pk;
+	}
+
+	public String getColumnName() {
+		return columnName;
+	}
+
+	public void setColumnName(String columnName) {
+		this.columnName = columnName;
+	}
+
+
+	public String getColumnAlias() {
+		return columnAlias;
+	}
+
+
+	public void setColumnAlias(String columnAlias) {
+		this.columnAlias = columnAlias;
+	}
+	
 
 }

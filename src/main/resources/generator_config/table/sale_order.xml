@@ -24,14 +24,12 @@
 		hibernateValidatorExprssion=""
 		hasOne="" hasMany=""
 	>
-	`<foreign>
-		<table name="staff">
-		```	<column pk="true" searchable="false">staff_id</column>
-		`	<column searchable="true">staff_name</column>
-			<column searchable="true">login_name</column>
-			<column searchable="false">phone</column>
-			<column searchable="false">address</column>
-		</table>
+	`<foreign table="staff">
+		```	<column pk="true" searchable="false" columnName="staff_id" />
+		`	<column searchable="true" columnName="staff_name" />
+			<column searchable="true" columnName="login_name" />
+			<column searchable="false" columnName="phone" />
+			<column searchable="false" columnName="address" />
 	</foreign>
 	</column>
 
@@ -43,14 +41,12 @@
 		hasOne="" hasMany=""
 	>
 	
-	`<foreign>
-		<table name="customer">
-		```	<column pk="true" searchable="false">cust_id</column>
-		`	<column searchable="true">cust_name</column>
-			<column searchable="true">short_name</column>
-			<column searchable="false">telephone</column>
-			<column searchable="false">address</column>
-		</table>
+	`<foreign table="customer">
+		```	<column pk="true" searchable="false" columnName="cust_id" />
+		`	<column searchable="true" columnName="cust_name" />
+			<column searchable="true" columnName="short_name" />
+			<column searchable="false" columnName="telephone" />
+			<column searchable="false" columnName="address" />
 	</foreign>
 	
 	

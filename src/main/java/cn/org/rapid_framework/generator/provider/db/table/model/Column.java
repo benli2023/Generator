@@ -15,6 +15,10 @@ import cn.org.rapid_framework.generator.util.typemapping.DatabaseDataTypesUtils;
 import cn.org.rapid_framework.generator.util.typemapping.JavaPrimitiveTypeMapping;
 import cn.org.rapid_framework.generator.util.typemapping.JdbcType;
 
+import com.thoughtworks.xstream.annotations.XStreamAlias;
+import com.thoughtworks.xstream.annotations.XStreamAsAttribute;
+import com.thoughtworks.xstream.annotations.XStreamOmitField;
+
 /**
  * 用于生成代码的Columb对象.对应数据库表column
  * @author badqiu
@@ -24,69 +28,88 @@ public class Column implements java.io.Serializable,Cloneable{
 	/**
 	 * Reference to the containing table
 	 */
+	@XStreamOmitField
 	private Table _table;
 
 	/**
 	 * The java.sql.Types type
 	 */
+	@XStreamOmitField
 	private int _sqlType;
 
 	/**
 	 * The sql typename. provided by JDBC driver
+	 * 
 	 */
+	@XStreamOmitField
 	private String _sqlTypeName;
 
 	/**
 	 * The name of the column
 	 */
+	@XStreamAlias("sqlName")
+   	@XStreamAsAttribute
 	private String _sqlName;
 
 	/**
 	 * True if the column is a primary key
 	 */
+	@XStreamAlias("pk")
+   	@XStreamAsAttribute
 	private boolean _isPk;
 
 	/**
 	 * True if the column is a foreign key
 	 */
+	@XStreamOmitField
 	private boolean _isFk;
 
 	/**
 	 * @todo-javadoc Describe the column
 	 */
+	@XStreamOmitField
 	private int _size;
 
 	/**
 	 * @todo-javadoc Describe the column
 	 */
+	@XStreamOmitField
 	private int _decimalDigits;
 
 	/**
 	 * True if the column is nullable
 	 */
+	@XStreamAlias("nullable")
+   	@XStreamAsAttribute
 	private boolean _isNullable;
 
 	/**
 	 * True if the column is indexed
 	 */
+	@XStreamOmitField
 	private boolean _isIndexed;
 
 	/**
 	 * True if the column is unique
 	 */
+	@XStreamAlias("unique")
+   	@XStreamAsAttribute
 	private boolean _isUnique;
 
 	/**
 	 * Null if the DB reports no default value
 	 */
+	@XStreamOmitField
 	private String _defaultValue;
 	
 	/**
 	 * The comments of column
 	 */
+	@XStreamOmitField
 	private String _remarks;
 	
-	
+	@XStreamAlias("manual")
+   	@XStreamAsAttribute
 	private boolean manual=true;
 	
 	
@@ -95,7 +118,7 @@ public class Column implements java.io.Serializable,Cloneable{
 	 * Foreign Info
 	 * 
 	 */
-	
+	@XStreamAlias("foreign")
 	private ForeignInfo foreignInfo=null;
 	
 	
@@ -633,7 +656,7 @@ public class Column implements java.io.Serializable,Cloneable{
 
 
 
-
+	@XStreamOmitField
 	private ReferenceKey hasOne;
 	public String getHasOne() {
 		return ReferenceKey.toString(hasOne);
@@ -661,7 +684,7 @@ public class Column implements java.io.Serializable,Cloneable{
 			_table.getImportedKeys().addForeignKey(hasOne.tableName, hasOne.columnSqlName, getSqlName(), hasOne.columnSqlName.toLowerCase().hashCode());
 		}
 	}
-	
+	@XStreamOmitField
 	private ReferenceKey hasMany = null;
 	public String getHasMany() {
 		return ReferenceKey.toString(hasMany);
@@ -696,14 +719,30 @@ public class Column implements java.io.Serializable,Cloneable{
         return columSqlName.replace('(', '_').replace(")", "").replace("*", "");
     }
 	
+    @XStreamAlias("enumString")
+   	@XStreamAsAttribute
 	private String enumString = "";
+	@XStreamAlias("javaType")
+   	@XStreamAsAttribute
 	private String javaType;
+	@XStreamAlias("columnAlias")
+   	@XStreamAsAttribute
 	private String columnAlias;
+	@XStreamOmitField
 	private String columnName;
+	@XStreamOmitField
 	private String asType;	
+	@XStreamAlias("enumClassName")
+   	@XStreamAsAttribute
 	private String enumClassName;
-	private boolean updatable = true;	
+	@XStreamAlias("updatable")
+   	@XStreamAsAttribute
+	private boolean updatable = true;
+	@XStreamAlias("insertable")
+   	@XStreamAsAttribute
 	private boolean insertable = true;
+	@XStreamAlias("hibernateValidatorExprssion")
+   	@XStreamAsAttribute
 	private String hibernateValidatorExprssion;
 //	private String rapidValidation;
 	/**
