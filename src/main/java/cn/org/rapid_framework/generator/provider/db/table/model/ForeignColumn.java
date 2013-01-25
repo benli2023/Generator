@@ -1,47 +1,35 @@
 package cn.org.rapid_framework.generator.provider.db.table.model;
 
+import cn.org.rapid_framework.generator.util.StringHelper;
+
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 import com.thoughtworks.xstream.annotations.XStreamAsAttribute;
 
+public class ForeignColumn {
 
-
-public class ForeignColumn  {
-	
 	private static final long serialVersionUID = 1568565694691647451L;
 
-	
 	@XStreamAlias("searchable")
-   	@XStreamAsAttribute
+	@XStreamAsAttribute
 	private boolean searchable = false;
 	
-	@XStreamAlias("pk")
-   	@XStreamAsAttribute
-	private boolean pk=false;
+	@XStreamAlias("refer")
+	@XStreamAsAttribute
+	private String refer = null;
+
+	private Column referColumn = null;
 	
-	@XStreamAlias("columnName")
-   	@XStreamAsAttribute
 	private String columnName=null;
-	
-	@XStreamAlias("columnAlias")
-   	@XStreamAsAttribute
-	private String columnAlias=null;
-	
-	
-	
+
 	public ForeignColumn() {
 		super();
 	}
-	
-	
-	public ForeignColumn(boolean searchable, boolean pk, String columnName,
-			String columnAlias) {
+
+	public ForeignColumn(boolean searchable, String sqlName,
+			String columnAlias, String javaType) {
 		super();
 		this.searchable = searchable;
-		this.pk = pk;
-		this.columnName = columnName;
-		this.columnAlias = columnAlias;
 	}
-
 
 	public boolean isSearchable() {
 		return searchable;
@@ -52,30 +40,66 @@ public class ForeignColumn  {
 	}
 
 	public boolean isPk() {
-		return pk;
+		if (referColumn != null) {
+			return referColumn.isPk();
+		}
+		return false;
 	}
 
-	public void setPk(boolean pk) {
-		this.pk = pk;
+	public String getSqlName() {
+		if (referColumn != null) {
+			return referColumn.getSqlName();
+		}
+		return "";
 	}
-
-	public String getColumnName() {
-		return columnName;
-	}
-
-	public void setColumnName(String columnName) {
-		this.columnName = columnName;
-	}
-
 
 	public String getColumnAlias() {
-		return columnAlias;
+		if (referColumn != null) {
+			return referColumn.getColumnAlias();
+		}
+		return "";
+
 	}
 
-
-	public void setColumnAlias(String columnAlias) {
-		this.columnAlias = columnAlias;
+	public String getJavaType() {
+		if (referColumn != null) {
+			return referColumn.getJavaType();
+		}
+		return "";
 	}
 	
+	public String getColumnNameLower() {
+		if(columnName==null) {
+			columnName = StringHelper.makeAllWordFirstLetterUpperCase(StringHelper.toUnderscoreName(getSqlName()));
+		}
+		return StringHelper.uncapitalize(columnName);
+	}
+
+	@Override
+	public String toString() {
+		if (referColumn != null) {
+			return (referColumn.getSqlName() + "("
+					+ referColumn.getColumnAlias() + ")");
+		}
+		return this.refer;
+	}
+
+	
+
+	public String getRefer() {
+		return refer;
+	}
+
+	public void setRefer(String refer) {
+		this.refer = refer;
+	}
+
+	public Column getReferColumn() {
+		return referColumn;
+	}
+
+	public void setReferColumn(Column referColumn) {
+		this.referColumn = referColumn;
+	}
 
 }

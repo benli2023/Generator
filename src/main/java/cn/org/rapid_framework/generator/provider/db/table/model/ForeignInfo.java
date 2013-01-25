@@ -9,32 +9,28 @@ import com.thoughtworks.xstream.annotations.XStreamAsAttribute;
 import com.thoughtworks.xstream.annotations.XStreamImplicit;
 
 public class ForeignInfo {
-	
-	@XStreamImplicit(itemFieldName="column")
-	private List<ForeignColumn> foreignColumns=new LinkedList<ForeignColumn>();
-	
+
+	@XStreamImplicit(itemFieldName = "column")
+	private List<ForeignColumn> foreignColumns = new LinkedList<ForeignColumn>();
+
 	@XStreamAlias("table")
-   	@XStreamAsAttribute
-	private String table=null;
-	
-	
+	@XStreamAsAttribute
+	private String table = null;
+
+	private Table referTable = null;
+
 	public String getTable() {
 		return table;
 	}
-
 
 	public void setTable(String table) {
 		this.table = table;
 	}
 
-
-	
-	
-	public Iterator<ForeignColumn>  iterator() {
+	public Iterator<ForeignColumn> iterator() {
 		return foreignColumns.iterator();
 	}
 
-	
 	public void addForeignColumn(ForeignColumn foreignColumn) {
 		foreignColumns.add(foreignColumn);
 	}
@@ -43,13 +39,15 @@ public class ForeignInfo {
 		return foreignColumns;
 	}
 
-
 	public void setForeignColumns(List<ForeignColumn> foreignColumns) {
 		this.foreignColumns = foreignColumns;
 	}
-	
-	
-	
-	
 
+	public Table getReferTable() {
+		return referTable;
+	}
+
+	public void setReferTable(Table referTable) {
+		this.referTable = referTable;
+	}
 }

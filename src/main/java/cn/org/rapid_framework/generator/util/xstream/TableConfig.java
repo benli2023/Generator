@@ -135,13 +135,13 @@ public class TableConfig {
 
 		ForeignColumn foreignColumn = new ForeignColumn();
 
-		foreignColumn.setColumnName("staff_id");
+		//foreignColumn.setColumnName("staff_id");
 		
-		foreignColumn.setPk(true);
+		//foreignColumn.setPk(true);
 
 		ForeignColumn foreignColumn2 = new ForeignColumn();
 
-		foreignColumn2.setColumnName("staff_name");
+		//foreignColumn2.setColumnName("staff_name");
 
 		foreignInfo.addForeignColumn(foreignColumn);
 

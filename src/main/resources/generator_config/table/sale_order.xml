@@ -24,12 +24,12 @@
 		hibernateValidatorExprssion=""
 		hasOne="" hasMany=""
 	>
-	`<foreign table="staff">
-		```	<column pk="true" searchable="false" columnName="staff_id" />
-		`	<column searchable="true" columnName="staff_name" />
-			<column searchable="true" columnName="login_name" />
-			<column searchable="false" columnName="phone" />
-			<column searchable="false" columnName="address" />
+	<foreign table="staff">
+		<column searchable="false" refer="staff_id" />
+		<column searchable="true" refer="staff_name" />
+		<column searchable="true" refer="login_name" />
+		<column searchable="false" refer="phone" />
+		<column searchable="false" refer="address" />
 	</foreign>
 	</column>
 
@@ -41,12 +41,12 @@
 		hasOne="" hasMany=""
 	>
 	
-	`<foreign table="customer">
-		```	<column pk="true" searchable="false" columnName="cust_id" />
-		`	<column searchable="true" columnName="cust_name" />
-			<column searchable="true" columnName="short_name" />
-			<column searchable="false" columnName="telephone" />
-			<column searchable="false" columnName="address" />
+	<foreign table="customer">
+			<column searchable="false" refer="cust_id" />
+		    <column searchable="true" refer="cust_name" />
+			<column searchable="true" refer="short_name" />
+			<column searchable="false" refer="telephone" />
+			<column searchable="false" refer="address" />
 	</foreign>
 	
 	

@@ -4,8 +4,13 @@ package cn.org.rapid_framework.generator.provider.db.table.model;
 import java.sql.DatabaseMetaData;
 import java.sql.ResultSet;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.LinkedHashSet;
 import java.util.List;
+
+import com.thoughtworks.xstream.annotations.XStreamAlias;
+import com.thoughtworks.xstream.annotations.XStreamAsAttribute;
+import com.thoughtworks.xstream.annotations.XStreamImplicit;
 
 import cn.org.rapid_framework.generator.GeneratorProperties;
 import cn.org.rapid_framework.generator.provider.db.table.TableFactory;
@@ -15,10 +20,22 @@ import cn.org.rapid_framework.generator.util.StringHelper;
  * @author badqiu
  * @email badqiu(a)gmail.com
  */
-public class Table implements java.io.Serializable,Cloneable {
 
+@XStreamAlias("table")
+public class Table implements java.io.Serializable,Cloneable {
+	
+	private static final long serialVersionUID = -24089896374163470L;
+
+
+	@XStreamAlias("sqlName")
+	@XStreamAsAttribute
 	String sqlName;
+	
+	
 	String remarks;
+	
+	@XStreamAlias("className")
+	@XStreamAsAttribute
 	String className;
 	
 	/** the name of the owner of the synonym if this table is a synonym */
@@ -26,7 +43,12 @@ public class Table implements java.io.Serializable,Cloneable {
 	/** real table name for oracle SYNONYM */
 	private String tableSynonymName = null; 
 	
+	@XStreamImplicit(itemFieldName = "column")
 	LinkedHashSet<Column> columns = new LinkedHashSet<Column>();
+	
+	/** other table refer these column as foreign columns **/
+	List<ForeignColumn> referredColums=new ArrayList<ForeignColumn>();
+	
 	List<Column> primaryKeyColumns = new ArrayList<Column>();
 	
 	
@@ -47,6 +69,15 @@ public class Table implements java.io.Serializable,Cloneable {
 	public LinkedHashSet<Column> getColumns() {
 		return columns;
 	}
+	
+	public List<ForeignColumn> getReferredColums() {
+		return referredColums;
+	}
+	
+	public void setReferredColums(List<ForeignColumn> referedColums) {
+		this.referredColums = referedColums;
+	}
+
 	public void setColumns(LinkedHashSet<Column> columns) {
 		this.columns = columns;
 	}
@@ -361,6 +392,8 @@ public class Table implements java.io.Serializable,Cloneable {
 	String catalog = TableFactory.getInstance().getCatalog();
 	String schema = TableFactory.getInstance().getSchema();
 	
+	@XStreamAlias("tableAlias")
+	@XStreamAsAttribute
 	private String tableAlias;
 	private ForeignKeys exportedKeys;
 	private ForeignKeys importedKeys;
@@ -370,4 +403,40 @@ public class Table implements java.io.Serializable,Cloneable {
 	public    static final String FKTABLE_NAME  = "FKTABLE_NAME";
 	public    static final String FKCOLUMN_NAME = "FKCOLUMN_NAME";
 	public    static final String KEY_SEQ       = "KEY_SEQ";
+	
+	
+	public boolean isReferredColumnSearchable(String referSqlName) {
+		if(this.referredColums!=null) {
+			for (Iterator<ForeignColumn> iterator = referredColums.iterator(); iterator.hasNext();) {
+				ForeignColumn	foreignColumn = (ForeignColumn) iterator.next();
+				if(foreignColumn.getSqlName().equals(referSqlName)) {
+					return foreignColumn.isSearchable();
+				}
+			}
+		}
+		return false;
+	}
+	
+	public List<ForeignColumn> getReferredSearchableColumns() {
+		List<ForeignColumn> result=new ArrayList<ForeignColumn>();
+		if(this.referredColums!=null) {
+			for (Iterator<ForeignColumn> iterator = referredColums.iterator(); iterator.hasNext();) {
+				ForeignColumn	foreignColumn = (ForeignColumn) iterator.next();
+				if(foreignColumn.isSearchable()) {
+					result.add(foreignColumn);
+				}
+			}
+		}
+		return result;
+	}
+	
+	public void override(Table table) {
+		this.sqlName=table.getSqlName();
+		this.className=table.getClassName();
+		this.tableAlias=table.getTableAlias();
+		if(table.getReferredColums()!=null) {
+			this.setReferredColums(table.getReferredColums());
+		}
+	}
+	
 }

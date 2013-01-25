@@ -1,10 +1,10 @@
 package cn.org.rapid_framework.generator.provider.db.table;
 
 
-import java.io.File;
+import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
@@ -21,12 +21,8 @@ import cn.org.rapid_framework.generator.GeneratorProperties;
 import cn.org.rapid_framework.generator.provider.db.DataSourceProvider;
 import cn.org.rapid_framework.generator.provider.db.table.model.Column;
 import cn.org.rapid_framework.generator.provider.db.table.model.Table;
-import cn.org.rapid_framework.generator.util.BeanHelper;
-import cn.org.rapid_framework.generator.util.FileHelper;
 import cn.org.rapid_framework.generator.util.GLogger;
 import cn.org.rapid_framework.generator.util.StringHelper;
-import cn.org.rapid_framework.generator.util.XMLHelper;
-import cn.org.rapid_framework.generator.util.XMLHelper.NodeData;
 /**
  * 
  * 根据数据库表的元数据(metadata)创建Table对象
@@ -91,6 +87,7 @@ public class TableFactory {
 				t = _getTable(catalog,schema,tableName.toLowerCase());
 			}
 		}catch(Exception e) {
+			e.printStackTrace();
 			throw new RuntimeException(e);
 		}
 		if(t == null) {
@@ -146,11 +143,16 @@ public class TableFactory {
 			
 			table.initExportedKeys(conn.getMetaData());
 			table.initImportedKeys(conn.getMetaData());
-			BeanHelper.copyProperties(table, TableOverrideValuesProvider.getTableOverrideValues(table.getSqlName()));
+			
+			Table tableFromXml=TableOverrideValuesProvider.getInstance().getTable(table.getSqlName());
+			
+			if(tableFromXml!=null) {
+				table.override(tableFromXml);
+			}
 			return table;
 		}catch(SQLException e) {
 			throw new RuntimeException("create table object error,tableName:"+realTableName,e);
-		}
+		} 
 	}
 	
 	private List getAllTables(Connection conn) throws SQLException {
@@ -344,7 +346,22 @@ public class TableFactory {
 	               manual,
 	               columnDefaultValue,
 	               remarks);
-	         BeanHelper.copyProperties(column,TableOverrideValuesProvider.getColumnOverrideValues(table,column));
+	         
+	         Column columnFromXml = TableOverrideValuesProvider.getInstance().getColumn(table.getSqlName(), columnName);
+	         if(columnFromXml!=null) {
+	        	 
+	        	 column.override(columnFromXml);
+	        	 
+//		         try {
+//					BeanUtils.copyProperties(column, TableOverrideValuesProvider.getInstance().getColumn(table.getSqlName(), columnName));
+//				} catch (IllegalAccessException e) {
+//					throw new RuntimeException("create column object error,column name:"+table.getSqlName()+"."+columnName,e);
+//					
+//				} catch (InvocationTargetException e) {
+//					throw new RuntimeException("create column object error,column name:"+table.getSqlName()+"."+columnName,e.getTargetException());
+//				} 
+	         }
+	         //BeanHelper.copyProperties(column,TableOverrideValuesProvider.getColumnOverrideValues(table,column));
 	         columns.add(column);
 	    }
 	    columnRs.close();
@@ -390,53 +407,7 @@ public class TableFactory {
 		return dbHelper.queryForString(sql);
 	}
 	
-	/** 得到表的自定义配置信息 */
-	public static class TableOverrideValuesProvider {
-		
-		private static Map getTableOverrideValues(String tableSqlName){
-			NodeData nd = getTableConfigXmlNodeData(tableSqlName);
-			if(nd == null) {
-			    return new HashMap();
-			}
-			return nd == null ? new HashMap() : nd.attributes;
-		}
-	
-		private static Map getColumnOverrideValues(Table table, Column column) {
-			NodeData root = getTableConfigXmlNodeData(table.getSqlName());
-			if(root != null){
-				 for(NodeData item : root.childs) {
-					 if(item.nodeName.equals("column")) {
-					     if(column.getSqlName().equalsIgnoreCase(item.attributes.get("sqlName"))) {
-					         return item.attributes;
-					     }
-					 }
-			     }
-			}
-			return new HashMap();
-		}
-		
-		private static NodeData getTableConfigXmlNodeData(String tableSqlName){
-			NodeData nd = getTableConfigXmlNodeData0(tableSqlName);
-			if(nd == null) {
-				nd = getTableConfigXmlNodeData0(tableSqlName.toLowerCase());
-				if(nd == null) {
-					nd = getTableConfigXmlNodeData0(tableSqlName.toUpperCase());
-				}
-			}
-			return nd;
-		}
 
-		private static NodeData getTableConfigXmlNodeData0(String tableSqlName) {
-			try {
-				File file = FileHelper.getFileByClassLoader("generator_config/table/"+tableSqlName+".xml");
-				GLogger.trace("getTableConfigXml() load nodeData by tableSqlName:"+tableSqlName+".xml");
-				return new XMLHelper().parseXML(file);
-			}catch(Exception e) {//ignore
-				GLogger.trace("not found config xml for table:"+tableSqlName+", exception:"+e);
-				return null;
-			}
-		}
-	}
 	
 	class DbHelper {
 		public void close(ResultSet rs,PreparedStatement ps,Statement... statements) {

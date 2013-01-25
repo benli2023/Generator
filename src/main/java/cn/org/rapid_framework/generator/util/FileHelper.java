@@ -87,7 +87,9 @@ public class FileHelper {
 	public static File getFileByClassLoader(String resourceName) throws IOException {
 		Enumeration<URL> urls = GeneratorProperties.class.getClassLoader().getResources(resourceName);
 		while (urls.hasMoreElements()) {
-			return new File(urls.nextElement().getFile());
+			String filePath=urls.nextElement().getFile();
+			filePath=filePath.replace("%20", " ");
+			return new File(filePath);
 		}
 		throw new FileNotFoundException(resourceName);
 	}
