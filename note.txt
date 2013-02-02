@@ -1,0 +1,87 @@
+@RequestMapping(value="/index.json")
+  @ResponseBody
+	public Map indexJson(ModelMap model,CategoryQuery query) {
+		Page page = this.categoryManager.findPage(query);
+		Map<String,Object> map=new HashMap<String,Object>();
+		map.put("rows",page.getResult());
+		map.put("page",page.getThisPageNumber());
+		int pageCount=page.getTotalCount();
+		int pageSize=page.getPageSize();
+		int totalPage=(pageCount%pageSize==0)?(pageCount/pageSize):((pageCount/pageSize)+1);
+		map.put("total",totalPage);
+		map.put("records",pageCount);
+		return map;
+	}
+	
+	@RequestMapping(value="/query")
+	public String query(ModelMap model,String fieldId) {
+		model.addAttribute("fieldId",fieldId);
+		return "/dept/query";
+	}
+	   public UserContext getLoginUser(HttpServletRequest request) {
+    	return SessionHelper.getLoginUser(request);
+    }
+
+	public class UserContext implements Serializable {
+	private static final long serialVersionUID = 4333202957297300445L;
+
+	private String loginName;
+
+	private long loginId;
+
+	private Date lastLoginTime;
+
+}
+public class SessionHelper {
+
+	public static final String SESSION_USER = "SESSION_USER";
+
+	public static UserContext getLoginUser(HttpServletRequest request) {
+		HttpSession session = request.getSession();
+		UserContext userContext = (UserContext) session.getAttribute(SESSION_USER);
+		if(userContext==null) {
+			userContext=new UserContext();
+			userContext.setLastLoginTime(new Date());
+			userContext.setLoginId(1);
+			userContext.getLoginName();
+		}
+		return userContext;
+	}
+
+}
+
+	UserContext  userContext=getLoginUser(request);
+		category.setAdmin(userContext.getLoginId());
+		category.setCtime(new Date());
+		
+		<form:select path="isAvailable" id="isAvailable">
+			<form:option value="1" >是</form:option>
+			<form:option value="0" >否</form:option>
+		</form:select>
+		
+		   <update id="Category.update" >
+    <![CDATA[
+        UPDATE category SET
+	        parent_id = #parentId# ,
+	        cate_name = #cateName# ,
+	        is_available = #isAvailable#
+        WHERE 
+	        cate_id = #cateId# 
+    ]]>
+    </update>
+	
+<isNotEqual	prepend="AND" property="isAvailable" compareValue="-1">  is_available = #isAvailable# </isNotEqual>	
+
+<Connector port="80" protocol="org.apache.coyote.http11.Http11NioProtocol" connectionTimeout="20000" URIEncoding="UTF-8" useBodyEncodingForURI="true" enableLookups="false" redirectPort="8443" /> 
+private int isAvailable=-1;
+category.setIsAvailable(1);
+public static final String FORMAT_CTIME = DATE_TIME_FORMAT;
+<select name="isAvailable">
+	<option value="-1" <c:if test="${query.isAvailable==-1}">selected</c:if>>不限</option>
+	<option value="1" <c:if test="${query.isAvailable==1}">selected</c:if>>是</option>
+	<option value="0" <c:if test="${query.isAvailable==0}">selected</c:if>>否</option>		
+</select>
+
+<c:choose ><c:when test="${item.isAvailable==1}">是</c:when><c:when test="${item.isAvailable==0}">否</c:when></c:choose>
+
+	
