@@ -309,16 +309,125 @@ function readURL(input,imageId,ieDivId) {
 <input type="file" name="productImageFile" onchange="readURL(this,'preview','preview_ie');" />
 
 
-						<!--  
-						<span class="mini-buttonedit" style="border-width: 0px; width: 130px;" id="btnEdit1">
-						<span class="mini-buttonedit-border" style="width: 130px;">
-						<input type="input" class="mini-buttonedit-input" autocomplete="off" placeholder="" name="catIdTxt" style="width: 103px;" id="popup_input_id" value="${query.catIdTxt}" />
-						<input type="hidden" name="catId" value="${query.catId}" id="hidden_popup_id" class="popup_hidden_Id"/>
-						<span class="mini-buttonedit-button" onmouseover="PopupSelection.addClass(this,'mini-buttonedit-button-hover');" onmouseout="PopupSelection.removeClass(this,'mini-buttonedit-button-hover');" onclick="PopupSelection.openSelection('popup_input_id')" >
-						  <span class="mini-buttonedit-icon"></span>
-						</span>
-						<span class="mini-buttonedit-close" style="display:none" onclick="PopupSelection.clearSelection(this,'popup_input_id')"></span>
-						</span>
-						</span>
-						-->
+
+body .mini-textbox *,
+body .mini-buttonedit *
+{
+
+    box-sizing:content-box;     
+    -moz-box-sizing:content-box;
+    -ms-box-sizing:content-box;
+    -webkit-box-sizing:content-box;      
+}
+
+
+.mini-buttonedit-border
+{
+    background:white;
+    border: solid 1px #a5acb5;
+    width:123px;
+    height:19px;
+    display:inline-block;
+    position:static;
+    float:left;
+    overflow:hidden;
+}
+
+
+.mini-buttonedit-input
+{
+    background:none;
+    border: 0; 
+    width:100px;    
+    height:19px;
+    line-height:19px;
+    
+    font-family: Verdana;
+    font-size: 9pt;        
+    padding: 0;
+    margin:0;
+    padding-left:1px;
+    padding-right:1px;
+     
+    outline:none;
+    
+    float:left;
+    z-index:1;
+    cursor:text;
+}
+
+
+.mini-buttonedit-button, .mini-buttonedit-close
+{    
+    border:0px;
+    padding:1px;
+    
+    background:none;
+    width:15px;
+    height:15px;
+    overflow:hidden;
+    cursor:pointer;
+    
+    margin-top:1px;
+    margin-right:1px;
+    float:right;
+    z-index:10;
+    
+    
+}
+
+.mini-buttonedit-icon
+{
+    display:block;
+    width:15px;
+    height:15px;
+    overflow:hidden;
+    background:url(<c:url value="/resources/web/popup/icon1.gif" />) no-repeat 50% 50%;
+}
+
+.mini-buttonedit-close
+{
+    background:url(<c:url value="/resources/web/popup/close.gif" />) no-repeat 50% 50%;
+}
+
+.mini-buttonedit-button-hover,
+.mini-buttonedit-hover .mini-buttonedit-button
+{
+    border:1px solid #ababab;
+    padding:0;
+    background:#dde6fe url(<c:url value="/resources/web/popup/hover.png" />) repeat-x 0 0;   
+}
+
+
+
+<script type="text/javascript">
+<!--
+
+	function OOl0(obj,cssClazz) {
+		$(obj).addClass(cssClazz);
+	}
+	function o00O(obj,cssClazz) {
+		$(obj).removeClass(cssClazz);
+	}
+   
+    
+//-->
+</script>
+
+<div style="margin-top:10px">
+<span class="mini-buttonedit" style="border-width: 0px; width: 125px;" id="btnEdit1">
+<span class="mini-buttonedit-border" style="width: 123px;">
+<input type="input" class="mini-buttonedit-input" autocomplete="off" placeholder="" id="btnEdit1$text" name="b" style="width: 103px;">
+ 	<span class="mini-buttonedit-button" onmouseover="OOl0(this,'mini-buttonedit-button-hover');" onmouseout="o00O(this,'mini-buttonedit-button-hover');" onclick="openDialog()">
+ 		<span class="mini-buttonedit-icon"></span>
+	</span>
+	<span class="mini-buttonedit-close" style="display: none;"></span>
+</span>
+</span>
+</div>
+
+
+
+
+
  
