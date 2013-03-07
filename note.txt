@@ -308,4 +308,17 @@ function readURL(input,imageId,ieDivId) {
 
 <input type="file" name="productImageFile" onchange="readURL(this,'preview','preview_ie');" />
 
+
+						<!--  
+						<span class="mini-buttonedit" style="border-width: 0px; width: 130px;" id="btnEdit1">
+						<span class="mini-buttonedit-border" style="width: 130px;">
+						<input type="input" class="mini-buttonedit-input" autocomplete="off" placeholder="" name="catIdTxt" style="width: 103px;" id="popup_input_id" value="${query.catIdTxt}" />
+						<input type="hidden" name="catId" value="${query.catId}" id="hidden_popup_id" class="popup_hidden_Id"/>
+						<span class="mini-buttonedit-button" onmouseover="PopupSelection.addClass(this,'mini-buttonedit-button-hover');" onmouseout="PopupSelection.removeClass(this,'mini-buttonedit-button-hover');" onclick="PopupSelection.openSelection('popup_input_id')" >
+						  <span class="mini-buttonedit-icon"></span>
+						</span>
+						<span class="mini-buttonedit-close" style="display:none" onclick="PopupSelection.clearSelection(this,'popup_input_id')"></span>
+						</span>
+						</span>
+						-->
  

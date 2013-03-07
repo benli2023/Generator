@@ -59,12 +59,6 @@
 		hasOne="" hasMany=""
 	>
 	
-	<foreign table="people">
-		<column refer="PersonId"/>
-		<column searchable="true" refer="Name"/>
-		<column searchable="false" refer="Age" />
-		<column searchable="false" refer="RecordDate" />
-	</foreign>
 	
 	</column>
 

@@ -19,7 +19,7 @@
  -->
 <table sqlName="category" className="Category" tableAlias="Category" >
 
-	<column sqlName="cate_id" columnAlias="cateId" javaType="java.lang.Long" 
+	<column sqlName="cate_id" columnAlias="编码" javaType="java.lang.Long" 
 		unique="true" nullable="false" pk="true"
 		updatable="true" insertable="true"
 		enumString="" enumClassName="CateIdEnum"

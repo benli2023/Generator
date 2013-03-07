@@ -34,6 +34,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.company.project.vo.query.StaffQuery;
+import com.yunwei.order.controller.colmodel.ColModelList;
+import com.yunwei.order.model.Category;
+import com.yunwei.order.vo.query.CategoryQuery;
 
 import cn.org.rapid_framework.page.Page;
 import cn.org.rapid_framework.web.scope.Flash;
@@ -78,13 +81,23 @@ public class ${className}Controller extends BaseRestSpringController<${className
 		model.addAllAttributes(toModelMap(page, query));
 		return "/${classNameLowerCase}/index";
 	}
-	
-	/**Json列表*/
-	@RequestMapping(value="/index.json")
+
+
+	@RequestMapping({"/index.json"})
 	@ResponseBody
-	public List indexJson(${className}Query query) {
-		Page page =  this.${classNameFirstLower}Manager.findPage(query);
-		return page.getResult();
+	public Map indexJson(ModelMap model, CategoryQuery query) {
+		Page page = this.${classNameFirstLower}Manager.findPage(query);
+		return jsonPagination(page);
+	}
+
+	@RequestMapping({"/query"})
+	public String query(ModelMap model, String fieldId) throws Exception {
+		model.addAttribute("fieldId", fieldId);
+		model.addAttribute("jsonURL", "/${classNameLowerCase}/index.json");
+		model.addAttribute("pageTitle",${className}.TABLE_ALIAS);
+		ColModelList colModelList=colModelFactory.getColModel("${className}-colmodel.xml");
+		model.addAttribute("colModelList", colModelList.getColModels());
+		return "/popup/table_window";
 	}
 	
 	

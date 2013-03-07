@@ -25,7 +25,14 @@
 		enumString="" enumClassName="ProductIdEnum"
 		hibernateValidatorExprssion=""
 		hasOne="" hasMany=""
-	/>
+	>
+		<foreign table="category">
+			<column refer="cate_id" width="50" align="center" />
+			<column searchable="true" refer="cate_name" width="100" align="center"/>
+			<column searchable="false" refer="parent_id" width="60" align="center"/>
+		</foreign>
+	
+	</column>
 
 	<column sqlName="cat_id" columnAlias="产品类别ID" javaType="java.lang.Long" 
 		unique="false" nullable="true" pk="false"

@@ -10,6 +10,7 @@ import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.apache.commons.lang.builder.ToStringBuilder;
 import org.apache.commons.lang.builder.ToStringStyle;
+import org.codehaus.jackson.annotate.JsonProperty;
 
 <#include "/java_imports.include">
 
@@ -36,6 +37,7 @@ public class ${className} extends BaseEntity implements java.io.Serializable {
      * ${column.columnAlias!}       db_column: ${column.sqlName} 
      */ 	
 	${column.hibernateValidatorExprssion}
+	<#if column.referredColumn??&&column.referredColumn.searchable>@JsonProperty("${column.sqlName}")</#if>
 	private ${column.javaType} ${column.columnNameLower};
 	</#list>
 	//columns END

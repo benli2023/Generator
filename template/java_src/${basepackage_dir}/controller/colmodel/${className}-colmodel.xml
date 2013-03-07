@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<#include "/macro.include"/>
+<#assign className = table.className>   
+<#assign classNameLower = className?uncap_first> 
+<column-models id="${classNameLower}">
+<#if (table.referredColums?size>0)>
+	<#list table.referredColums as foreignColumn>
+		<column-model>
+			<header>${foreignColumn.referColumn.columnAlias}</header>
+			<#if foreignColumn.searchable>
+			<name>${foreignColumn.sqlName}</name>
+			 <#else>
+			<name>${foreignColumn.columnNameLower}</name>
+			</#if>
+			<width>${foreignColumn.width!}</width>
+			<align>${foreignColumn.align!}</align>
+		</column-model>
+	</#list>
+</#if>
+</column-models>

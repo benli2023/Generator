@@ -20,6 +20,14 @@ public class ForeignColumn {
 	private Column referColumn = null;
 	
 	private String columnName=null;
+	
+	@XStreamAlias("align")
+	@XStreamAsAttribute
+	private String align;
+	
+	@XStreamAlias("width")
+	@XStreamAsAttribute
+	private String width;
 
 	public ForeignColumn() {
 		super();
@@ -101,5 +109,23 @@ public class ForeignColumn {
 	public void setReferColumn(Column referColumn) {
 		this.referColumn = referColumn;
 	}
+
+	public String getAlign() {
+		return align;
+	}
+
+	public void setAlign(String align) {
+		this.align = align;
+	}
+
+	public String getWidth() {
+		return width;
+	}
+
+	public void setWidth(String width) {
+		this.width = width;
+	}
+	
+	
 
 }
