@@ -4,17 +4,19 @@ package cn.org.rapid_framework.generator.provider.db.table.model;
 import java.sql.DatabaseMetaData;
 import java.sql.ResultSet;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedHashSet;
 import java.util.List;
-
-import com.thoughtworks.xstream.annotations.XStreamAlias;
-import com.thoughtworks.xstream.annotations.XStreamAsAttribute;
-import com.thoughtworks.xstream.annotations.XStreamImplicit;
+import java.util.Set;
 
 import cn.org.rapid_framework.generator.GeneratorProperties;
 import cn.org.rapid_framework.generator.provider.db.table.TableFactory;
 import cn.org.rapid_framework.generator.util.StringHelper;
+
+import com.thoughtworks.xstream.annotations.XStreamAlias;
+import com.thoughtworks.xstream.annotations.XStreamAsAttribute;
+import com.thoughtworks.xstream.annotations.XStreamImplicit;
 /**
  * 用于生成代码的Table对象.对应数据库的table
  * @author badqiu
@@ -44,10 +46,15 @@ public class Table implements java.io.Serializable,Cloneable {
 	private String tableSynonymName = null; 
 	
 	@XStreamImplicit(itemFieldName = "column")
-	LinkedHashSet<Column> columns = new LinkedHashSet<Column>();
+	Set<Column> columns = new LinkedHashSet<Column>();
+	
+	
+	@XStreamImplicit(itemFieldName = "foreign-info")
+	Set<ForeignInfo> foreignInfos = new LinkedHashSet<ForeignInfo>();
+	
 	
 	/** other table refer these column as foreign columns **/
-	List<ForeignColumn> referredColums=new ArrayList<ForeignColumn>();
+	//List<ForeignColumn> referredColums=new ArrayList<ForeignColumn>();
 	
 	List<Column> primaryKeyColumns = new ArrayList<Column>();
 	
@@ -66,17 +73,17 @@ public class Table implements java.io.Serializable,Cloneable {
 		this.importedKeys = t.importedKeys;
 	}
 	
-	public LinkedHashSet<Column> getColumns() {
+	public Set<Column> getColumns() {
 		return columns;
 	}
 	
-	public List<ForeignColumn> getReferredColums() {
-		return referredColums;
-	}
-	
-	public void setReferredColums(List<ForeignColumn> referedColums) {
-		this.referredColums = referedColums;
-	}
+//	public List<ForeignColumn> getReferredColums() {
+//		return referredColums;
+//	}
+//	
+//	public void setReferredColums(List<ForeignColumn> referedColums) {
+//		this.referredColums = referedColums;
+//	}
 
 	public void setColumns(LinkedHashSet<Column> columns) {
 		this.columns = columns;
@@ -405,38 +412,147 @@ public class Table implements java.io.Serializable,Cloneable {
 	public    static final String KEY_SEQ       = "KEY_SEQ";
 	
 	
-	public boolean isReferredColumnSearchable(String referSqlName) {
-		if(this.referredColums!=null) {
-			for (Iterator<ForeignColumn> iterator = referredColums.iterator(); iterator.hasNext();) {
-				ForeignColumn	foreignColumn = (ForeignColumn) iterator.next();
-				if(foreignColumn.getSqlName().equals(referSqlName)) {
-					return foreignColumn.isSearchable();
-				}
-			}
-		}
-		return false;
-	}
+//	public boolean isReferredColumnSearchable(String referSqlName) {
+//		if(this.referredColums!=null) {
+//			for (Iterator<ForeignColumn> iterator = referredColums.iterator(); iterator.hasNext();) {
+//				ForeignColumn	foreignColumn = (ForeignColumn) iterator.next();
+//				if(foreignColumn.getSqlName().equals(referSqlName)) {
+//					return foreignColumn.isSearchable();
+//				}
+//			}
+//		}
+//		return false;
+//	}
 	
-	public List<ForeignColumn> getReferredSearchableColumns() {
-		List<ForeignColumn> result=new ArrayList<ForeignColumn>();
-		if(this.referredColums!=null) {
-			for (Iterator<ForeignColumn> iterator = referredColums.iterator(); iterator.hasNext();) {
-				ForeignColumn	foreignColumn = (ForeignColumn) iterator.next();
-				if(foreignColumn.isSearchable()) {
-					result.add(foreignColumn);
+	
+	
+	public Set<ForeignColumn> getSearchableColumnFromForeignInfo() {
+		Set<ForeignColumn> result=new HashSet<ForeignColumn>();
+		if(foreignInfos!=null&&foreignInfos.size()>0) {
+			for(Iterator<ForeignInfo> it=foreignInfos.iterator();it.hasNext();) {
+				ForeignInfo foreignInfo=it.next();
+				List<ForeignColumn> foreignColumns=foreignInfo.getForeignColumns();
+				for(Iterator<ForeignColumn> it2=foreignColumns.iterator();it2.hasNext();) {
+					ForeignColumn foreignColumn=it2.next();
+					if(foreignColumn.isSearchable()) result.add(foreignColumn);
 				}
 			}
 		}
 		return result;
 	}
 	
+	
+	public ForeignInfo getForeignInfoById(String id) {
+		if(foreignInfos!=null&&foreignInfos.size()>0) {
+			for(Iterator<ForeignInfo> it=foreignInfos.iterator();it.hasNext();) {
+				ForeignInfo foreignInfo=it.next();
+				if(foreignInfo.getId().equals(id)) {
+					return foreignInfo;
+				}
+			}
+		}
+		return null;
+	}
+	
+	public List<PopupOption> getPopupOptions() {
+		 List<PopupOption> result=new ArrayList<PopupOption>();
+		 if(!isDefineForeignKey()) return result;
+			for(Iterator<Column> it=columns.iterator();it.hasNext();) {
+				Column column=it.next();
+				if(column.getForeignInfo()!=null&&column.getForeignInfo().getRefer()!=null)  {
+					PopupOption popupOption=new PopupOption();
+					popupOption.setFieldId(column.getHtmlInputId());
+					String clazzNameLower=column.getForeignInfo().getReferForeignInfo().getReferTable().getClassNameLowerCase();
+					popupOption.setUrl("${ctx}/"+clazzNameLower+"/query");
+					
+					String title=null;
+					
+					if(column.getForeignInfo().getReferForeignInfo().getTitle()!=null) {
+						title=column.getForeignInfo().getReferForeignInfo().getTitle();
+					}else {
+						title="选择"+column.getForeignInfo().getReferForeignInfo().getReferTable().getTableAlias();
+					}
+					popupOption.setTitle(title);
+					String textColumn=null,valueCoumn=null;
+					List<ForeignColumn> foreignColumns=column.getForeignInfo().getReferForeignInfo().getForeignColumns();
+					for(Iterator<ForeignColumn> it2=foreignColumns.iterator();it2.hasNext();) {
+						ForeignColumn foreignColumn=it2.next();
+						if(foreignColumn.getFtype()!=null) {
+							if(foreignColumn.getFtype().equals("value")) {
+								if(foreignColumn.isSearchable()) {
+									valueCoumn=foreignColumn.getSqlName();
+								}else {
+									valueCoumn=foreignColumn.getColumnNameLower();
+								}
+								
+							}else if(foreignColumn.getFtype().equals("text")){
+								if(foreignColumn.isSearchable()) {
+									textColumn=foreignColumn.getSqlName();
+								}else {
+									textColumn=foreignColumn.getColumnNameLower();
+								}
+							}
+						}
+					}
+					
+					if(textColumn==null||valueCoumn==null) {
+						if(valueCoumn==null) {
+							ForeignColumn foreignColumn=foreignColumns.get(0);
+							if(foreignColumn.isSearchable()) {
+								valueCoumn=foreignColumn.getSqlName();
+							}else {
+								valueCoumn=foreignColumn.getColumnNameLower();
+							}
+						}
+						if(textColumn==null) {
+							ForeignColumn foreignColumn=foreignColumns.get(1);
+							if(foreignColumn.isSearchable()) {
+								textColumn=foreignColumn.getSqlName();
+							}else {
+								textColumn=foreignColumn.getColumnNameLower();
+							}
+						}
+					}
+					popupOption.setTextColumn(textColumn);
+					popupOption.setValueCoumn(valueCoumn);
+					result.add(popupOption);
+				}
+			}
+		   return result;
+	}
+	
+	public boolean isDefineForeignKey() {
+		for(Iterator<Column> it=columns.iterator();it.hasNext();) {
+			Column column=it.next();
+			if(column.getForeignInfo()!=null) return true;
+		}
+		return false;
+	}
+	
+	public boolean isDefineForeignInfo() {
+		return (foreignInfos!=null&&foreignInfos.size()>0);
+	}
+	
+	public Set<ForeignInfo> getForeignInfos() {
+		return foreignInfos;
+	}
+	
+
+	public void setForeignInfos(LinkedHashSet<ForeignInfo> foreignInfos) {
+		this.foreignInfos = foreignInfos;
+	}
+
 	public void override(Table table) {
 		this.sqlName=table.getSqlName();
 		this.className=table.getClassName();
 		this.tableAlias=table.getTableAlias();
-		if(table.getReferredColums()!=null) {
-			this.setReferredColums(table.getReferredColums());
+//		if(table.getReferredColums()!=null) {
+//			this.setReferredColums(table.getReferredColums());
+//		}
+		if(table.getForeignInfos()!=null) {
+			this.foreignInfos=table.getForeignInfos();
 		}
+		
 	}
 	
 }

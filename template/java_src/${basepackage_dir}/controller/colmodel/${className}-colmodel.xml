@@ -3,8 +3,11 @@
 <#assign className = table.className>   
 <#assign classNameLower = className?uncap_first> 
 <column-models id="${classNameLower}">
-<#if (table.referredColums?size>0)>
-	<#list table.referredColums as foreignColumn>
+<#if (table.foreignInfos?size>0)>
+	<#list table.foreignInfos as foreignInfo>
+	<profile id="${foreignInfo.id}" <#if foreignInfo.default>default="true"</#if> >
+	<#if (foreignInfo.foreignColumns?size>0)>
+		<#list foreignInfo.foreignColumns as foreignColumn>
 		<column-model>
 			<header>${foreignColumn.referColumn.columnAlias}</header>
 			<#if foreignColumn.searchable>
@@ -15,6 +18,9 @@
 			<width>${foreignColumn.width!}</width>
 			<align>${foreignColumn.align!}</align>
 		</column-model>
+		</#list>
+	</#if>
+	</profile>
 	</#list>
 </#if>
 </column-models>

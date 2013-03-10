@@ -13,7 +13,7 @@ import java.util.Map;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import javacommon.base.BaseRestSpringController;
+import com.github.springrest.base.BaseRestSpringController;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -34,9 +34,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.company.project.vo.query.StaffQuery;
-import com.yunwei.order.controller.colmodel.ColModelList;
-import com.yunwei.order.model.Category;
-import com.yunwei.order.vo.query.CategoryQuery;
+import com.github.springrest.base.ColModelProfile;
+import com.github.springrest.util.ColModelFactory;
 
 import cn.org.rapid_framework.page.Page;
 import cn.org.rapid_framework.web.scope.Flash;
@@ -49,6 +48,13 @@ public class ${className}Controller extends BaseRestSpringController<${className
 	protected static final String DEFAULT_SORT_COLUMNS = null; 
 	
 	private ${className}Manager ${classNameFirstLower}Manager;
+	<#if table.defineForeignInfo>
+	private ColModelFactory colModelFactory;
+
+	public void setColModelFactory(ColModelFactory colModelFactory) {
+		this.colModelFactory = colModelFactory;
+	}
+	</#if>
 	
 	private final String LIST_ACTION = "redirect:/${classNameLowerCase}";
 	
@@ -82,23 +88,24 @@ public class ${className}Controller extends BaseRestSpringController<${className
 		return "/${classNameLowerCase}/index";
 	}
 
-
-	@RequestMapping({"/index.json"})
+	<#if table.defineForeignInfo>
+	@RequestMapping({ "/index.json" })
 	@ResponseBody
 	public Map indexJson(ModelMap model, CategoryQuery query) {
 		Page page = this.${classNameFirstLower}Manager.findPage(query);
 		return jsonPagination(page);
 	}
 
-	@RequestMapping({"/query"})
-	public String query(ModelMap model, String fieldId) throws Exception {
+	@RequestMapping({ "/query" })
+	public String query(ModelMap model, String fieldId,String profileId) throws Exception {
 		model.addAttribute("fieldId", fieldId);
 		model.addAttribute("jsonURL", "/${classNameLowerCase}/index.json");
 		model.addAttribute("pageTitle",${className}.TABLE_ALIAS);
-		ColModelList colModelList=colModelFactory.getColModel("${className}-colmodel.xml");
-		model.addAttribute("colModelList", colModelList.getColModels());
+		ColModelProfile colModelProfile=colModelFactory.getColModel("${className}-colmodel.xml",profileId);
+		model.addAttribute("colModelList", colModelProfile.getColModels());
 		return "/popup/table_window";
 	}
+	</#if>
 	
 	
 	/** 显示 */

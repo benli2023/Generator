@@ -24,13 +24,6 @@
 		hibernateValidatorExprssion=""
 		hasOne="" hasMany=""
 	>
-	<foreign table="staff">
-		<column searchable="false" refer="staff_id" />
-		<column searchable="true" refer="staff_name" />
-		<column searchable="true" refer="login_name" />
-		<column searchable="false" refer="phone" />
-		<column searchable="false" refer="address" />
-	</foreign>
 	</column>
 
 	<column sqlName="cust_id" columnAlias="客户" javaType="java.lang.Long" 
@@ -40,14 +33,6 @@
 		hibernateValidatorExprssion=""
 		hasOne="" hasMany=""
 	>
-	
-	<foreign table="customer">
-			<column searchable="false" refer="cust_id" />
-		    <column searchable="true" refer="cust_name" />
-			<column searchable="true" refer="short_name" />
-			<column searchable="false" refer="telephone" />
-			<column searchable="false" refer="address" />
-	</foreign>
 	
 	
 	</column>

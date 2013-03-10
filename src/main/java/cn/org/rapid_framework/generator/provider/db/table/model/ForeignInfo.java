@@ -8,27 +8,47 @@ import com.thoughtworks.xstream.annotations.XStreamAlias;
 import com.thoughtworks.xstream.annotations.XStreamAsAttribute;
 import com.thoughtworks.xstream.annotations.XStreamImplicit;
 
+@XStreamAlias("foreign-info")
 public class ForeignInfo {
 
 	@XStreamImplicit(itemFieldName = "column")
 	private List<ForeignColumn> foreignColumns = new LinkedList<ForeignColumn>();
 
-	@XStreamAlias("table")
+	@XStreamAlias("refer")
 	@XStreamAsAttribute
-	private String table = null;
+	private String refer = null;
 
-	private Table referTable = null;
+	@XStreamAlias("id")
+	@XStreamAsAttribute
+	private String id = null;
 
-	public String getTable() {
-		return table;
+	@XStreamAlias("default")
+	@XStreamAsAttribute
+	private boolean _default = false;
+	
+	@XStreamAlias("title")
+	@XStreamAsAttribute
+	private String title=null;
+
+	private ForeignInfo referForeignInfo = null;
+	
+	private Table referTable=null;
+
+	public String getRefer() {
+		return refer;
 	}
 
-	public void setTable(String table) {
-		this.table = table;
+	public void setRefer(String refer) {
+		this.refer = refer;
 	}
 
 	public Iterator<ForeignColumn> iterator() {
-		return foreignColumns.iterator();
+		if (referForeignInfo != null) {
+			referForeignInfo.iterator();
+		} else {
+			return foreignColumns.iterator();
+		}
+		return null;
 	}
 
 	public void addForeignColumn(ForeignColumn foreignColumn) {
@@ -43,6 +63,30 @@ public class ForeignInfo {
 		this.foreignColumns = foreignColumns;
 	}
 
+	public ForeignInfo getReferForeignInfo() {
+		return referForeignInfo;
+	}
+
+	public void setReferForeignInfo(ForeignInfo referForeignInfo) {
+		this.referForeignInfo = referForeignInfo;
+	}
+
+	public String getId() {
+		return id;
+	}
+
+	public void setId(String id) {
+		this.id = id;
+	}
+
+	public boolean isDefault() {
+		return _default;
+	}
+
+	public void setDefault(boolean _default) {
+		this._default = _default;
+	}
+
 	public Table getReferTable() {
 		return referTable;
 	}
@@ -50,4 +94,13 @@ public class ForeignInfo {
 	public void setReferTable(Table referTable) {
 		this.referTable = referTable;
 	}
+
+	public String getTitle() {
+		return title;
+	}
+
+	public void setTitle(String title) {
+		this.title = title;
+	}
+	
 }

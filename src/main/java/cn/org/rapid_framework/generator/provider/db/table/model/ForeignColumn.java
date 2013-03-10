@@ -29,6 +29,11 @@ public class ForeignColumn {
 	@XStreamAsAttribute
 	private String width;
 
+	@XStreamAlias("ftype")
+	@XStreamAsAttribute
+	private String ftype;
+	
+	
 	public ForeignColumn() {
 		super();
 	}
@@ -124,6 +129,39 @@ public class ForeignColumn {
 
 	public void setWidth(String width) {
 		this.width = width;
+	}
+	
+	public String getFtype() {
+		return ftype;
+	}
+
+	public void setFtype(String ftype) {
+		this.ftype = ftype;
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((refer == null) ? 0 : refer.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		ForeignColumn other = (ForeignColumn) obj;
+		if (refer == null) {
+			if (other.refer != null)
+				return false;
+		} else if (!refer.equals(other.refer))
+			return false;
+		return true;
 	}
 	
 	

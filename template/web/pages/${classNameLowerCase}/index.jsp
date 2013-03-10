@@ -11,7 +11,11 @@
 
 <rapid:override name="head">
 	<title><%=${className}.TABLE_ALIAS%> 维护</title>
-	
+	<#if table.defineForeignKey>
+	<%@ include file="../../commons/opera-maskui-dialog-import.jsp" %>
+	<link href="<c:url value="<@jspEl 'ctx'/>/scripts/plugins/popup-input/popup-input.css"/>" type="text/css" rel="stylesheet">
+	<script type="text/javascript" src="<@jspEl 'ctx'/>/scripts/plugins/popup-input/popup_selection.js"></script>
+	</#if>
 	<script src="<@jspEl 'ctx'/>/scripts/rest.js" ></script>
 	<link href="<c:url value="/widgets/simpletable/simpletable.css"/>" type="text/css" rel="stylesheet">
 	<script type="text/javascript" src="<c:url value="/widgets/simpletable/simpletable.js"/>"></script>
@@ -39,6 +43,8 @@
 						<#if column.isDateTimeColumn>
 						<input value="<fmt:formatDate value='<@jspEl "query."+column.columnNameLower+'Begin'/>' pattern='<%=${className}.FORMAT_${column.constantName}%>'/>" onclick="WdatePicker({dateFmt:'<%=${className}.FORMAT_${column.constantName}%>'})" id="${column.columnNameLower}Begin" name="${column.columnNameLower}Begin"   />
 						<input value="<fmt:formatDate value='<@jspEl "query."+column.columnNameLower+'End'/>' pattern='<%=${className}.FORMAT_${column.constantName}%>'/>" onclick="WdatePicker({dateFmt:'<%=${className}.FORMAT_${column.constantName}%>'})" id="${column.columnNameLower}End" name="${column.columnNameLower}End"   />
+						<#elseif column.defineForeignInfo>
+						<yun:button-edit name="${column.buttonEdit.name}" hiddenName="${column.buttonEdit.hiddenName}" id="${column.buttonEdit.id}" txtVal="<@jspEl "query."+column.buttonEdit.txtVal/>"  hiddenVal="<@jspEl "query."+column.buttonEdit.hiddenVal/>" width="${column.buttonEdit.width}"  profileId="${column.buttonEdit.profileId}"/> 
 						<#else>
 						<input value="<@jspEl "query."+column.columnNameLower/>" id="${column.columnNameLower}" name="${column.columnNameLower}" maxlength="${column.size}"  class="${column.noRequiredValidateString}"/>
 						</#if>
@@ -115,9 +121,23 @@
 		<simpletable:pageToolbar page="<@jspEl 'page'/>">
 		显示在这里是为了提示你如何自定义表头,可修改模板删除此行
 		</simpletable:pageToolbar>
-		
 	</div>
 	</form>
+	
+	<#if table.defineForeignKey>
+	<script type="text/javascript">
+	 var popupOption={
+	 	<#list table.popupOptions as current>
+		 '${current.fieldId}': {url:'${current.url}',title:'${current.title}',textColumn:'${current.textColumn}',valueColumn:'${current.valueCoumn}'}<#if current_has_next>,</#if>
+		</#list>
+	 };
+	 PopupSelection.initOption(popupOption); 	
+	</script>
+	  <div id="dialog-modal" title="">
+        <iframe frameborder="0" style="width:100%;height:99%;height:100%\9;" src="about:blank"></iframe>
+    </div>
+	</#if>
+	
 </rapid:override>
 
 <%-- jsp模板继承,具体使用请查看: http://code.google.com/p/rapid-framework/wiki/rapid_jsp_extends --%>

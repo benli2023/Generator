@@ -32,7 +32,10 @@ public class ${className}Query extends BaseQuery implements Serializable {
 	<#if column.isDateTimeColumn && !column.contains("begin,start,end")>
 	private ${column.javaType} ${column.columnNameLower}Begin;
 	private ${column.javaType} ${column.columnNameLower}End;
-	<#else>
+	<#elseif column.defineForeignInfo>
+	private ${column.javaType} ${column.columnNameLower};
+	private String ${column.columnNameLower}Txt;
+	<#else >
 	private ${column.javaType} ${column.columnNameLower};
 	</#if>
 	</#list>
@@ -56,6 +59,24 @@ public class ${className}Query extends BaseQuery implements Serializable {
 	
 	public void set${column.columnName}End(${column.javaType} value) {
 		this.${column.columnNameLower}End = value;
+	}
+	
+	<#elseif column.defineForeignInfo>
+	
+	public ${column.javaType} get${column.columnName}() {
+		return this.${column.columnNameLower};
+	}
+	
+	public void set${column.columnName}(${column.javaType} value) {
+		this.${column.columnNameLower} = value;
+	}
+	
+	public String get${column.columnName}Txt() {
+		return this.${column.columnNameLower}Txt;
+	}
+	
+	public void set${column.columnName}Txt(String value) {
+		this.${column.columnNameLower}Txt = value;
 	}
 	
 	<#else>

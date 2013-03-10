@@ -131,7 +131,7 @@ public class TableConfig {
 
 		ForeignInfo foreignInfo = new ForeignInfo();
 
-		foreignInfo.setTable("staff");
+		//foreignInfo.setTable("staff");
 
 		ForeignColumn foreignColumn = new ForeignColumn();
 

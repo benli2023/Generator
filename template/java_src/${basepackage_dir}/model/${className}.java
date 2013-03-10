@@ -33,12 +33,19 @@ public class ${className} extends BaseEntity implements java.io.Serializable {
 	//可以直接使用: @Length(max=50,message="用户名长度不能大于50")显示错误消息
 	//columns START
 	<#list table.columns as column>
+	
+	<#if column.defineForeignInfo> 
+	private ${column.javaType} ${column.columnNameLower};
+	private String ${column.columnNameLower}Txt;
+	<#else>
     /**
      * ${column.columnAlias!}       db_column: ${column.sqlName} 
      */ 	
 	${column.hibernateValidatorExprssion}
-	<#if column.referredColumn??&&column.referredColumn.searchable>@JsonProperty("${column.sqlName}")</#if>
+	<#if column.foreignSearchable>@JsonProperty("${column.sqlName}")</#if>
 	private ${column.javaType} ${column.columnNameLower};
+	</#if>
+	
 	</#list>
 	//columns END
 
@@ -93,6 +100,15 @@ public class ${className} extends BaseEntity implements java.io.Serializable {
 	public ${column.javaType} get${column.columnName}() {
 		return this.${column.columnNameLower};
 	}
+	<#if column.defineForeignInfo>
+	public String get${column.columnName}Txt() {
+		return this.${column.columnNameLower}Txt;
+	}
+	
+	public void set${column.columnName}Txt(String value) {
+		this.${column.columnNameLower}Txt = value;
+	}
+	</#if>
 	</#list>
 </#macro>
 

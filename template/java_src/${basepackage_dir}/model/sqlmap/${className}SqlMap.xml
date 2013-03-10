@@ -95,9 +95,9 @@
 		       </isNotEmpty>
 				</#if>
 	       </#list>
-	       <#if (table.referredSearchableColumns?size>0)>
+	       <#if (table.searchableColumnFromForeignInfo?size>0)>
 	       	   <isNotEmpty prepend="AND" property="searchTerm">
-	        	<#list table.referredSearchableColumns as foreignColumn><#if foreignColumn_index==0>(</#if> ${foreignColumn.sqlName} like '%$searchTerm$%' <#if foreignColumn_has_next>or</#if> <#if foreignColumn_index==((table.referredSearchableColumns?size)-1)> )</#if></#list>
+	        	<#list table.searchableColumnFromForeignInfo as foreignColumn><#if foreignColumn_index==0>(</#if> ${foreignColumn.sqlName} like '%$searchTerm$%' <#if foreignColumn_has_next>or</#if> <#if foreignColumn_index==((table.searchableColumnFromForeignInfo?size)-1)> )</#if></#list>
 	           </isNotEmpty>
 	       </#if>
 	    </dynamic>	

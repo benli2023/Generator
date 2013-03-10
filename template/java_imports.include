@@ -1,8 +1,8 @@
 import java.util.*;
 
-import javacommon.base.*;
-import javacommon.util.*;
-
+import com.github.springrest.base.*;
+import com.github.springrest.util.*;
+import org.codehaus.jackson.annotate.*;
 import cn.org.rapid_framework.util.*;
 import cn.org.rapid_framework.web.util.*;
 import cn.org.rapid_framework.page.*;

@@ -2,9 +2,9 @@ package cn.org.rapid_framework.generator.provider.db.table.model;
 
 
 
-import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 
 import cn.org.rapid_framework.generator.GeneratorProperties;
 import cn.org.rapid_framework.generator.provider.db.table.model.ForeignKey.ReferenceKey;
@@ -116,14 +116,14 @@ public class Column implements java.io.Serializable,Cloneable{
 	
 	
 	/** the column being foreign and referred by other table 's foreign key **/
-	private ForeignColumn referredColumn=null;
+	//private ForeignColumn referredColumn=null;
 	
 	
 	/**
 	 * Foreign Info
 	 * 
 	 */
-	@XStreamAlias("foreign")
+	@XStreamAlias("foreign-info")
 	private ForeignInfo foreignInfo=null;
 	
 	
@@ -781,62 +781,118 @@ public class Column implements java.io.Serializable,Cloneable{
 	}
 	
 	
-	public List<ForeignColumn> getForeignColumns() {
-		if(this.foreignInfo==null) return new ArrayList<ForeignColumn>();
-		return foreignInfo.getForeignColumns();
-	}
+//	public List<ForeignColumn> getForeignColumns() {
+//		if(this.foreignInfo==null) return new ArrayList<ForeignColumn>();
+//		return foreignInfo.getForeignColumns();
+//	}
+//	
+//	public List<ForeignColumn> getForeignSearchableColumns() {
+//		List<ForeignColumn> result=new ArrayList<ForeignColumn>();
+//		if(this.foreignInfo!=null) {
+//			for (Iterator<ForeignColumn> iterator = foreignInfo.getForeignColumns().iterator(); iterator.hasNext();) {
+//				ForeignColumn	foreignColumn = (ForeignColumn) iterator.next();
+//				if(foreignColumn.isSearchable()) {
+//					result.add(foreignColumn);
+//				}
+//			}
+//		}
+//		return result;
+//	}
+//	
+//	public ForeignColumn getForeignPKColumn() {
+//		if(this.foreignInfo!=null) {
+//			for (Iterator<ForeignColumn> iterator = foreignInfo.getForeignColumns().iterator(); iterator.hasNext();) {
+//				ForeignColumn	foreignColumn = (ForeignColumn) iterator.next();
+//				if(foreignColumn.isPk()) {
+//					return foreignColumn;
+//				}
+//			}
+//		}
+//		return null;
+//	}
+//	
+//	public ForeignColumn getForeignColumn(String sqlName) {
+//		if(this.foreignInfo==null) return null;
+//		for (Iterator<ForeignColumn> iterator = foreignInfo.getForeignColumns().iterator(); iterator.hasNext();) {
+//			ForeignColumn	foreignColumn = (ForeignColumn) iterator.next();
+//			if(foreignColumn.getSqlName().equals(sqlName)) return foreignColumn;
+//		}
+//		return null;
+//	}
 	
-	public List<ForeignColumn> getForeignSearchableColumns() {
-		List<ForeignColumn> result=new ArrayList<ForeignColumn>();
-		if(this.foreignInfo!=null) {
-			for (Iterator<ForeignColumn> iterator = foreignInfo.getForeignColumns().iterator(); iterator.hasNext();) {
-				ForeignColumn	foreignColumn = (ForeignColumn) iterator.next();
-				if(foreignColumn.isSearchable()) {
-					result.add(foreignColumn);
+//	public ForeignColumn getReferredColumn() {
+//		return referredColumn;
+//	}
+//
+//	public void setReferredColumn(ForeignColumn referedColumn) {
+//		this.referredColumn = referedColumn;
+//	}
+//	
+//	public boolean isReferredSearchable() {
+//		if(referredColumn!=null) {
+//			return referredColumn.isSearchable();
+//		}
+//		return false;
+//	}
+	
+	public boolean isForeignSearchable() {
+		Set<ForeignColumn> searchableSet = this.getTable().getSearchableColumnFromForeignInfo();
+		if (searchableSet != null && searchableSet.size() > 0) {
+			for (Iterator<ForeignColumn> it = searchableSet.iterator(); it.hasNext();) {
+				ForeignColumn foreignColumn=it.next();
+				if(foreignColumn.getRefer().equals(this.getSqlName())) {
+					return true;
 				}
 			}
-		}
-		return result;
-	}
-	
-	public ForeignColumn getForeignPKColumn() {
-		if(this.foreignInfo!=null) {
-			for (Iterator<ForeignColumn> iterator = foreignInfo.getForeignColumns().iterator(); iterator.hasNext();) {
-				ForeignColumn	foreignColumn = (ForeignColumn) iterator.next();
-				if(foreignColumn.isPk()) {
-					return foreignColumn;
-				}
-			}
-		}
-		return null;
-	}
-	
-	public ForeignColumn getForeignColumn(String sqlName) {
-		if(this.foreignInfo==null) return null;
-		for (Iterator<ForeignColumn> iterator = foreignInfo.getForeignColumns().iterator(); iterator.hasNext();) {
-			ForeignColumn	foreignColumn = (ForeignColumn) iterator.next();
-			if(foreignColumn.getSqlName().equals(sqlName)) return foreignColumn;
-		}
-		return null;
-	}
-	
-	public ForeignColumn getReferredColumn() {
-		return referredColumn;
-	}
-
-	public void setReferredColumn(ForeignColumn referedColumn) {
-		this.referredColumn = referedColumn;
-	}
-	
-	public boolean isReferredSearchable() {
-		if(referredColumn!=null) {
-			return referredColumn.isSearchable();
 		}
 		return false;
 	}
+	
+	
+	public String getForeignInfoProfileId(){
+		if(!isFk()) return "";
+		String refer=this.foreignInfo.getRefer();
+		int index=refer.lastIndexOf(".");
+		if(index<0) return refer;
+		return refer.substring(index+1);
+	}
+	
+	private ButtonEdit buttonEdit=null;
+	public ButtonEdit getButtonEdit() {
+		if(buttonEdit==null) {
+			ButtonEdit buttonEdit=new ButtonEdit();
+			String name=this.getColumnNameFirstLower();
+			String textName=name+"Txt";
+			buttonEdit.setName(textName);
+			buttonEdit.setHiddenName(name);
+			buttonEdit.setId(getHtmlInputId());
+			buttonEdit.setTxtVal(textName);
+			buttonEdit.setHiddenVal(name);
+			buttonEdit.setWidth("130");
+			buttonEdit.setProfileId(getForeignInfoProfileId());
+			this.buttonEdit=buttonEdit;
+		}
+		return buttonEdit;
+		
+	}
+	
+	
+	public String calculateWidth() {
+		int size=this.getSize();
+		return String.valueOf(size*1.5);
+	}
+	
+	public boolean isDefineForeignInfo() {
+		return this.foreignInfo!=null&&this.foreignInfo.getRefer()!=null;
+	}
+	
+	public String getHtmlInputId() {
+		return (this.getTable().getClassNameFirstLower()+"_"+this.getColumnNameFirstLower());
+	}
+	
 
 	public void override(Column column) {
-		this._isFk=column.isPk();
+		this._isFk=column.isFk();
 		this._isNullable=column.isNullable();
 		this._isUnique=column.isUnique();
 		this.manual=column.isManual();
@@ -847,9 +903,10 @@ public class Column implements java.io.Serializable,Cloneable{
 		if(column.getForeignInfo()!=null) {
 			this.foreignInfo=column.getForeignInfo();
 		}
-		if(column.getReferredColumn()!=null) {
-			this.referredColumn=column.getReferredColumn();
-		}
+		
+//		if(column.getReferredColumn()!=null) {
+//			this.referredColumn=column.getReferredColumn();
+//		}
 		
 	}
 	
