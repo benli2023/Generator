@@ -12,14 +12,20 @@
 
     <resultMap id="RM.${className}" class="${basepackage}.model.${className}">
         <#list table.columns as column>
+        <#if column.defineForeignInfo>
         <result property="${column.columnNameLower}" column="${column.sqlName}"/>
+        <result property="${column.columnNameLower}Txt" column="${column.foreingTextColumn}"/>
+        <#else>
+         <result property="${column.columnNameLower}" column="${column.sqlName}"/>
+        </#if>
 		</#list>
     </resultMap>
 
 	<!-- 用于select查询公用抽取的列 -->
 	<sql id="<@namespace/>columns">
 	    <![CDATA[
-        <#list table.columns as column>${column.sqlName} <#if column_has_next>,</#if></#list>
+        <#list table.columns as column> ${table.tableSqlSearchAlias}.${column.sqlName} <#if column_has_next>,</#if></#list> <#if (table.leftJoinSelectColumns?size>0)><#list table.leftJoinSelectColumns as leftJoinSelectColumn>, ${leftJoinSelectColumn.joinTable.tableSqlSearchAlias}.${leftJoinSelectColumn.column.sqlName}</#list></#if>
+        
 	    ]]>
 	</sql>
 	
@@ -71,10 +77,10 @@
     <select id="<@namespace/>getById" resultMap="RM.${className}">
 	    SELECT <include refid="<@namespace/>columns"/>
 	    <![CDATA[
-	        FROM ${table.sqlName} 
+	        FROM ${table.sqlName} AS ${table.tableSqlSearchAlias} <#if (table.leftJoins?size>0)><#list table.leftJoins as leftJoin>  Left Join ${leftJoin.table.sqlName} AS ${leftJoin.table.tableSqlSearchAlias} ON ${table.tableSqlSearchAlias}.${leftJoin.leftColumn.sqlName}=${leftJoin.table.tableSqlSearchAlias}.${leftJoin.rightColumn.sqlName}</#list></#if>
 	        WHERE 
 				<#list table.compositeIdColumns as column>
-		        ${column.sqlName} = #${column.columnNameLower}# <#if column_has_next> AND </#if>
+		        ${table.tableSqlSearchAlias}.${column.sqlName} = #${column.columnNameLower}# <#if column_has_next> AND </#if>
 		        </#list>
 	    ]]>
     </select>
@@ -112,10 +118,10 @@
     	因为分页查询将传 #offset#,#pageSize#,#lastRows# 三个参数,不同的数据库可以根于此三个参数属性应用不同的分页实现
     -->
     <select id="<@namespace/>findPage" resultMap="RM.${className}">
-    	SELECT <include refid="<@namespace/>columns"/> FROM ${table.sqlName} 
+    	SELECT <include refid="<@namespace/>columns"/> FROM ${table.sqlName} AS ${table.tableSqlSearchAlias} <#if (table.leftJoins?size>0)><#list table.leftJoins as leftJoin>  Left Join ${leftJoin.table.sqlName} AS ${leftJoin.table.tableSqlSearchAlias} ON ${table.tableSqlSearchAlias}.${leftJoin.leftColumn.sqlName}=${leftJoin.table.tableSqlSearchAlias}.${leftJoin.rightColumn.sqlName}</#list></#if>
 		<include refid="<@namespace/>findPage.where"/>
 		<isNotEmpty property="sortColumns">
-			ORDER BY $sortColumns$
+			ORDER BY ${table.tableSqlSearchAlias}.$sortColumns$
 		</isNotEmpty>
     </select>
 

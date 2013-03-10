@@ -18,6 +18,16 @@
 	>
 	<foreign-info refer="category.product" />
 	</column>
+	
+	<column sqlName="people_id" columnAlias="peopleId" javaType="java.lang.Long" 
+		unique="false" nullable="true" pk="false"
+		updatable="true" insertable="true"
+		enumString="" enumClassName="PeopleIdEnum"
+		hibernateValidatorExprssion=""
+		hasOne="" hasMany=""
+	>
+	<foreign-info refer="people.product" />
+	</column>
 
 	<column sqlName="product_name" columnAlias="商品名称" javaType="java.lang.String" 
 		unique="false" nullable="true" pk="false"

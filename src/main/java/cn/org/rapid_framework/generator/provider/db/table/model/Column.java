@@ -876,7 +876,7 @@ public class Column implements java.io.Serializable,Cloneable{
 		
 	}
 	
-	
+	/**not used **/
 	public String calculateWidth() {
 		int size=this.getSize();
 		return String.valueOf(size*1.5);
@@ -888,6 +888,11 @@ public class Column implements java.io.Serializable,Cloneable{
 	
 	public String getHtmlInputId() {
 		return (this.getTable().getClassNameFirstLower()+"_"+this.getColumnNameFirstLower());
+	}
+	
+	public String getForeingTextColumn() {
+		ForeignColumn txtForeignColumn=(this.getForeignInfo().getReferForeignInfo().getValueTextColumns())[1];
+		return txtForeignColumn.getSqlName();
 	}
 	
 

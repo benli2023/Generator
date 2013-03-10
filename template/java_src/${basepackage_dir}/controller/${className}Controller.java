@@ -91,7 +91,7 @@ public class ${className}Controller extends BaseRestSpringController<${className
 	<#if table.defineForeignInfo>
 	@RequestMapping({ "/index.json" })
 	@ResponseBody
-	public Map indexJson(ModelMap model, CategoryQuery query) {
+	public Map indexJson(ModelMap model, ${className}Query query) {
 		Page page = this.${classNameFirstLower}Manager.findPage(query);
 		return jsonPagination(page);
 	}

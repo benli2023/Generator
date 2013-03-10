@@ -89,6 +89,7 @@ public  class TableOverrideValuesProvider implements Serializable {
 						column.getForeignInfo().setReferForeignInfo(referredForeignInfo);
 						column.getForeignInfo().setReferTable(referTable);
 						referredForeignInfo.setReferTable(referTable);
+						column.getForeignInfo().setParentColumn(column);
 					}
 				}
 				//set up foreign info column reference

@@ -100,6 +100,8 @@
 					<#compress>
 					<#if column.isDateTimeColumn>
 					<c:out value='<@jspEl "item."+column.columnNameLower+"String"/>'/>&nbsp;
+					<#elseif column.defineForeignInfo>
+					<c:out value='<@jspEl "item."+column.columnNameLower+"Txt"/>'/>&nbsp;
 					<#else>
 					<c:out value='<@jspEl "item."+column.columnNameLower/>'/>&nbsp;
 					</#if>

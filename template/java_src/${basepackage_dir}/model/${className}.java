@@ -11,6 +11,9 @@ import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.apache.commons.lang.builder.ToStringBuilder;
 import org.apache.commons.lang.builder.ToStringStyle;
 import org.codehaus.jackson.annotate.JsonProperty;
+import org.codehaus.jackson.map.annotate.JsonSerialize;
+
+import com.github.springrest.base.JsonDateSerializer;
 
 <#include "/java_imports.include">
 
@@ -43,6 +46,7 @@ public class ${className} extends BaseEntity implements java.io.Serializable {
      */ 	
 	${column.hibernateValidatorExprssion}
 	<#if column.foreignSearchable>@JsonProperty("${column.sqlName}")</#if>
+	<#if column.isDateTimeColumn>@JsonSerialize(using = JsonDateSerializer.class)</#if>
 	private ${column.javaType} ${column.columnNameLower};
 	</#if>
 	

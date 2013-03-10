@@ -29,6 +29,8 @@ public class ForeignInfo {
 	@XStreamAlias("title")
 	@XStreamAsAttribute
 	private String title=null;
+	
+	private Column parentColumn=null;
 
 	private ForeignInfo referForeignInfo = null;
 	
@@ -101,6 +103,69 @@ public class ForeignInfo {
 
 	public void setTitle(String title) {
 		this.title = title;
+	}
+	
+	public Column getParentColumn() {
+		return parentColumn;
+	}
+
+	public void setParentColumn(Column parentColumn) {
+		this.parentColumn = parentColumn;
+	}
+
+	public ForeignColumn[] getValueTextColumns() {
+		
+		ForeignColumn[] result=new ForeignColumn[2];
+		
+		ForeignColumn textColumn=null,valueColumn=null;
+		List<ForeignColumn> foreignColumns=getForeignColumns();
+		for(Iterator<ForeignColumn> it2=foreignColumns.iterator();it2.hasNext();) {
+			ForeignColumn foreignColumn=it2.next();
+			if(foreignColumn.getFtype()!=null) {
+				if(foreignColumn.getFtype().equals("value")) {
+//					if(foreignColumn.isSearchable()) {
+//						valueCoumn=foreignColumn.getSqlName();
+//					}else {
+//						valueCoumn=foreignColumn.getColumnNameLower();
+//					}
+					valueColumn=foreignColumn;
+					
+				}else if(foreignColumn.getFtype().equals("text")){
+//					if(foreignColumn.isSearchable()) {
+//						textColumn=foreignColumn.getSqlName();
+//					}else {
+//						textColumn=foreignColumn.getColumnNameLower();
+//					}
+					textColumn=foreignColumn;
+				}
+			}
+		}
+		
+		if(textColumn==null||valueColumn==null) {
+			if(valueColumn==null) {
+				ForeignColumn foreignColumn=foreignColumns.get(0);
+//				if(foreignColumn.isSearchable()) {
+//					valueCoumn=foreignColumn.getSqlName();
+//				}else {
+//					valueCoumn=foreignColumn.getColumnNameLower();
+//				}
+				valueColumn=foreignColumn;
+			}
+			if(textColumn==null) {
+				ForeignColumn foreignColumn=foreignColumns.get(1);
+//				if(foreignColumn.isSearchable()) {
+//					textColumn=foreignColumn.getSqlName();
+//				}else {
+//					textColumn=foreignColumn.getColumnNameLower();
+//				}
+				textColumn=foreignColumn;
+			}
+		}
+		
+		result[0]=valueColumn;
+		result[1]=textColumn;
+		
+		return result;
 	}
 	
 }

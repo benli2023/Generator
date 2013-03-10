@@ -473,48 +473,23 @@ public class Table implements java.io.Serializable,Cloneable {
 						title="选择"+column.getForeignInfo().getReferForeignInfo().getReferTable().getTableAlias();
 					}
 					popupOption.setTitle(title);
-					String textColumn=null,valueCoumn=null;
-					List<ForeignColumn> foreignColumns=column.getForeignInfo().getReferForeignInfo().getForeignColumns();
-					for(Iterator<ForeignColumn> it2=foreignColumns.iterator();it2.hasNext();) {
-						ForeignColumn foreignColumn=it2.next();
-						if(foreignColumn.getFtype()!=null) {
-							if(foreignColumn.getFtype().equals("value")) {
-								if(foreignColumn.isSearchable()) {
-									valueCoumn=foreignColumn.getSqlName();
-								}else {
-									valueCoumn=foreignColumn.getColumnNameLower();
-								}
-								
-							}else if(foreignColumn.getFtype().equals("text")){
-								if(foreignColumn.isSearchable()) {
-									textColumn=foreignColumn.getSqlName();
-								}else {
-									textColumn=foreignColumn.getColumnNameLower();
-								}
-							}
-						}
-					}
 					
-					if(textColumn==null||valueCoumn==null) {
-						if(valueCoumn==null) {
-							ForeignColumn foreignColumn=foreignColumns.get(0);
-							if(foreignColumn.isSearchable()) {
-								valueCoumn=foreignColumn.getSqlName();
-							}else {
-								valueCoumn=foreignColumn.getColumnNameLower();
-							}
-						}
-						if(textColumn==null) {
-							ForeignColumn foreignColumn=foreignColumns.get(1);
-							if(foreignColumn.isSearchable()) {
-								textColumn=foreignColumn.getSqlName();
-							}else {
-								textColumn=foreignColumn.getColumnNameLower();
-							}
-						}
+					String valueCoumn=null,textColumn=null;
+					ForeignColumn[] results=column.getForeignInfo().getReferForeignInfo().getValueTextColumns();
+					ForeignColumn valForeignColumn=results[0];
+					ForeignColumn txtForeignColumn=results[1];
+					if(valForeignColumn.isSearchable()) {
+						valueCoumn=valForeignColumn.getSqlName();
+					}else {
+						valueCoumn=valForeignColumn.getColumnNameLower();
 					}
-					popupOption.setTextColumn(textColumn);
+					if(txtForeignColumn.isSearchable()) {
+						textColumn=txtForeignColumn.getSqlName();
+					}else {
+						textColumn=txtForeignColumn.getColumnNameLower();
+					}
 					popupOption.setValueCoumn(valueCoumn);
+					popupOption.setTextColumn(textColumn);
 					result.add(popupOption);
 				}
 			}
@@ -533,6 +508,44 @@ public class Table implements java.io.Serializable,Cloneable {
 		return (foreignInfos!=null&&foreignInfos.size()>0);
 	}
 	
+	
+	public List<LeftJoin> getLeftJoins() {
+		List<LeftJoin> list=new ArrayList<LeftJoin>(3);
+		if(!isDefineForeignKey()) return list;
+		for(Iterator<Column> it=columns.iterator();it.hasNext();) {
+			Column column=it.next();
+			if(column.getForeignInfo()!=null)  {
+				ForeignInfo foreignInfo=column.getForeignInfo();
+				LeftJoin leftJoin=new LeftJoin();
+				ForeignColumn[] fcolumns=foreignInfo.getReferForeignInfo().getValueTextColumns();
+				leftJoin.setTable(foreignInfo.getReferForeignInfo().getReferTable());
+				leftJoin.setLeftColumn(foreignInfo.getParentColumn());
+				leftJoin.setRightColumn(fcolumns[0].getReferColumn());
+				list.add(leftJoin);
+			}
+		}
+		return list;
+	}
+	
+	public List<LeftJoinSelectColumn> getLeftJoinSelectColumns() {
+		List<LeftJoinSelectColumn> list=new ArrayList<LeftJoinSelectColumn>(3);
+		if(!isDefineForeignKey()) return list;
+		for(Iterator<Column> it=columns.iterator();it.hasNext();) {
+			Column column=it.next();
+			if(column.getForeignInfo()!=null)  {
+				Table table=column.getForeignInfo().getReferForeignInfo().getReferTable();
+				ForeignColumn[] fcolumns=column.getForeignInfo().getReferForeignInfo().getValueTextColumns();
+				Column textColumn=fcolumns[1].getReferColumn();
+				LeftJoinSelectColumn leftJoinSelectColumn=new LeftJoinSelectColumn();
+				leftJoinSelectColumn.setJoinTable(table);
+				leftJoinSelectColumn.setColumn(textColumn);
+				list.add(leftJoinSelectColumn);
+			}
+			
+		}
+		return list;
+	}
+	
 	public Set<ForeignInfo> getForeignInfos() {
 		return foreignInfos;
 	}
@@ -540,6 +553,20 @@ public class Table implements java.io.Serializable,Cloneable {
 
 	public void setForeignInfos(LinkedHashSet<ForeignInfo> foreignInfos) {
 		this.foreignInfos = foreignInfos;
+	}
+	
+	private String tableSqlSearchAlias=null;
+	public String getTableSqlSearchAlias() {
+		if(tableSqlSearchAlias==null) {
+			String sqlName=this.getSqlName();
+			sqlName=sqlName.replace("_", "");
+			sqlName=sqlName.replace("-", "");
+			if(sqlName.length()>3) {
+				sqlName=sqlName.substring(0,3);
+			}
+			tableSqlSearchAlias=sqlName;
+		}
+		return tableSqlSearchAlias;
 	}
 
 	public void override(Table table) {

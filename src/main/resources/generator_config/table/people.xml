@@ -61,5 +61,12 @@
 	
 	
 	</column>
+	
+	<foreign-info id="product" default="true" title="选择人员">
+		<column refer="PersonId" width="50" align="center"  ftype="value"/>
+		<column searchable="true" refer="Name" width="100" align="center" ftype="text"/>
+		<column searchable="false" refer="Age" width="60" align="center"/>
+		<column searchable="false" refer="RecordDate" width="60" align="center"/>
+	</foreign-info>
 
 </table>
