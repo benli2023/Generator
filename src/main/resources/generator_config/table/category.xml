@@ -15,7 +15,9 @@
 		enumString="" enumClassName="ParentIdEnum"
 		hibernateValidatorExprssion=""
 		hasOne="" hasMany=""
-	/>
+	>
+	<foreign-info refer="category.category" />
+	</column>
 
 	<column sqlName="cate_name" columnAlias="类别名称" javaType="java.lang.String" 
 		unique="false" nullable="true" pk="false"
@@ -52,10 +54,9 @@
 	<foreign-info id="product" default="true" title="选择产品分类">
 		<column refer="cate_id" width="50" align="center"  ftype="value"/>
 		<column searchable="true" refer="cate_name" width="100" align="center" ftype="text"/>
-		<column searchable="false" refer="parent_id" width="60" align="center"/>
 	</foreign-info>
 	
-	<foreign-info id="product2" >
+	<foreign-info id="category" >
 		<column refer="cate_id" width="50" align="center" />
 		<column searchable="true" refer="cate_name" width="100" align="center"/>
 	</foreign-info>

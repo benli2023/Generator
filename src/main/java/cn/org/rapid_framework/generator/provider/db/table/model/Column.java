@@ -4,6 +4,7 @@ package cn.org.rapid_framework.generator.provider.db.table.model;
 
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import cn.org.rapid_framework.generator.GeneratorProperties;
@@ -71,6 +72,8 @@ public class Column implements java.io.Serializable,Cloneable{
 	 */
 	@XStreamOmitField
 	private int _size;
+	
+	
 
 	/**
 	 * @todo-javadoc Describe the column
@@ -891,9 +894,23 @@ public class Column implements java.io.Serializable,Cloneable{
 	}
 	
 	public String getForeingTextColumn() {
-		ForeignColumn txtForeignColumn=(this.getForeignInfo().getReferForeignInfo().getValueTextColumns())[1];
-		return txtForeignColumn.getSqlName();
+		if(this.getForeignInfo()==null) {
+			throw new IllegalStateException("should not call this method if this column 's foreign info is not define !");
+		}
+		//if the column itself is runtime column rather that XML column
+		if(this.getRuntimeColumn()==null) {
+			Map<Column,Table> leftJoinTablesMap=this.getTable().getLeftJoinTables();
+			Table table=leftJoinTablesMap.get(this);
+			String tableAlias=table.getTableSqlSearchAlias();
+			ForeignColumn txtForeignColumn=(this.getForeignInfo().getReferForeignInfo().getValueTextColumns())[1];
+			String columnName=txtForeignColumn.getReferColumn().getRuntimeColumn().getColumnNameLowerCase();
+			return tableAlias+"_"+columnName;
+			
+		}else {
+			throw new IllegalStateException("the column should not be XML defined Column...");
+		}
 	}
+	
 	
 
 	public void override(Column column) {
@@ -908,11 +925,30 @@ public class Column implements java.io.Serializable,Cloneable{
 		if(column.getForeignInfo()!=null) {
 			this.foreignInfo=column.getForeignInfo();
 		}
+		column.setTable(this.getTable());
+		column.setRuntimeColumn(this);
 		
 //		if(column.getReferredColumn()!=null) {
 //			this.referredColumn=column.getReferredColumn();
 //		}
 		
 	}
+	
+	@XStreamOmitField
+	private Column runtimeColumn;
+
+	public void setTable(Table _table) {
+		this._table = _table;
+	}
+
+	public void setRuntimeColumn(Column runtimeColumn) {
+		this.runtimeColumn = runtimeColumn;
+	}
+
+	public Column getRuntimeColumn() {
+		return runtimeColumn;
+	}
+	
+	
 	
 }

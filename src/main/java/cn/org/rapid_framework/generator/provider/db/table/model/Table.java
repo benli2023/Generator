@@ -4,10 +4,13 @@ package cn.org.rapid_framework.generator.provider.db.table.model;
 import java.sql.DatabaseMetaData;
 import java.sql.ResultSet;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedHashSet;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import cn.org.rapid_framework.generator.GeneratorProperties;
@@ -17,6 +20,7 @@ import cn.org.rapid_framework.generator.util.StringHelper;
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 import com.thoughtworks.xstream.annotations.XStreamAsAttribute;
 import com.thoughtworks.xstream.annotations.XStreamImplicit;
+import com.thoughtworks.xstream.annotations.XStreamOmitField;
 /**
  * 用于生成代码的Table对象.对应数据库的table
  * @author badqiu
@@ -509,16 +513,46 @@ public class Table implements java.io.Serializable,Cloneable {
 	}
 	
 	
+	@XStreamOmitField
+	private Map<Column,Table> leftJoinTables=null;
+	
+	public Map<Column,Table> getLeftJoinTables() {
+		if (leftJoinTables == null) {
+			leftJoinTables=new HashMap<Column,Table>();
+			//List<Table> list = new LinkedList<Table>();
+			if (!isDefineForeignKey())
+				return leftJoinTables;
+			int seq = 1;
+			for (Iterator<Column> it = columns.iterator(); it.hasNext();) {
+				Column column = it.next();
+				if(column.getRuntimeColumn()!=null) {
+					throw new IllegalStateException("the column should not be XML defined column...");
+				}
+				if (column.getForeignInfo() != null) {
+					ForeignInfo foreignInfo=column.getForeignInfo();
+					Table table = foreignInfo.getReferForeignInfo().getReferTable();
+					Table table2 = (Table) table.clone();
+					table2.setLeftJoinAliasSeq(seq++);
+					leftJoinTables.put(column, table2);
+				}
+			}
+		}
+		return leftJoinTables;
+	}
+	
+	
 	public List<LeftJoin> getLeftJoins() {
-		List<LeftJoin> list=new ArrayList<LeftJoin>(3);
+		List<LeftJoin> list=new LinkedList<LeftJoin>();
 		if(!isDefineForeignKey()) return list;
+		Map<Column,Table> leftJoinTablesMap=getLeftJoinTables();
 		for(Iterator<Column> it=columns.iterator();it.hasNext();) {
 			Column column=it.next();
 			if(column.getForeignInfo()!=null)  {
 				ForeignInfo foreignInfo=column.getForeignInfo();
 				LeftJoin leftJoin=new LeftJoin();
 				ForeignColumn[] fcolumns=foreignInfo.getReferForeignInfo().getValueTextColumns();
-				leftJoin.setTable(foreignInfo.getReferForeignInfo().getReferTable());
+				Table table=leftJoinTablesMap.get(column);
+				leftJoin.setTable(table);
 				leftJoin.setLeftColumn(foreignInfo.getParentColumn());
 				leftJoin.setRightColumn(fcolumns[0].getReferColumn());
 				list.add(leftJoin);
@@ -530,19 +564,20 @@ public class Table implements java.io.Serializable,Cloneable {
 	public List<LeftJoinSelectColumn> getLeftJoinSelectColumns() {
 		List<LeftJoinSelectColumn> list=new ArrayList<LeftJoinSelectColumn>(3);
 		if(!isDefineForeignKey()) return list;
+		Map<Column,Table> leftJoinTablesMap=getLeftJoinTables();
 		for(Iterator<Column> it=columns.iterator();it.hasNext();) {
 			Column column=it.next();
 			if(column.getForeignInfo()!=null)  {
-				Table table=column.getForeignInfo().getReferForeignInfo().getReferTable();
+				Table table=leftJoinTablesMap.get(column);
 				ForeignColumn[] fcolumns=column.getForeignInfo().getReferForeignInfo().getValueTextColumns();
 				Column textColumn=fcolumns[1].getReferColumn();
 				LeftJoinSelectColumn leftJoinSelectColumn=new LeftJoinSelectColumn();
 				leftJoinSelectColumn.setJoinTable(table);
-				leftJoinSelectColumn.setColumn(textColumn);
+				leftJoinSelectColumn.setColumn(textColumn.getRuntimeColumn());
 				list.add(leftJoinSelectColumn);
 			}
-			
 		}
+		
 		return list;
 	}
 	
@@ -554,7 +589,9 @@ public class Table implements java.io.Serializable,Cloneable {
 	public void setForeignInfos(LinkedHashSet<ForeignInfo> foreignInfos) {
 		this.foreignInfos = foreignInfos;
 	}
-	
+
+	@XStreamOmitField
+	private int leftJoinAliasSeq=0;
 	private String tableSqlSearchAlias=null;
 	public String getTableSqlSearchAlias() {
 		if(tableSqlSearchAlias==null) {
@@ -566,8 +603,22 @@ public class Table implements java.io.Serializable,Cloneable {
 			}
 			tableSqlSearchAlias=sqlName;
 		}
-		return tableSqlSearchAlias;
+		return tableSqlSearchAlias+leftJoinAliasSeq;
 	}
+	
+	
+
+	public void setLeftJoinAliasSeq(int leftJoinAliasSeq) {
+		this.leftJoinAliasSeq = leftJoinAliasSeq;
+	}
+
+	public int getAliasSeq() {
+		return leftJoinAliasSeq;
+	}
+
+	@XStreamOmitField
+	private Table runtimeTable;
+
 
 	public void override(Table table) {
 		this.sqlName=table.getSqlName();
@@ -579,7 +630,17 @@ public class Table implements java.io.Serializable,Cloneable {
 		if(table.getForeignInfos()!=null) {
 			this.foreignInfos=table.getForeignInfos();
 		}
-		
+		table.setRuntimeTable(this);
 	}
+
+	public Table getRuntimeTable() {
+		return runtimeTable;
+	}
+
+	public void setRuntimeTable(Table runtimeTable) {
+		this.runtimeTable = runtimeTable;
+	}
+	
+	
 	
 }

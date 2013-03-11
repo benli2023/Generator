@@ -24,7 +24,7 @@
 	<!-- 用于select查询公用抽取的列 -->
 	<sql id="<@namespace/>columns">
 	    <![CDATA[
-        <#list table.columns as column> ${table.tableSqlSearchAlias}.${column.sqlName} <#if column_has_next>,</#if></#list> <#if (table.leftJoinSelectColumns?size>0)><#list table.leftJoinSelectColumns as leftJoinSelectColumn>, ${leftJoinSelectColumn.joinTable.tableSqlSearchAlias}.${leftJoinSelectColumn.column.sqlName}</#list></#if>
+        <#list table.columns as column> ${table.tableSqlSearchAlias}.${column.sqlName} <#if column_has_next>,</#if></#list> <#if (table.leftJoinSelectColumns?size>0)><#list table.leftJoinSelectColumns as leftJoinSelectColumn>, ${leftJoinSelectColumn.joinTable.tableSqlSearchAlias}.${leftJoinSelectColumn.column.sqlName} as ${leftJoinSelectColumn.joinTable.tableSqlSearchAlias}_${leftJoinSelectColumn.column.columnNameLowerCase}</#list></#if>
         
 	    ]]>
 	</sql>
@@ -90,27 +90,27 @@
 	       <#list table.columns as column>
 		        <#if column.isDateTimeColumn>
 		       <isNotEmpty prepend="AND" property="${column.columnNameLower}Begin">
-		             ${column.sqlName} >= #${column.columnNameLower}Begin#
+		              ${table.tableSqlSearchAlias}.${column.sqlName} >= #${column.columnNameLower}Begin#
 		       </isNotEmpty>
 		       <isNotEmpty prepend="AND" property="${column.columnNameLower}End">
-		             ${column.sqlName} &lt;= #${column.columnNameLower}End#
+		              ${table.tableSqlSearchAlias}.${column.sqlName} &lt;= #${column.columnNameLower}End#
 		       </isNotEmpty>
 				<#else>
 		       <isNotEmpty prepend="AND" property="${column.columnNameLower}">
-		             ${column.sqlName} = #${column.columnNameLower}#
+		              ${table.tableSqlSearchAlias}.${column.sqlName} = #${column.columnNameLower}#
 		       </isNotEmpty>
 				</#if>
 	       </#list>
 	       <#if (table.searchableColumnFromForeignInfo?size>0)>
 	       	   <isNotEmpty prepend="AND" property="searchTerm">
-	        	<#list table.searchableColumnFromForeignInfo as foreignColumn><#if foreignColumn_index==0>(</#if> ${foreignColumn.sqlName} like '%$searchTerm$%' <#if foreignColumn_has_next>or</#if> <#if foreignColumn_index==((table.searchableColumnFromForeignInfo?size)-1)> )</#if></#list>
+	        	<#list table.searchableColumnFromForeignInfo as foreignColumn><#if foreignColumn_index==0>(</#if>  ${table.tableSqlSearchAlias}.${foreignColumn.sqlName} like '%$searchTerm$%' <#if foreignColumn_has_next>or</#if> <#if foreignColumn_index==((table.searchableColumnFromForeignInfo?size)-1)> )</#if></#list>
 	           </isNotEmpty>
 	       </#if>
 	    </dynamic>	
 	</sql>
 	 
     <select id="<@namespace/>findPage.count" resultClass="long">
-        SELECT count(*) FROM ${table.sqlName} <include refid="<@namespace/>findPage.where"/>    
+        SELECT count(*) FROM  ${table.sqlName} AS ${table.tableSqlSearchAlias} <include refid="<@namespace/>findPage.where"/>    
     </select>
     
     <!--
