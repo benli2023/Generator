@@ -45,6 +45,13 @@
 						<input value="<fmt:formatDate value='<@jspEl "query."+column.columnNameLower+'End'/>' pattern='<%=${className}.FORMAT_${column.constantName}%>'/>" onclick="WdatePicker({dateFmt:'<%=${className}.FORMAT_${column.constantName}%>'})" id="${column.columnNameLower}End" name="${column.columnNameLower}End"   />
 						<#elseif column.defineForeignInfo>
 						<yun:button-edit name="${column.buttonEdit.name}" hiddenName="${column.buttonEdit.hiddenName}" id="${column.buttonEdit.id}" txtVal="<@jspEl "query."+column.buttonEdit.txtVal/>"  hiddenVal="<@jspEl "query."+column.buttonEdit.hiddenVal/>" width="${column.buttonEdit.width}"  profileId="${column.buttonEdit.profileId}"/> 
+						
+						<#elseif column.enumType>
+						<select name="${column.columnNameLower}">
+							<#list column.enumList as current>
+							<option value="${current.enumKey}" <c:if test="<@jspEl "query."+column.columnNameLower+"=="+current.enumKey/>">selected</c:if>>${current.enumDesc}</option>
+							</#list>		
+						</select>
 						<#else>
 						<input value="<@jspEl "query."+column.columnNameLower/>" id="${column.columnNameLower}" name="${column.columnNameLower}" maxlength="${column.size}"  class="${column.noRequiredValidateString}"/>
 						</#if>
@@ -100,6 +107,8 @@
 					<#compress>
 					<#if column.isDateTimeColumn>
 					<c:out value='<@jspEl "item."+column.columnNameLower+"String"/>'/>&nbsp;
+					<#elseif column.enumType>
+					<c:choose><#list column.enumListExcludeOtherVal as current><c:when test="<@jspEl 'item.' + column.columnNameLower+'=='+current.enumKey/>">${current.enumDesc}</c:when></#list></c:choose>
 					<#elseif column.defineForeignInfo>
 					<c:out value='<@jspEl "item."+column.columnNameLower+"Txt"/>'/>&nbsp;
 					<#else>

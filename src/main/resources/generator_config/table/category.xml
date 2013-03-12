@@ -27,10 +27,10 @@
 		hasOne="" hasMany=""
 	/>
 
-	<column sqlName="is_available" columnAlias="是否有效" javaType="java.lang.Boolean" 
+	<column sqlName="is_available" columnAlias="是否有效" javaType="java.lang.Integer" 
 		unique="false" nullable="true" pk="false"
 		updatable="true" insertable="true"
-		enumString="" enumClassName="IsAvailableEnum"
+		enumString="Y(1,是);N(0,否);Unlimited(-1,不限)" enumClassName="YesNoEnum"
 		hibernateValidatorExprssion=""
 		hasOne="" hasMany=""
 	/>

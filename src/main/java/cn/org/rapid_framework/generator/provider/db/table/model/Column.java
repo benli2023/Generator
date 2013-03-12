@@ -3,6 +3,7 @@ package cn.org.rapid_framework.generator.provider.db.table.model;
 
 
 import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -100,7 +101,9 @@ public class Column implements java.io.Serializable,Cloneable{
 	@XStreamAlias("unique")
    	@XStreamAsAttribute
 	private boolean _isUnique;
-
+	
+	
+	
 	/**
 	 * Null if the DB reports no default value
 	 */
@@ -116,6 +119,8 @@ public class Column implements java.io.Serializable,Cloneable{
 	@XStreamAlias("manual")
    	@XStreamAsAttribute
 	private boolean manual=true;
+	
+	
 	
 	
 	/** the column being foreign and referred by other table 's foreign key **/
@@ -611,11 +616,35 @@ public class Column implements java.io.Serializable,Cloneable{
 		return enumString;
 	}
 	/** 解析getEnumString()字符串转换为List<EnumMetaDada>对象  */
+	
+	@XStreamOmitField
+	private  List<EnumMetaDada>  enumMetaData=null;
 	public List<EnumMetaDada> getEnumList() {
-		return StringHelper.string2EnumMetaData(getEnumString());
+		if(enumMetaData==null) {
+			enumMetaData= StringHelper.string2EnumMetaData(getEnumString());
+		}
+		return enumMetaData;
 	}
+	
+	public List<EnumMetaDada> getEnumListExcludeOtherVal() {
+		 List<EnumMetaDada> list=getEnumList();List<EnumMetaDada> list2=new LinkedList();
+		 String otherKey=this.getEnumOtherVal().trim();
+		 for(Iterator<EnumMetaDada> it=list.iterator();it.hasNext();) {
+			 EnumMetaDada enumMetaDada=it.next();
+			 if(!enumMetaDada.getEnumKey().equals(otherKey)) {
+				 list2.add(enumMetaDada);
+			 }
+		 }
+		 return list2;
+		
+	}
+	
 	/** 是否是枚举列，等价于:return getEnumList() != null && !getEnumList().isEmpty()  */
 	public boolean isEnumColumn() {
+		return getEnumList() != null && !getEnumList().isEmpty();
+	}
+	
+	public boolean getEnumType() {
 		return getEnumList() != null && !getEnumList().isEmpty();
 	}
 	
@@ -730,6 +759,13 @@ public class Column implements java.io.Serializable,Cloneable{
     @XStreamAlias("enumString")
    	@XStreamAsAttribute
 	private String enumString = "";
+    
+    
+    /** 查询时使用,不限制Enum类型的值，默认为-1 **/
+    @XStreamAlias("enumOtherVal")
+   	@XStreamAsAttribute
+    private String enumOtherVal=null;
+    
 	@XStreamAlias("javaType")
    	@XStreamAsAttribute
 	private String javaType;
@@ -919,9 +955,12 @@ public class Column implements java.io.Serializable,Cloneable{
 		this._isUnique=column.isUnique();
 		this.manual=column.isManual();
 		this.enumString=column.getEnumString();
+		this.enumClassName=column.getEnumClassName();
+		this.enumOtherVal=column.getEnumOtherVal();
 		this.javaType=column.getJavaType();
 		this.updatable=column.isUpdatable();
 		this.insertable=column.isInsertable();
+		
 		if(column.getForeignInfo()!=null) {
 			this.foreignInfo=column.getForeignInfo();
 		}
@@ -948,6 +987,18 @@ public class Column implements java.io.Serializable,Cloneable{
 	public Column getRuntimeColumn() {
 		return runtimeColumn;
 	}
+
+	static final String DEFAULT_ENUM_OTHER_VAL="-1";
+	public String getEnumOtherVal() {
+		if( enumOtherVal==null) return DEFAULT_ENUM_OTHER_VAL;
+		else return enumOtherVal;
+	}
+
+	public void setEnumOtherVal(String enumOtherVal) {
+		this.enumOtherVal = enumOtherVal;
+	}
+	
+	
 	
 	
 	

@@ -35,6 +35,8 @@ public class ${className}Query extends BaseQuery implements Serializable {
 	<#elseif column.defineForeignInfo>
 	private ${column.javaType} ${column.columnNameLower};
 	private String ${column.columnNameLower}Txt;
+	<#elseif column.enumType>
+	private ${column.javaType} ${column.columnNameLower}=${column.enumOtherVal};
 	<#else >
 	private ${column.javaType} ${column.columnNameLower};
 	</#if>

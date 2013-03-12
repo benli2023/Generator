@@ -23,6 +23,13 @@
 	
 	<#elseif column.defineForeignInfo>
 		<yun:button-edit name="${column.buttonEdit.name}" hiddenName="${column.buttonEdit.hiddenName}" id="${column.buttonEdit.id}" txtVal="<@jspEl classNameLower+"."+column.buttonEdit.txtVal/>"  hiddenVal="<@jspEl classNameLower+"."+column.buttonEdit.hiddenVal/>" width="${column.buttonEdit.width}"  profileId="${column.buttonEdit.profileId}"/> 
+	
+	<#elseif column.enumType>
+		<form:select path="${column.columnNameLower}" id="${column.columnNameLower}">
+		<#list column.enumListExcludeOtherVal as current>
+			<form:option value="${current.enumKey}" >${current.enumDesc}</form:option>
+		</#list>
+		</form:select>
 	<#else>
 		<form:input path="${column.columnNameLower}" id="${column.columnNameLower}" cssClass="${column.validateString}" maxlength="${column.size}" />
 	</#if>

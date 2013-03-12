@@ -95,6 +95,8 @@
 		       <isNotEmpty prepend="AND" property="${column.columnNameLower}End">
 		              ${table.tableSqlSearchAlias}.${column.sqlName} &lt;= #${column.columnNameLower}End#
 		       </isNotEmpty>
+		       <#elseif column.enumType>
+		       <isNotEqual	prepend="AND" property="${column.columnNameLower}" compareValue="${column.enumOtherVal}">  ${table.tableSqlSearchAlias}.${column.sqlName} = #${column.columnNameLower}#</isNotEqual>	
 				<#else>
 		       <isNotEmpty prepend="AND" property="${column.columnNameLower}">
 		              ${table.tableSqlSearchAlias}.${column.sqlName} = #${column.columnNameLower}#
