@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<table sqlName="customer" className="Customer" tableAlias="Customer" >
+
+	<column sqlName="cust_id" columnAlias="custId" javaType="java.lang.Long" 
+		unique="true" nullable="false" pk="true"
+		updatable="true" insertable="true"
+		enumString="" enumClassName="CustIdEnum"
+		hibernateValidatorExprssion=""
+		hasOne="" hasMany=""
+	/>
+
+	<column sqlName="cust_name" columnAlias="客户名称" javaType="java.lang.String" 
+		unique="false" nullable="true" pk="false"
+		updatable="true" insertable="true"
+		enumString="" enumClassName="CustNameEnum"
+		hibernateValidatorExprssion="@Length(max=64)"
+		hasOne="" hasMany=""
+	/>
+
+	<column sqlName="short_name" columnAlias="简名" javaType="java.lang.String" 
+		unique="false" nullable="true" pk="false"
+		updatable="true" insertable="true"
+		enumString="" enumClassName="ShortNameEnum"
+		hibernateValidatorExprssion="@Length(max=64)"
+		hasOne="" hasMany=""
+	/>
+
+	<column sqlName="cust_code" columnAlias="编码" javaType="java.lang.String" 
+		unique="false" nullable="true" pk="false"
+		updatable="true" insertable="true"
+		enumString="" enumClassName="CustCodeEnum"
+		hibernateValidatorExprssion="@Length(max=128)"
+		hasOne="" hasMany=""
+	/>
+
+	<column sqlName="contact_name" columnAlias="联系人" javaType="java.lang.String" 
+		unique="false" nullable="true" pk="false"
+		updatable="true" insertable="true"
+		enumString="" enumClassName="ContactNameEnum"
+		hibernateValidatorExprssion="@Length(max=64)"
+		hasOne="" hasMany=""
+	/>
+
+	<column sqlName="contry_code" columnAlias="国家" javaType="java.lang.String" 
+		unique="false" nullable="true" pk="false"
+		updatable="true" insertable="true"
+		enumString="" enumClassName="ContryCodeEnum"
+		hibernateValidatorExprssion="@Length(max=8)"
+		hasOne="" hasMany=""
+	/>
+
+	<column sqlName="prov_code" columnAlias="省份" javaType="java.lang.String" 
+		unique="false" nullable="true" pk="false"
+		updatable="true" insertable="true"
+		enumString="" enumClassName="ProvCodeEnum"
+		hibernateValidatorExprssion="@Length(max=8)"
+		hasOne="" hasMany=""
+	/>
+
+	<column sqlName="city_code" columnAlias="城市" javaType="java.lang.String" 
+		unique="false" nullable="true" pk="false"
+		updatable="true" insertable="true"
+		enumString="" enumClassName="CityCodeEnum"
+		hibernateValidatorExprssion="@Length(max=8)"
+		hasOne="" hasMany=""
+	/>
+
+	<column sqlName="address" columnAlias="详细地址" javaType="java.lang.String" 
+		unique="false" nullable="true" pk="false"
+		updatable="true" insertable="true"
+		enumString="" enumClassName="AddressEnum"
+		hibernateValidatorExprssion="@Length(max=256)"
+		hasOne="" hasMany=""
+	/>
+
+	<column sqlName="contact" columnAlias="联系人" javaType="java.lang.String" 
+		unique="false" nullable="true" pk="false"
+		updatable="true" insertable="true"
+		enumString="" enumClassName="ContactEnum"
+		hibernateValidatorExprssion="@Length(max=64)"
+		hasOne="" hasMany=""
+	/>
+
+	<column sqlName="telephone" columnAlias="联系电话" javaType="java.lang.String" 
+		unique="false" nullable="true" pk="false"
+		updatable="true" insertable="true"
+		enumString="" enumClassName="TelephoneEnum"
+		hibernateValidatorExprssion="@Length(max=64)"
+		hasOne="" hasMany=""
+	/>
+
+	<column sqlName="fax" columnAlias="传真" javaType="java.lang.String" 
+		unique="false" nullable="true" pk="false"
+		updatable="true" insertable="true"
+		enumString="" enumClassName="FaxEnum"
+		hibernateValidatorExprssion="@Length(max=64)"
+		hasOne="" hasMany=""
+	/>
+
+	<column sqlName="email" columnAlias="电子邮件" javaType="java.lang.String" 
+		unique="false" nullable="true" pk="false"
+		updatable="true" insertable="true"
+		enumString="" enumClassName="EmailEnum"
+		hibernateValidatorExprssion="@Email @Length(max=64)"
+		hasOne="" hasMany=""
+	/>
+
+	<column sqlName="website" columnAlias="主页" javaType="java.lang.String" 
+		unique="false" nullable="true" pk="false"
+		updatable="true" insertable="true"
+		enumString="" enumClassName="WebsiteEnum"
+		hibernateValidatorExprssion="@Length(max=256)"
+		hasOne="" hasMany=""
+	/>
+
+	<column sqlName="bank" columnAlias="开户银行" javaType="java.lang.String" 
+		unique="false" nullable="true" pk="false"
+		updatable="true" insertable="true"
+		enumString="" enumClassName="BankEnum"
+		hibernateValidatorExprssion="@Length(max=128)"
+		hasOne="" hasMany=""
+	/>
+
+	<column sqlName="bank_account" columnAlias="账号" javaType="java.lang.String" 
+		unique="false" nullable="true" pk="false"
+		updatable="true" insertable="true"
+		enumString="" enumClassName="BankAccountEnum"
+		hibernateValidatorExprssion="@Length(max=128)"
+		hasOne="" hasMany=""
+	/>
+
+	<column sqlName="bank_account_name" columnAlias="开户姓名" javaType="java.lang.String" 
+		unique="false" nullable="true" pk="false"
+		updatable="true" insertable="true"
+		enumString="" enumClassName="BankAccountNameEnum"
+		hibernateValidatorExprssion="@Length(max=128)"
+		hasOne="" hasMany=""
+	/>
+
+	<column sqlName="tax_id" columnAlias="税号" javaType="java.lang.String" 
+		unique="false" nullable="true" pk="false"
+		updatable="true" insertable="true"
+		enumString="" enumClassName="TaxIdEnum"
+		hibernateValidatorExprssion="@Length(max=256)"
+		hasOne="" hasMany=""
+	/>
+
+	<column sqlName="business_people" columnAlias="业务人员" javaType="java.lang.String" 
+		unique="false" nullable="true" pk="false"
+		updatable="true" insertable="true"
+		enumString="" enumClassName="BusinessPeopleEnum"
+		hibernateValidatorExprssion="@Length(max=64)"
+		hasOne="" hasMany=""
+	/>
+
+	<column sqlName="collection_people" columnAlias="收款人员" javaType="java.lang.String" 
+		unique="false" nullable="true" pk="false"
+		updatable="true" insertable="true"
+		enumString="" enumClassName="CollectionPeopleEnum"
+		hibernateValidatorExprssion="@Length(max=64)"
+		hasOne="" hasMany=""
+	/>
+
+	<column sqlName="cTime" columnAlias="创建时间" javaType="java.util.Date" 
+		unique="false" nullable="true" pk="false"
+		updatable="true" insertable="true"
+		enumString="" enumClassName="CtimeEnum"
+		hibernateValidatorExprssion=""
+		hasOne="" hasMany=""
+	/>
+
+	<column sqlName="remark" columnAlias="备注" javaType="java.lang.String" 
+		unique="false" nullable="true" pk="false"
+		updatable="true" insertable="true"
+		enumString="" enumClassName="RemarkEnum"
+		hibernateValidatorExprssion="@Length(max=512)"
+		hasOne="" hasMany=""
+	/>
+
+</table>

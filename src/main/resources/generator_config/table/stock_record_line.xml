@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<table sqlName="stock_record_line" className="StockRecordLine" tableAlias="StockRecordLine" >
+
+	<column sqlName="stock_oper_detail_id" columnAlias="stockOperDetailId" javaType="java.lang.Long" 
+		unique="true" nullable="false" pk="true"
+		updatable="true" insertable="true"
+		enumString="" enumClassName="StockOperDetailIdEnum"
+		hibernateValidatorExprssion=""
+		hasOne="" hasMany=""
+	/>
+
+	<column sqlName="stock_operation_id" columnAlias="仓库操作ID" javaType="java.lang.Long" 
+		unique="false" nullable="true" pk="false"
+		updatable="true" insertable="true"
+		enumString="" enumClassName="StockOperationIdEnum"
+		hibernateValidatorExprssion=""
+		hasOne="" hasMany=""
+	/>
+
+	<column sqlName="product_id" columnAlias="产品ID" javaType="java.lang.Long" 
+		unique="false" nullable="true" pk="false"
+		updatable="true" insertable="true"
+		enumString="" enumClassName="ProductIdEnum"
+		hibernateValidatorExprssion=""
+		hasOne="" hasMany=""
+	/>
+
+	<column sqlName="price" columnAlias="价格" javaType="Long" 
+		unique="false" nullable="true" pk="false"
+		updatable="true" insertable="true"
+		enumString="" enumClassName="PriceEnum"
+		hibernateValidatorExprssion=""
+		hasOne="" hasMany=""
+	/>
+
+	<column sqlName="quantity" columnAlias="出库数量" javaType="java.lang.Integer" 
+		unique="false" nullable="true" pk="false"
+		updatable="true" insertable="true"
+		enumString="" enumClassName="QuantityEnum"
+		hibernateValidatorExprssion=""
+		hasOne="" hasMany=""
+	/>
+
+	<column sqlName="have_invoice" columnAlias="是否有发票" javaType="java.lang.Boolean" 
+		unique="false" nullable="true" pk="false"
+		updatable="true" insertable="true"
+		enumString="" enumClassName="HaveInvoiceEnum"
+		hibernateValidatorExprssion=""
+		hasOne="" hasMany=""
+	/>
+
+	<column sqlName="invoice_number" columnAlias="发票号码" javaType="java.lang.String" 
+		unique="false" nullable="true" pk="false"
+		updatable="true" insertable="true"
+		enumString="" enumClassName="InvoiceNumberEnum"
+		hibernateValidatorExprssion="@Length(max=32)"
+		hasOne="" hasMany=""
+	/>
+
+</table>

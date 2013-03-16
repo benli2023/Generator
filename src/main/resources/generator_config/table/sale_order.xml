@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<table sqlName="sale_order" className="SaleOrder" tableAlias="SaleOrder" >
+
+	<column sqlName="order_id" columnAlias="orderId" javaType="java.lang.Long" 
+		unique="true" nullable="false" pk="true"
+		updatable="true" insertable="true" manual="false"
+		enumString="" enumClassName="OrderIdEnum"
+		hibernateValidatorExprssion=""
+		hasOne="" hasMany=""
+	/>
+
+	<column sqlName="order_no" columnAlias="orderNo" javaType="java.lang.String" 
+		unique="true" nullable="false" pk="false"
+		updatable="true" insertable="true"  manual="true"
+		enumString="" enumClassName="OrderNoEnum"
+		hibernateValidatorExprssion="@NotBlank @Length(max=16)"
+		hasOne="" hasMany=""
+	/>
+
+	<column sqlName="staff_id" columnAlias="业务员" javaType="java.lang.Long" 
+		unique="false" nullable="true" pk="false"
+		updatable="true" insertable="true"
+		enumString="" enumClassName="StaffIdEnum"
+		hibernateValidatorExprssion=""
+		hasOne="" hasMany=""
+	>
+	</column>
+
+	<column sqlName="cust_id" columnAlias="客户" javaType="java.lang.Long" 
+		unique="false" nullable="true" pk="false"
+		updatable="true" insertable="true" 	 searchable="true"
+		enumString="" enumClassName="CustIdEnum"
+		hibernateValidatorExprssion=""
+		hasOne="" hasMany=""
+	>
+	
+	
+	</column>
+
+	<column sqlName="order_date" columnAlias="订单日期" javaType="java.util.Date" 
+		unique="false" nullable="true" pk="false"
+		updatable="true" insertable="true"
+		enumString="" enumClassName="OrderDateEnum"  searchable="true"
+		hibernateValidatorExprssion=""
+		hasOne="" hasMany=""
+	/>
+
+	<column sqlName="payment_mode" columnAlias="付款方式" javaType="java.lang.String" 
+		unique="false" nullable="true" pk="false"
+		updatable="true" insertable="true"  searchable="true"
+		enumString="" enumClassName="PaymentModeEnum"
+		hibernateValidatorExprssion="@Length(max=8)"
+		hasOne="" hasMany=""
+	/>
+
+	<column sqlName="invoice_no" columnAlias="发票号码" javaType="java.lang.String" 
+		unique="false" nullable="true" pk="false"
+		updatable="true" insertable="true"  searchable="true"
+		enumString="" enumClassName="InvoiceNoEnum"
+		hibernateValidatorExprssion="@Length(max=128)"
+		hasOne="" hasMany=""
+	/>
+
+	<column sqlName="description" columnAlias="订单说明" javaType="java.lang.String" 
+		unique="false" nullable="true" pk="false"
+		updatable="true" insertable="true"
+		enumString="" enumClassName="DescriptionEnum"
+		hibernateValidatorExprssion="@Length(max=512)"
+		hasOne="" hasMany=""
+	/>
+
+	<column sqlName="accounting_deptId" columnAlias="核算部门" javaType="java.lang.Long" 
+		unique="false" nullable="true" pk="false"
+		updatable="true" insertable="true"
+		enumString="" enumClassName="AccountingDeptIdEnum"
+		hibernateValidatorExprssion=""
+		hasOne="" hasMany=""
+	/>
+
+	<column sqlName="currency" columnAlias="币种" javaType="java.lang.String" 
+		unique="false" nullable="true" pk="false"
+		updatable="true" insertable="true"
+		enumString="" enumClassName="CurrencyEnum"
+		hibernateValidatorExprssion="@Length(max=8)"
+		hasOne="" hasMany=""
+	/>
+
+	<column sqlName="delivery_method" columnAlias="交货方式" javaType="java.lang.String" 
+		unique="false" nullable="true" pk="false"
+		updatable="true" insertable="true"
+		enumString="" enumClassName="DeliveryMethodEnum"
+		hibernateValidatorExprssion="@Length(max=8)"
+		hasOne="" hasMany=""
+	/>
+
+	<column sqlName="delivery_date" columnAlias="交货日期" javaType="java.util.Date" 
+		unique="false" nullable="true" pk="false"
+		updatable="true" insertable="true"
+		enumString="" enumClassName="DeliveryDateEnum"
+		hibernateValidatorExprssion=""
+		hasOne="" hasMany=""
+	/>
+
+	<column sqlName="additional_text" columnAlias="更多内容" javaType="java.lang.String" 
+		unique="false" nullable="true" pk="false"
+		updatable="true" insertable="true"
+		enumString="" enumClassName="AdditionalTextEnum"
+		hibernateValidatorExprssion="@Length(max=65535)"
+		hasOne="" hasMany=""
+	/>
+
+	<column sqlName="is_available" columnAlias="是否可用" javaType="java.lang.Boolean" 
+		unique="false" nullable="true" pk="false"
+		updatable="true" insertable="true"
+		enumString="" enumClassName="IsAvailableEnum"
+		hibernateValidatorExprssion=""
+		hasOne="" hasMany=""
+	/>
+
+	<column sqlName="updator" columnAlias="更新人" javaType="java.lang.Long" 
+		unique="false" nullable="true" pk="false" manual="false"
+		updatable="true" insertable="true"
+		enumString="" enumClassName="UpdatorEnum"
+		hibernateValidatorExprssion=""
+		hasOne="" hasMany=""
+	/>
+
+	<column sqlName="uTime" columnAlias="更新时间" javaType="java.util.Date" 
+		unique="false" nullable="true" pk="false" manual="false"
+		updatable="true" insertable="true"
+		enumString="" enumClassName="UtimeEnum"
+		hibernateValidatorExprssion=""
+		hasOne="" hasMany=""
+	/>
+
+	<column sqlName="cTime" columnAlias="创建时间" javaType="java.util.Date" 
+		unique="false" nullable="true" pk="false"	manual="false"
+		updatable="true" insertable="true"
+		enumString="" enumClassName="CtimeEnum"
+		hibernateValidatorExprssion=""
+		hasOne="" hasMany=""
+	/>
+
+	<column sqlName="creator" columnAlias="创建人名称" javaType="java.lang.String" 
+		unique="false" nullable="true" pk="false"  manual="false"
+		updatable="true" insertable="true"
+		enumString="" enumClassName="CreatorEnum"
+		hibernateValidatorExprssion="@Length(max=64)"
+		hasOne="" hasMany=""
+	/>
+
+	<column sqlName="creator_Id" columnAlias="创建人ID" javaType="java.lang.Long" 
+		unique="false" nullable="true" pk="false"  manual="false"
+		updatable="true" insertable="true"
+		enumString="" enumClassName="CreatorIdEnum"
+		hibernateValidatorExprssion=""
+		hasOne="" hasMany=""
+	/>
+
+</table>

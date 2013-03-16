@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<table sqlName="staff" className="Staff" tableAlias="Staff" >
+
+	<column sqlName="staff_id" columnAlias="staffId" javaType="java.lang.Long" 
+		unique="true" nullable="false" pk="true"
+		updatable="true" insertable="true"
+		enumString="" enumClassName="StaffIdEnum"
+		hibernateValidatorExprssion=""
+		hasOne="" hasMany=""
+	/>
+
+	<column sqlName="dept_id" columnAlias="deptId" javaType="java.lang.Integer" 
+		unique="false" nullable="true" pk="false"
+		updatable="true" insertable="true"
+		enumString="" enumClassName="DeptIdEnum"
+		hibernateValidatorExprssion=""
+		hasOne="" hasMany=""
+	/>
+
+	<column sqlName="staff_name" columnAlias="员工名称" javaType="java.lang.String" 
+		unique="false" nullable="true" pk="false"
+		updatable="true" insertable="true"
+		enumString="" enumClassName="StaffNameEnum"
+		hibernateValidatorExprssion="@Length(max=128)"
+		hasOne="" hasMany=""
+	/>
+
+	<column sqlName="login_name" columnAlias="登录名称" javaType="java.lang.String" 
+		unique="false" nullable="true" pk="false"
+		updatable="true" insertable="true"
+		enumString="" enumClassName="LoginNameEnum"
+		hibernateValidatorExprssion="@Length(max=64)"
+		hasOne="" hasMany=""
+	/>
+
+	<column sqlName="login_password" columnAlias="密码" javaType="java.lang.String" 
+		unique="false" nullable="true" pk="false"
+		updatable="true" insertable="true"
+		enumString="" enumClassName="LoginPasswordEnum"
+		hibernateValidatorExprssion="@Length(max=128)"
+		hasOne="" hasMany=""
+	/>
+
+	<column sqlName="position" columnAlias="职务" javaType="java.lang.String" 
+		unique="false" nullable="true" pk="false"
+		updatable="true" insertable="true"
+		enumString="" enumClassName="PositionEnum"
+		hibernateValidatorExprssion="@Length(max=8)"
+		hasOne="" hasMany=""
+	/>
+
+	<column sqlName="gender" columnAlias="性别" javaType="java.lang.Integer" 
+		unique="false" nullable="true" pk="false"
+		updatable="true" insertable="true"
+		enumString="" enumClassName="GenderEnum"
+		hibernateValidatorExprssion=""
+		hasOne="" hasMany=""
+	/>
+
+	<column sqlName="birth_date" columnAlias="出生日期" javaType="java.util.Date" 
+		unique="false" nullable="true" pk="false"
+		updatable="true" insertable="true"
+		enumString="" enumClassName="BirthDateEnum"
+		hibernateValidatorExprssion=""
+		hasOne="" hasMany=""
+	/>
+
+	<column sqlName="hire_date" columnAlias="合同签订日期" javaType="java.util.Date" 
+		unique="false" nullable="true" pk="false"
+		updatable="true" insertable="true"
+		enumString="" enumClassName="HireDateEnum"
+		hibernateValidatorExprssion=""
+		hasOne="" hasMany=""
+	/>
+
+	<column sqlName="mature_date" columnAlias="合同到期日期" javaType="java.util.Date" 
+		unique="false" nullable="true" pk="false"
+		updatable="true" insertable="true"
+		enumString="" enumClassName="MatureDateEnum"
+		hibernateValidatorExprssion=""
+		hasOne="" hasMany=""
+	/>
+
+	<column sqlName="identity_card" columnAlias="身份证号码" javaType="java.lang.String" 
+		unique="false" nullable="true" pk="false"
+		updatable="true" insertable="true"
+		enumString="" enumClassName="IdentityCardEnum"
+		hibernateValidatorExprssion="@Length(max=32)"
+		hasOne="" hasMany=""
+	/>
+
+	<column sqlName="address" columnAlias="住址" javaType="java.lang.String" 
+		unique="false" nullable="true" pk="false"
+		updatable="true" insertable="true"
+		enumString="" enumClassName="AddressEnum"
+		hibernateValidatorExprssion="@Length(max=256)"
+		hasOne="" hasMany=""
+	/>
+
+	<column sqlName="phone" columnAlias="电话" javaType="java.lang.String" 
+		unique="false" nullable="true" pk="false"
+		updatable="true" insertable="true"
+		enumString="" enumClassName="PhoneEnum"
+		hibernateValidatorExprssion="@Length(max=32)"
+		hasOne="" hasMany=""
+	/>
+
+	<column sqlName="email" columnAlias="电子邮件" javaType="java.lang.String" 
+		unique="false" nullable="true" pk="false"
+		updatable="true" insertable="true"
+		enumString="" enumClassName="EmailEnum"
+		hibernateValidatorExprssion="@Email @Length(max=128)"
+		hasOne="" hasMany=""
+	/>
+
+	<column sqlName="cTime" columnAlias="创建时间" javaType="java.util.Date" 
+		unique="false" nullable="true" pk="false"
+		updatable="true" insertable="true"
+		enumString="" enumClassName="CtimeEnum"
+		hibernateValidatorExprssion=""
+		hasOne="" hasMany=""
+	/>
+
+	<column sqlName="adminId" columnAlias="创建人ID" javaType="java.lang.Long" 
+		unique="false" nullable="true" pk="false"
+		updatable="true" insertable="true"
+		enumString="" enumClassName="AdminIdEnum"
+		hibernateValidatorExprssion=""
+		hasOne="" hasMany=""
+	/>
+
+</table>

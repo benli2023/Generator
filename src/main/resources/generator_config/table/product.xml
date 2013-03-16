@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<table sqlName="product" className="Product" tableAlias="Product" >
+
+	<column sqlName="product_id" columnAlias="productId" javaType="java.lang.Long" 
+		unique="true" nullable="false" pk="true"
+		updatable="true" insertable="true"
+		enumString="" enumClassName="ProductIdEnum"
+		hibernateValidatorExprssion=""
+		hasOne="" hasMany=""
+	/>
+	
+	<column sqlName="cat_id" columnAlias="产品类别ID" javaType="java.lang.Long" 
+		unique="false" nullable="true" pk="false"
+		updatable="true" insertable="true"
+		enumString="" enumClassName="CatIdEnum"
+		hibernateValidatorExprssion=""
+		hasOne="" hasMany=""
+	>
+	<foreign-info refer="category.product" />
+	</column>
+	
+	<column sqlName="people_id" columnAlias="peopleId" javaType="java.lang.Long" 
+		unique="false" nullable="true" pk="false"
+		updatable="true" insertable="true"
+		enumString="" enumClassName="PeopleIdEnum"
+		hibernateValidatorExprssion=""
+		hasOne="" hasMany=""
+	>
+	<foreign-info refer="people.product" />
+	</column>
+
+	<column sqlName="product_name" columnAlias="商品名称" javaType="java.lang.String" 
+		unique="false" nullable="true" pk="false"
+		updatable="true" insertable="true"
+		enumString="" enumClassName="ProductNameEnum"
+		hibernateValidatorExprssion="@Length(max=64)"
+		hasOne="" hasMany=""
+	/>
+
+	<column sqlName="product_code" columnAlias="商品编码" javaType="java.lang.String" 
+		unique="false" nullable="true" pk="false"
+		updatable="true" insertable="true"
+		enumString="" enumClassName="ProductCodeEnum"
+		hibernateValidatorExprssion="@Length(max=64)"
+		hasOne="" hasMany=""
+	/>
+
+	<column sqlName="ceil_limit" columnAlias="库存上限" javaType="java.lang.Integer" 
+		unique="false" nullable="true" pk="false"
+		updatable="true" insertable="true"
+		enumString="" enumClassName="CeilLimitEnum"
+		hibernateValidatorExprssion=""
+		hasOne="" hasMany=""
+	/>
+
+	<column sqlName="low_limit" columnAlias="库存下限" javaType="java.lang.Integer" 
+		unique="false" nullable="true" pk="false"
+		updatable="true" insertable="true"
+		enumString="" enumClassName="LowLimitEnum"
+		hibernateValidatorExprssion=""
+		hasOne="" hasMany=""
+	/>
+
+	<column sqlName="piny_code" columnAlias="拼音编码" javaType="java.lang.String" 
+		unique="false" nullable="true" pk="false"
+		updatable="true" insertable="true"
+		enumString="" enumClassName="PinyCodeEnum"
+		hibernateValidatorExprssion="@Length(max=64)"
+		hasOne="" hasMany=""
+	/>
+
+	<column sqlName="product_spec" columnAlias="规格型号" javaType="java.lang.String" 
+		unique="false" nullable="true" pk="false"
+		updatable="true" insertable="true"
+		enumString="" enumClassName="ProductSpecEnum"
+		hibernateValidatorExprssion="@Length(max=64)"
+		hasOne="" hasMany=""
+	/>
+
+	<column sqlName="sale_price" columnAlias="预设售价" javaType="java.math.BigDecimal" 
+		unique="false" nullable="true" pk="false"
+		updatable="true" insertable="true"
+		enumString="" enumClassName="SalePriceEnum"
+		hibernateValidatorExprssion=""
+		hasOne="" hasMany=""
+	/>
+
+	<column sqlName="purchase_price" columnAlias="预设进价" javaType="java.math.BigDecimal" 
+		unique="false" nullable="true" pk="false"
+		updatable="true" insertable="true"
+		enumString="" enumClassName="PurchasePriceEnum"
+		hibernateValidatorExprssion=""
+		hasOne="" hasMany=""
+	/>
+
+	<column sqlName="is_available" columnAlias="是否有效" javaType="java.lang.Integer" 
+		unique="false" nullable="true" pk="false" 
+		updatable="true" insertable="true"
+		enumString="Y(1,是);N(0,否);Unlimited(-1,不限)" enumClassName="YesNoEnum"
+		hibernateValidatorExprssion=""
+		hasOne="" hasMany=""
+	/>
+
+	<column sqlName="is_sellable" columnAlias="是否可卖" javaType="java.lang.Integer" 
+		unique="false" nullable="true" pk="false"
+		updatable="true" insertable="true"
+		enumString="Y(1,是);N(0,否);Unlimited(-2,不限)" enumClassName="YesNoEnum" enumOtherVal="-2"
+		hibernateValidatorExprssion=""
+		hasOne="" hasMany=""
+	/>
+
+	<column sqlName="is_negative" columnAlias="是否允许负库存" javaType="java.lang.Integer" 
+		unique="false" nullable="true" pk="false"
+		updatable="true" insertable="true"
+		enumString="Y(1,是);N(0,否);Unlimited(-1,不限)" enumClassName="YesNoEnum"
+		hibernateValidatorExprssion=""
+		hasOne="" hasMany=""
+	/>
+
+	<column sqlName="is_purchasable" columnAlias="是否允许采购" javaType="java.lang.Integer" 
+		unique="false" nullable="true" pk="false"
+		updatable="true" insertable="true"
+		enumString="Y(1,是);N(0,否);Unlimited(-1,不限)" enumClassName="YesNoEnum"
+		hibernateValidatorExprssion=""
+		hasOne="" hasMany=""
+	/>
+
+	<column sqlName="product_image" columnAlias="产品图片" javaType="java.lang.String" 
+		unique="false" nullable="true" pk="false"
+		updatable="true" insertable="true"
+		enumString="" enumClassName="ProductImageEnum"
+		hibernateValidatorExprssion="@Length(max=256)"
+		hasOne="" hasMany=""
+	/>
+
+	<column sqlName="manufacturer" columnAlias="生产商" javaType="java.lang.String" 
+		unique="false" nullable="true" pk="false"
+		updatable="true" insertable="true"
+		enumString="" enumClassName="ManufacturerEnum"
+		hibernateValidatorExprssion="@Length(max=256)"
+		hasOne="" hasMany=""
+	/>
+
+	<column sqlName="orginal_place" columnAlias="产地" javaType="java.lang.String" 
+		unique="false" nullable="true" pk="false"
+		updatable="true" insertable="true"
+		enumString="" enumClassName="OrginalPlaceEnum"
+		hibernateValidatorExprssion="@Length(max=256)"
+		hasOne="" hasMany=""
+	/>
+
+	<column sqlName="cTime" columnAlias="创建时间" javaType="java.util.Date" 
+		unique="false" nullable="true" pk="false"
+		updatable="true" insertable="true"
+		enumString="" enumClassName="CtimeEnum"
+		hibernateValidatorExprssion=""
+		hasOne="" hasMany=""
+	/>
+
+</table>
