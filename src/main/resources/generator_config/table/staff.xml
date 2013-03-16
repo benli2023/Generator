@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<table sqlName="staff" className="Staff" tableAlias="Staff" >
+<table sqlName="staff" className="Staff" tableAlias="员工" >
 
 	<column sqlName="staff_id" columnAlias="staffId" javaType="java.lang.Long" 
 		unique="true" nullable="false" pk="true"
@@ -10,7 +10,7 @@
 		hasOne="" hasMany=""
 	/>
 
-	<column sqlName="dept_id" columnAlias="deptId" javaType="java.lang.Integer" 
+	<column sqlName="dept_id" columnAlias="所在部门" javaType="java.lang.Integer" 
 		unique="false" nullable="true" pk="false"
 		updatable="true" insertable="true"
 		enumString="" enumClassName="DeptIdEnum"
@@ -115,7 +115,7 @@
 	/>
 
 	<column sqlName="cTime" columnAlias="创建时间" javaType="java.util.Date" 
-		unique="false" nullable="true" pk="false"
+		unique="false" nullable="true" pk="false" noneditable="true"
 		updatable="true" insertable="true"
 		enumString="" enumClassName="CtimeEnum"
 		hibernateValidatorExprssion=""
@@ -123,7 +123,7 @@
 	/>
 
 	<column sqlName="adminId" columnAlias="创建人ID" javaType="java.lang.Long" 
-		unique="false" nullable="true" pk="false"
+		unique="false" nullable="true" pk="false" noneditable="true"
 		updatable="true" insertable="true"
 		enumString="" enumClassName="AdminIdEnum"
 		hibernateValidatorExprssion=""

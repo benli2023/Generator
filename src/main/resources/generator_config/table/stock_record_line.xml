@@ -9,7 +9,7 @@
 		hasOne="" hasMany=""
 	/>
 
-	<column sqlName="stock_operation_id" columnAlias="仓库操作ID" javaType="java.lang.Long" 
+	<column sqlName="stock_operation_id" columnAlias="操作ID" javaType="java.lang.Long" 
 		unique="false" nullable="true" pk="false"
 		updatable="true" insertable="true"
 		enumString="" enumClassName="StockOperationIdEnum"
@@ -17,7 +17,7 @@
 		hasOne="" hasMany=""
 	/>
 
-	<column sqlName="product_id" columnAlias="产品ID" javaType="java.lang.Long" 
+	<column sqlName="product_id" columnAlias="产品" javaType="java.lang.Long" 
 		unique="false" nullable="true" pk="false"
 		updatable="true" insertable="true"
 		enumString="" enumClassName="ProductIdEnum"
