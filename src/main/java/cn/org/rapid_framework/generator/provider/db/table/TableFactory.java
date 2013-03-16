@@ -343,7 +343,6 @@ public class TableFactory {
 	               isNullable,
 	               isIndexed,
 	               isUnique,
-	               manual,
 	               columnDefaultValue,
 	               remarks);
 	         

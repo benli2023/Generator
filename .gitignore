@@ -1,5 +1,6 @@
 *.class
-
+.externalToolBuilders
+generator_config
 # Package Files #
 *.jar
 *.war
@@ -7,3 +8,5 @@
 target
 .svn
 .settings
+.classpath
+.project

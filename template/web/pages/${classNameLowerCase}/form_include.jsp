@@ -12,7 +12,7 @@
 </#list>
 
 <#list table.columns as column>
-	<#if !column.htmlHidden>	
+	<#if !column.htmlHidden && (!column.noneditable)>	
 	<tr>	
 		<td class="tdLabel">
 			<#if !column.nullable><span class="required">*</span></#if><%=${className}.ALIAS_${column.constantName}%>:

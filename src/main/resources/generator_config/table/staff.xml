@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<table sqlName="staff" className="Staff" tableAlias="Staff" >
+<table sqlName="staff" className="Staff" tableAlias="员工" >
 
-	<column sqlName="staff_id" columnAlias="staffId" javaType="java.lang.Long" 
+	<column sqlName="staff_id" columnAlias="员工ID" javaType="java.lang.Long" 
 		unique="true" nullable="false" pk="true"
 		updatable="true" insertable="true"
 		enumString="" enumClassName="StaffIdEnum"
@@ -10,13 +10,15 @@
 		hasOne="" hasMany=""
 	/>
 
-	<column sqlName="dept_id" columnAlias="deptId" javaType="java.lang.Integer" 
+	<column sqlName="dept_id" columnAlias="所在部门" javaType="java.lang.Integer" 
 		unique="false" nullable="true" pk="false"
 		updatable="true" insertable="true"
 		enumString="" enumClassName="DeptIdEnum"
 		hibernateValidatorExprssion=""
 		hasOne="" hasMany=""
-	/>
+	>
+	<foreign-info refer="dept.dept" />
+	</column>
 
 	<column sqlName="staff_name" columnAlias="员工名称" javaType="java.lang.String" 
 		unique="false" nullable="true" pk="false"
@@ -53,7 +55,7 @@
 	<column sqlName="gender" columnAlias="性别" javaType="java.lang.Integer" 
 		unique="false" nullable="true" pk="false"
 		updatable="true" insertable="true"
-		enumString="" enumClassName="GenderEnum"
+		enumString="M(1,男);F(0,女);O(2,其他);Unlimited(-1,不限)" enumClassName="" 
 		hibernateValidatorExprssion=""
 		hasOne="" hasMany=""
 	/>
@@ -115,19 +117,31 @@
 	/>
 
 	<column sqlName="cTime" columnAlias="创建时间" javaType="java.util.Date" 
-		unique="false" nullable="true" pk="false"
+		unique="false" nullable="true" pk="false" noneditable="true"
 		updatable="true" insertable="true"
 		enumString="" enumClassName="CtimeEnum"
 		hibernateValidatorExprssion=""
 		hasOne="" hasMany=""
 	/>
 
-	<column sqlName="adminId" columnAlias="创建人ID" javaType="java.lang.Long" 
-		unique="false" nullable="true" pk="false"
+	<column sqlName="adminId" columnAlias="创建人" javaType="java.lang.Long" 
+		unique="false" nullable="true" pk="false" noneditable="true"
 		updatable="true" insertable="true"
 		enumString="" enumClassName="AdminIdEnum"
 		hibernateValidatorExprssion=""
 		hasOne="" hasMany=""
-	/>
+	>
+		<foreign-info refer="staff.staff" />
+	</column>
+	
+	<foreign-info id="staff" default="true" title="选择创建人">
+		<column refer="staff_id" width="50" align="center" />
+		<column searchable="true" refer="staff_name" width="100" align="center"/>
+	</foreign-info>
+	
+	<foreign-info id="stock"  title="选择负责人">
+		<column refer="staff_id" width="50" align="center" />
+		<column searchable="true" refer="staff_name" width="100" align="center"/>
+	</foreign-info>
 
 </table>

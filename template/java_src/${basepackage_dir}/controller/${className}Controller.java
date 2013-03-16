@@ -33,7 +33,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.company.project.vo.query.StaffQuery;
+
 import com.github.springrest.base.ColModelProfile;
 import com.github.springrest.util.ColModelFactory;
 

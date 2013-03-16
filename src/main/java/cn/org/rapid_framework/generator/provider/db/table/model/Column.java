@@ -116,9 +116,9 @@ public class Column implements java.io.Serializable,Cloneable{
 	@XStreamOmitField
 	private String _remarks;
 	
-	@XStreamAlias("manual")
+	@XStreamAlias("noneditable")
    	@XStreamAsAttribute
-	private boolean manual=true;
+	private boolean noneditable=false;
 	
 	
 	
@@ -152,7 +152,7 @@ public class Column implements java.io.Serializable,Cloneable{
 	 */
 	public Column(Table table, int sqlType, String sqlTypeName,
 			String sqlName, int size, int decimalDigits, boolean isPk,
-			boolean isNullable, boolean isIndexed, boolean isUnique, boolean manual,
+			boolean isNullable, boolean isIndexed, boolean isUnique,
 			String defaultValue,String remarks) {
 		if(sqlName == null) throw new NullPointerException();
 		_table = table;
@@ -167,7 +167,6 @@ public class Column implements java.io.Serializable,Cloneable{
 		_isUnique = isUnique;
 		_defaultValue = defaultValue;
 		_remarks = remarks;
-		this.manual=manual;
 		
 		GLogger.trace(sqlName + " isPk -> " + _isPk);
 		
@@ -185,7 +184,6 @@ public class Column implements java.io.Serializable,Cloneable{
            c.isNullable(),
            c.isIndexed(),
            c.isUnique(),
-           c.isManual(),
            c.getDefaultValue(),
            c.getRemarks());
 	}
@@ -297,14 +295,6 @@ public class Column implements java.io.Serializable,Cloneable{
 	
 	
 	
-
-	public boolean isManual() {
-		return manual;
-	}
-
-	public void setManual(boolean manual) {
-		this.manual = manual;
-	}
 
 	/**
 	 * Gets the DefaultValue attribute of the DbColumn object
@@ -949,18 +939,26 @@ public class Column implements java.io.Serializable,Cloneable{
 	
 	
 
+	public boolean isNoneditable() {
+		return noneditable;
+	}
+
+	public void setNoneditable(boolean noneditable) {
+		this.noneditable = noneditable;
+	}
+
 	public void override(Column column) {
 		this._isFk=column.isFk();
 		this._isNullable=column.isNullable();
 		this._isUnique=column.isUnique();
-		this.manual=column.isManual();
+		this.noneditable=column.isNoneditable();
 		this.enumString=column.getEnumString();
 		this.enumClassName=column.getEnumClassName();
 		this.enumOtherVal=column.getEnumOtherVal();
 		this.javaType=column.getJavaType();
 		this.updatable=column.isUpdatable();
 		this.insertable=column.isInsertable();
-		
+		this.columnAlias=column.getColumnAlias();
 		if(column.getForeignInfo()!=null) {
 			this.foreignInfo=column.getForeignInfo();
 		}
