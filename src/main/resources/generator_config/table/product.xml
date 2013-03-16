@@ -143,7 +143,7 @@
 
 	<column sqlName="orginal_place" columnAlias="产地" javaType="java.lang.String" 
 		unique="false" nullable="true" pk="false"
-		updatable="true" insertable="true"
+		updatable="false" insertable="true"
 		enumString="" enumClassName="OrginalPlaceEnum"
 		hibernateValidatorExprssion="@Length(max=256)"
 		hasOne="" hasMany=""
@@ -151,7 +151,7 @@
 
 	<column sqlName="cTime" columnAlias="创建时间" javaType="java.util.Date" 
 		unique="false" nullable="true" pk="false"
-		updatable="true" insertable="true"
+		updatable="false" insertable="true"
 		enumString="" enumClassName="CtimeEnum"
 		hibernateValidatorExprssion=""
 		hasOne="" hasMany=""

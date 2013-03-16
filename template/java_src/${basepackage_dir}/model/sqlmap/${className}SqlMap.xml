@@ -56,7 +56,9 @@
     <![CDATA[
         UPDATE ${table.sqlName} SET
 	        <#list table.notPkColumns as column>
+	        <#if column.updatable>
 	        ${column.sqlName} = #${column.columnNameLower}# <#if column_has_next>,</#if>
+	        </#if>
 	        </#list>
         WHERE 
         	<#list table.compositeIdColumns as column>
