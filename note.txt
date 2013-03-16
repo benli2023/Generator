@@ -1,0 +1,433 @@
+Spring MVC Json
+@RequestMapping(value="/index.json")
+	@ResponseBody
+	public Map indexJson(ModelMap model,CategoryQuery query) {
+		Page page = this.categoryManager.findPage(query);
+		Map<String,Object> map=new HashMap<String,Object>();
+		map.put("rows",page.getResult());
+		map.put("page",page.getThisPageNumber());
+		int pageCount=page.getTotalCount();
+		int pageSize=page.getPageSize();
+		int totalPage=(pageCount%pageSize==0)?(pageCount/pageSize):((pageCount/pageSize)+1);
+		map.put("total",totalPage);
+		map.put("records",pageCount);
+		return map;
+	}
+	
+	@RequestMapping(value="/query")
+	public String query(ModelMap model,String fieldId) {
+		model.addAttribute("fieldId",fieldId);
+		return "/dept/query";
+	}
+	   public UserContext getLoginUser(HttpServletRequest request) {
+    	return SessionHelper.getLoginUser(request);
+    }
+
+	public class UserContext implements Serializable {
+	private static final long serialVersionUID = 4333202957297300445L;
+
+	private String loginName;
+
+	private long loginId;
+
+	private Date lastLoginTime;
+
+}
+public class SessionHelper {
+
+	public static final String SESSION_USER = "SESSION_USER";
+
+	public static UserContext getLoginUser(HttpServletRequest request) {
+		HttpSession session = request.getSession();
+		UserContext userContext = (UserContext) session.getAttribute(SESSION_USER);
+		if(userContext==null) {
+			userContext=new UserContext();
+			userContext.setLastLoginTime(new Date());
+			userContext.setLoginId(1);
+			userContext.getLoginName();
+		}
+		return userContext;
+	}
+
+}
+
+Get Login Id:
+
+	UserContext  userContext=getLoginUser(request);
+		category.setAdmin(userContext.getLoginId());
+		category.setCtime(new Date());
+
+Select Tag:
+		<form:select path="isAvailable" id="isAvailable">
+			<form:option value="1" >是</form:option>
+			<form:option value="0" >否</form:option>
+		</form:select>
+		
+
+Remove unnessesary update field
+	<update id="Category.update" >
+    <![CDATA[
+        UPDATE category SET
+	        parent_id = #parentId# ,
+	        cate_name = #cateName# ,
+	        is_available = #isAvailable#
+        WHERE 
+	        cate_id = #cateId# 
+    ]]>
+    </update>
+	
+<isNotEqual	prepend="AND" property="isAvailable" compareValue="-1">  is_available = #isAvailable# </isNotEqual>	
+
+<Connector port="80" protocol="org.apache.coyote.http11.Http11NioProtocol" connectionTimeout="20000" URIEncoding="UTF-8" useBodyEncodingForURI="true" enableLookups="false" redirectPort="8443" /> 
+private int isAvailable=-1;
+category.setIsAvailable(1);
+public static final String FORMAT_CTIME = DATE_TIME_FORMAT;
+
+<form:select path="isAvailable" id="isAvailable">
+			<form:option value="1" >是</form:option>
+			<form:option value="0" >否</form:option>
+</form:select>
+
+<select name="isAvailable">
+	<option value="-1" <c:if test="${query.isAvailable==-1}">selected</c:if>>不限</option>
+	<option value="1" <c:if test="${query.isAvailable==1}">selected</c:if>>是</option>
+	<option value="0" <c:if test="${query.isAvailable==0}">selected</c:if>>否</option>		
+</select>
+
+<c:choose ><c:when test="${item.isAvailable==1}">是</c:when><c:when test="${item.isAvailable==0}">否</c:when></c:choose>
+
+Popup Selection:
+	<script>
+	 var popupOption={
+		 'parentIdTxt': {url:'${ctx}/category/query',title:'选择父类'}
+	 };
+     function fillBackAndCloseDialog(data){
+        $( "#dialog-modal").omDialog('close');
+        window.frames[0].location.href="about:blank";//reset the iframe location
+     };
+    $(function() {
+        $( "#dialog-modal").omDialog({
+            autoOpen: false,
+            width:535,
+            height: 465,
+            modal: true
+        });
+        for(var htmlId in popupOption) {
+		        $('#'+htmlId).keydown(function(e){
+		             if(e.keyCode==118){ //F7
+		            	var fieldId=$(this).attr('id');
+		            	var requestUrl=popupOption[fieldId].url;
+		            	var title=popupOption[fieldId].title;
+			            $( "#dialog-modal").omDialog({
+			            	title:title
+			            });
+		                $( "#dialog-modal").omDialog('open');
+		                var frameLoc=window.frames[0].location;
+		                var date=new Date();
+		                frameLoc.href=requestUrl+"?fieldId="+fieldId;
+		                return false;
+		           }else{
+		               return false; //forbide any input
+		           }
+		        });
+        }
+    });
+	</script>
+	  <div id="dialog-modal" title="">
+        <iframe frameborder="0" style="width:100%;height:99%;height:100%\9;" src="about:blank"></iframe>
+    </div>
+	
+	<input name="parentIdTxt" id="parentIdTxt" class="input-text small" maxlength="19"  value="${category.parentIdTxt}"  autocomplete="off"/>
+	<input id="parentId" name="parentId" type="hidden" class="userIDHidden" value="${category.parentId}"/>
+	
+	<link rel="stylesheet" href="<c:url value="/resources/plugins/operamasks-ui/themes/default/operamasks-ui.min.css"/>" type="text/css" />
+	<script type="text/javascript" src="<c:url value="/resources/plugins/operamasks-ui/operamasks-ui.min.js"/>"></script>
+		
+		
+Validation:
+
+	@NotEmpty
+	@JsonProperty(value="cate_name")
+	
+	cssClass="validate-currency-dollar required"
+	immediate:true,
+		getMessageSource : function() {
+ 		var lang = ValidationUtils.getLanguage();
+ 		var messageSource = Validator.messageSource['zh-cn'];
+		if(Validator.messageSource[lang]) {
+			//messageSource = Validator.messageSource[lang];
+		}
+		var results = {};
+		for(var i = 0; i < messageSource.length; i++) {
+			results[messageSource[i][0]] = messageSource[i][1];
+		}
+		return results;
+ 	},
+	
+	
+File Upload &Image Preview:
+	
+	private MultipartFile productImageFile;
+	public static final String DEFAULT_FILE_UPLOAD_DIR="static/fileUpload/productInfo";
+	
+	
+	public class ContextBase {
+	public ContextBase() {
+	}
+	public WebApplicationContext getWebApplicationContext() {
+		return ContextLoader.getCurrentWebApplicationContext();
+	}
+	public ServletContext getServletContext() {
+		return this.getWebApplicationContext().getServletContext();
+	}
+	public String getWebRootAbsolutePath() {
+		return this.getServletContext().getRealPath("/");
+	}
+}
+
+
+public class FileBase {
+	public FileBase(){}
+	public static boolean saveFile(MultipartFile mFile, String relativeDir,String newfileName) throws IllegalStateException, IOException {
+		String fileDir = createDir(relativeDir);
+
+		if (newfileName != null) {
+			if (FilenameUtils.getExtension(newfileName) == "") {
+				newfileName = newfileName.concat(".").concat(FilenameUtils.getExtension(mFile.getOriginalFilename()));
+			}
+		} else {
+			newfileName = mFile.getOriginalFilename();
+		}
+
+		String newFileFullName = FilenameUtils.concat(fileDir, newfileName);
+		mFile.transferTo(new File(newFileFullName));
+		return true;
+	}
+	
+	public static void saveFile(String sourceFileFullPath, String targetFileFullPath) throws IOException{
+		FileInputStream input = new FileInputStream(new File(sourceFileFullPath));
+		OutputStream output =new FileOutputStream(new File(targetFileFullPath));
+		saveFile(input,output);
+	}
+	
+
+	public static boolean saveFile(InputStream input, String relativeDir, String newfileName) throws IOException {
+		String fileDir = createDir(relativeDir);
+		String newFileFullName = FilenameUtils.concat(fileDir, newfileName);
+		saveFile(input, newFileFullName);
+		return true;
+	}
+	
+	public static void saveFile(InputStream input, String fileFullPath) throws IOException {
+		OutputStream output = new FileOutputStream(new File(fileFullPath));
+		saveFile(input, output);
+	}
+	
+	public static void saveFile(InputStream input, OutputStream output) throws IOException {
+		IOUtils.copy(input, output);
+	}
+	public static String createDir(String dir) throws IOException {
+		String webRootPath = new ContextBase().getWebRootAbsolutePath();
+
+		File dirPath = new File(webRootPath +"static/"+ dir);
+		if (!dirPath.exists()) {
+			dirPath.mkdirs();
+		}
+		
+		return dirPath.getCanonicalPath();
+	}
+}
+public class FileUploadUtil {
+	public static final String DEFAULT_FILE_UPLOAD_DIR = "fileupload/files";
+	public static String saveFileUpload(MultipartFile mFile, String relativeDir) {
+		return saveFileUpload(mFile, relativeDir, UUID.randomUUID().toString());
+	}
+	public static String saveFileUpload(MultipartFile mFile, String relativeDir, String newfileName) {
+		try {
+			if (newfileName != null) {
+				if (FilenameUtils.getExtension(newfileName) == "") {
+					newfileName = newfileName.concat(".").concat(FilenameUtils.getExtension(mFile.getOriginalFilename()));
+				}
+			} else {
+				newfileName = mFile.getOriginalFilename();
+			}
+
+			if (FileBase.saveFile(mFile, relativeDir, newfileName)) {
+				return relativeDir.concat("/").concat(newfileName);
+			}
+		} catch (IllegalStateException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+}
+	
+	
+	<bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver"/>
+	<form:form method="post" action="${ctx}/product" modelAttribute="product" enctype="multipart/form-data">
+	<form:form method="post" action="${ctx}/product/update/${product.productId}" modelAttribute="product"  enctype="multipart/form-data">
+	
+	image-preview.js
+function readURL(input,imageId,ieDivId) {
+    if (input.files && input.files[0]) {
+        var reader = new FileReader();
+        reader.onload = function (e) {
+        	var imgObj=document.getElementById(imageId);
+        	imgObj.setAttribute('src',e.target.result);
+        	imgObj.style.display="block";
+        }
+        reader.readAsDataURL(input.files[0]);
+    }
+}
+	
+	image-preview-ie.js
+ function readURL(imgFile,divId,ieDivId)
+{   
+	//if select on IE, then clear the image tag
+	var imageObj=document.getElementById(divId);
+	if(imageObj) {
+		imageObj.setAttribute("src","");
+		imageObj.style.display="none";
+	}
+    var newPreview = document.getElementById(ieDivId);
+    newPreview.style.filter="progid:DXImageTransform.Microsoft.AlphaImageLoader(src='"+imgFile.value+"' ,sizingMethod='scale')";
+    newPreview.style.width = "160px";
+    newPreview.style.height = "120px";
+}
+	
+<script type="text/javascript" src="<c:url value="/scripts/image-priew/image-preview.js"/>"></script>
+	<!--[if gte IE 7]> 
+		<script type="text/javascript" src="<c:url value="/scripts/image-priew/image-preview-ie.js"/>"></script>
+<![endif]-->
+
+
+<img id="preview" <c:if test="${! empty product.productImage}">src="${ctx}/${product.productImage}" </c:if>  alt="" style="<c:if test="${ empty product.productImage}">display:none;</c:if> max-width: 160px; max-height: 120px; border: none; width:160px;height:120px"/>
+<div id="preview_ie" style=""></div>
+
+<input type="file" name="productImageFile" onchange="readURL(this,'preview','preview_ie');" />
+
+
+
+body .mini-textbox *,
+body .mini-buttonedit *
+{
+
+    box-sizing:content-box;     
+    -moz-box-sizing:content-box;
+    -ms-box-sizing:content-box;
+    -webkit-box-sizing:content-box;      
+}
+
+
+.mini-buttonedit-border
+{
+    background:white;
+    border: solid 1px #a5acb5;
+    width:123px;
+    height:19px;
+    display:inline-block;
+    position:static;
+    float:left;
+    overflow:hidden;
+}
+
+
+.mini-buttonedit-input
+{
+    background:none;
+    border: 0; 
+    width:100px;    
+    height:19px;
+    line-height:19px;
+    
+    font-family: Verdana;
+    font-size: 9pt;        
+    padding: 0;
+    margin:0;
+    padding-left:1px;
+    padding-right:1px;
+     
+    outline:none;
+    
+    float:left;
+    z-index:1;
+    cursor:text;
+}
+
+
+.mini-buttonedit-button, .mini-buttonedit-close
+{    
+    border:0px;
+    padding:1px;
+    
+    background:none;
+    width:15px;
+    height:15px;
+    overflow:hidden;
+    cursor:pointer;
+    
+    margin-top:1px;
+    margin-right:1px;
+    float:right;
+    z-index:10;
+    
+    
+}
+
+.mini-buttonedit-icon
+{
+    display:block;
+    width:15px;
+    height:15px;
+    overflow:hidden;
+    background:url(<c:url value="/resources/web/popup/icon1.gif" />) no-repeat 50% 50%;
+}
+
+.mini-buttonedit-close
+{
+    background:url(<c:url value="/resources/web/popup/close.gif" />) no-repeat 50% 50%;
+}
+
+.mini-buttonedit-button-hover,
+.mini-buttonedit-hover .mini-buttonedit-button
+{
+    border:1px solid #ababab;
+    padding:0;
+    background:#dde6fe url(<c:url value="/resources/web/popup/hover.png" />) repeat-x 0 0;   
+}
+
+
+
+<script type="text/javascript">
+<!--
+
+	function OOl0(obj,cssClazz) {
+		$(obj).addClass(cssClazz);
+	}
+	function o00O(obj,cssClazz) {
+		$(obj).removeClass(cssClazz);
+	}
+   
+    
+//-->
+</script>
+
+<div style="margin-top:10px">
+<span class="mini-buttonedit" style="border-width: 0px; width: 125px;" id="btnEdit1">
+<span class="mini-buttonedit-border" style="width: 123px;">
+<input type="input" class="mini-buttonedit-input" autocomplete="off" placeholder="" id="btnEdit1$text" name="b" style="width: 103px;">
+ 	<span class="mini-buttonedit-button" onmouseover="OOl0(this,'mini-buttonedit-button-hover');" onmouseout="o00O(this,'mini-buttonedit-button-hover');" onclick="openDialog()">
+ 		<span class="mini-buttonedit-icon"></span>
+	</span>
+	<span class="mini-buttonedit-close" style="display: none;"></span>
+</span>
+</span>
+</div>
+
+
+
+
+
+ 

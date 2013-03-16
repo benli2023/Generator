@@ -1,0 +1,289 @@
+http://freemarker.org/docs/ref_builtins_sequence.html
+http://freemarker.sourceforge.net/docs/ref_directive_list.html
+
+Built-ins for sequences
+
+Page Contents
+first
+last
+seq_contains
+seq_index_of
+seq_last_index_of
+reverse
+size
+sort
+sort_by
+chunk
+first
+
+The first subvariable of the sequence. Template processing will die with error if the sequence is empty.
+
+last
+
+The last subvariable of the sequence. Template processing will die with error if the sequence is empty.
+
+seq_contains
+
+Note
+
+This built-in is available since FreeMarker 2.3.1. It doesn't exist in 2.3.
+
+Note
+
+The seq_ prefix is required in the built-in name to differentiate it from the contains built-in that searches a substring in a string (since a variable can be both string and sequence on the same time).
+
+Tells if the sequence contains the specified value. It has 1 parameter, the value to find. Example:
+
+		
+	
+<#assign x = ["red", 16, "blue", "cyan"]>
+"blue": ${x?seq_contains("blue")?string("yes", "no")}
+"yellow": ${x?seq_contains("yellow")?string("yes", "no")}
+16: ${x?seq_contains(16)?string("yes", "no")}
+"16": ${x?seq_contains("16")?string("yes", "no")}  
+
+		
+The output will be:
+
+		
+	
+"blue": yes
+"yellow": no
+16: yes
+"16": no  
+
+		
+To find the value the built-in uses FreeMarker's comparison rules (as if you was using == operator), except that comparing two values of different types or of types for which FreeMarker doesn't support comparison will not cause error, just will be evaluated as the two values are not equal. Thus, you can use it only to find scalar values (i.e. string, number, boolean or date/time values). For other types the result will be always false.
+
+For fault tolerance, this built-in also works with collections.
+
+seq_index_of
+
+Note
+
+This built-in is available since FreeMarker 2.3.1. It doesn't exist in 2.3.
+
+Note
+
+The seq_ prefix is required in the built-in name to differentiate it from the index_of built-in that searches a substring in a string (since a variable can be both string and sequence on the same time).
+
+Returns the index of the first occurrence of a value in the sequence, or -1 if the sequence doesn't contain the specified value. The value to find is specified as the first parameter. For example this template:
+
+		
+	
+<#assign colors = ["red", "green", "blue"]>
+${colors?seq_index_of("blue")}
+${colors?seq_index_of("red")}
+${colors?seq_index_of("purple")}  
+
+		
+will output this:
+
+		
+	
+2
+0
+-1  
+
+		
+To find the value the built-in uses FreeMarker's comparison rules (as if you was using == operator), except that comparing two values of different types or of types for which FreeMarker doesn't support comparison will not cause error, just will be evaluated as the two values are not equal. Thus, you can use it only to find scalar values (i.e. string, number, boolean or date/time values). For other types the result will be always -1.
+
+The index where the searching is started can be optionally given as the 2nd parameter. This may be useful if the same item can occur for multiple times in the same sequence. There is no restriction on the numerical value of the second parameter: if it is negative, it has the same effect as if it were zero, and if it is greater than the length of the sequence, it has the same effect as if it were equal to the length of the sequence. Decimal values will be truncated to integers. For example:
+
+		
+	
+<#assign names = ["Joe", "Fred", "Joe", "Susan"]>
+No 2nd param: ${names?seq_index_of("Joe")}
+-2: ${names?seq_index_of("Joe", -2)}
+-1: ${names?seq_index_of("Joe", -1)}
+ 0: ${names?seq_index_of("Joe", 0)}
+ 1: ${names?seq_index_of("Joe", 1)}
+ 2: ${names?seq_index_of("Joe", 2)}
+ 3: ${names?seq_index_of("Joe", 3)}
+ 4: ${names?seq_index_of("Joe", 4)}  
+
+		
+will output this:
+
+		
+	
+No 2nd param: 0
+-2: 0
+-1: 0
+ 0: 0
+ 1: 2
+ 2: 2
+ 3: -1
+ 4: -1  
+
+		
+seq_last_index_of
+
+Note
+
+This built-in is available since FreeMarker 2.3.1. It doesn't exist in 2.3.
+
+Note
+
+The seq_ prefix is required in the built-in name to differentiate it from the last_index_of built-in that searches a substring in a string (since a variable can be both string and sequence on the same time).
+
+Returns the index of the last occurrence of a value in the sequence, or -1 if the sequence doesn't contain the specified value. That is, it is the same as seq_index_of, just it searches backward starting from the last item of the sequence. It also supports the optional 2nd parameter that specifies the index where the searching is started. For example:
+
+		
+	
+<#assign names = ["Joe", "Fred", "Joe", "Susan"]>
+No 2nd param: ${names?seq_last_index_of("Joe")}
+-2: ${names?seq_last_index_of("Joe", -2)}
+-1: ${names?seq_last_index_of("Joe", -1)}
+ 0: ${names?seq_last_index_of("Joe", 0)}
+ 1: ${names?seq_last_index_of("Joe", 1)}
+ 2: ${names?seq_last_index_of("Joe", 2)}
+ 3: ${names?seq_last_index_of("Joe", 3)}
+ 4: ${names?seq_last_index_of("Joe", 4)}  
+
+		
+will output this:
+
+		
+	
+No 2nd param: 2
+-2: -1
+-1: -1
+ 0: 0
+ 1: 0
+ 2: 2
+ 3: 2
+ 4: 2  
+
+		
+reverse
+
+The sequence with reversed order.
+
+size
+
+The number of subvariables in sequence (as a numerical value). The highest possible index in sequence s is s?size - 1 (since the index of the first subvariable is 0) assuming that the sequence has at least one subvariable.
+
+sort
+
+Returns the sequence sorted in ascending order. (For descending order use this and then the reverse built in.) This will work only if all subvariables are strings, or if all subvariables are numbers, or if all subvariables are date values (date, time, or date+time), or if all subvariables are booleans (since 2.3.17). If the subvariables are strings, it uses locale (language) specific lexical sorting (which is usually not case sensitive). For example:
+
+		
+	
+<#assign ls = ["whale", "Barbara", "zeppelin", "aardvark", "beetroot"]?sort>
+<#list ls as i>${i} </#list>  
+
+		
+will print (with US locale at least):
+
+		
+	
+aardvark Barbara beetroot whale zeppelin  
+
+		
+sort_by
+
+Returns the sequence of hashes sorted by the given hash subvariable in ascending order. (For descending order use this and then the reverse built in.) The rules are the same as with the sort built-in, except that the subvariables of the sequence must be hashes, and you have to give the name of a hash subvariable that will decide the order. For example:
+
+		
+	
+<#assign ls = [
+  {"name":"whale", "weight":2000},
+  {"name":"Barbara", "weight":53},
+  {"name":"zeppelin", "weight":-200},
+  {"name":"aardvark", "weight":30},
+  {"name":"beetroot", "weight":0.3}
+]>
+Order by name:
+<#list ls?sort_by("name") as i>
+- ${i.name}: ${i.weight}
+</#list>
+
+Order by weight:
+<#list ls?sort_by("weight") as i>
+- ${i.name}: ${i.weight}
+</#list>  
+
+		
+will print (with US locale at least):
+
+		
+	
+Order by name:
+- aardvark: 30
+- Barbara: 53
+- beetroot: 0.3
+- whale: 2000
+- zeppelin: -200
+
+Order by weight:
+- zeppelin: -200
+- beetroot: 0.3
+- aardvark: 30
+- Barbara: 53
+- whale: 2000  
+
+		
+If the subvariable that you want to use for the sorting is on a deeper level (that is, if it is a subvariable of a subvariable and so on), then you can use a sequence as parameter, that specifies the names of the subvariables that lead down to the desired subvariable. For example:
+
+		
+	
+<#assign members = [
+    {"name": {"first": "Joe", "last": "Smith"}, "age": 40},
+    {"name": {"first": "Fred", "last": "Crooger"}, "age": 35},
+    {"name": {"first": "Amanda", "last": "Fox"}, "age": 25}]>
+Sorted by name.last: 
+<#list members?sort_by(['name', 'last']) as m>
+- ${m.name.last}, ${m.name.first}: ${m.age} years old
+</#list>  
+
+		
+will print (with US locale at least):
+
+		
+	
+Sorted by name.last: 
+- Crooger, Fred: 35 years old
+- Fox, Amanda: 25 years old
+- Smith, Joe: 40 years old  
+
+		
+chunk
+
+Note
+
+This built-in exists since FreeMarker 2.3.3.
+
+This built-in splits a sequence into multiple sequences of the size given with the 1st parameter to the built-in (like mySeq?chunk(3)). The result is the sequence of these sequences. The last sequence is possibly shorter than the given size, unless the 2nd parameter is given (like mySeq?chunk(3, '-')), that is the item used to make up the size of the last sequence to the given size. Example:
+
+		
+	
+<#assign seq = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j']>
+
+<#list seq?chunk(4) as row>
+  <#list row as cell>${cell} </#list>
+</#list>
+
+<#list seq?chunk(4, '-') as row>
+  <#list row as cell>${cell} </#list>
+</#list>  
+
+		
+The output will be:
+
+		
+	
+
+  a b c d 
+  e f g h 
+  i j 
+
+  a b c d 
+  e f g h 
+  i j - - 
+   
+
+		
+This built in is mostly for outputting sequnces in tabular/columnar format. When used with HTML tables, the 2nd parameter is often "\xA0" (that is the code of the no-break space character, also known as ``nbsp''), so the border of the empty TD-s will not be missing.
+
+The 1st parameter must be a number that is at least 1. If the number is not integer, it will be silently rounded down to integer (i.e. both 3.1 and 3.9 will be rounded to 3). The 2nd parameter can be of any type and value.

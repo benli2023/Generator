@@ -1,0 +1,12 @@
+*.class
+.externalToolBuilders
+generator_config
+# Package Files #
+*.jar
+*.war
+*.ear
+target
+.svn
+.settings
+.classpath
+.project
