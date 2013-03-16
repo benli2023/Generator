@@ -2,7 +2,7 @@
 
 <table sqlName="staff" className="Staff" tableAlias="员工" >
 
-	<column sqlName="staff_id" columnAlias="staffId" javaType="java.lang.Long" 
+	<column sqlName="staff_id" columnAlias="员工ID" javaType="java.lang.Long" 
 		unique="true" nullable="false" pk="true"
 		updatable="true" insertable="true"
 		enumString="" enumClassName="StaffIdEnum"
