@@ -958,7 +958,7 @@ public class Column implements java.io.Serializable,Cloneable{
 		this.javaType=column.getJavaType();
 		this.updatable=column.isUpdatable();
 		this.insertable=column.isInsertable();
-		
+		this.columnAlias=column.getColumnAlias();
 		if(column.getForeignInfo()!=null) {
 			this.foreignInfo=column.getForeignInfo();
 		}
