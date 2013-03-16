@@ -1,11 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <table sqlName="stock_house" className="StockHouse" tableAlias="仓库" >
 
-	<column sqlName="stock_id" columnAlias="stockId" javaType="java.lang.Long" 
+	<column sqlName="stock_id" columnAlias="仓库ID" javaType="java.lang.Long" 
 		unique="true" nullable="false" pk="true"
 		updatable="true" insertable="true"
 		enumString="" enumClassName="StockIdEnum"
 		hibernateValidatorExprssion=""
+		hasOne="" hasMany=""
+	/>
+	
+	<column sqlName="stock_name" columnAlias="仓库名称" javaType="java.lang.String" 
+		unique="false" nullable="true" pk="false"
+		updatable="true" insertable="true"
+		enumString="" enumClassName="StockNameEnum"
+		hibernateValidatorExprssion="@Length(max=256)"
 		hasOne="" hasMany=""
 	/>
 
@@ -15,7 +23,9 @@
 		enumString="" enumClassName="StaffIdEnum"
 		hibernateValidatorExprssion=""
 		hasOne="" hasMany=""
-	/>
+	>
+	<foreign-info refer="staff.stock" />
+	</column>
 
 	<column sqlName="address" columnAlias="地址" javaType="java.lang.String" 
 		unique="false" nullable="true" pk="false"
