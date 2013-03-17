@@ -427,7 +427,9 @@ body .mini-buttonedit *
 </div>
 
 
-
+http://www.tonylea.com/go/examples/jquery-easy-editable-text-fields/
+http://www.tonylea.com/2010/jquery-easy-editable-text-fields/
+http://www.boarsoft.com/javascript/combo/grid2.html
 
 
  
