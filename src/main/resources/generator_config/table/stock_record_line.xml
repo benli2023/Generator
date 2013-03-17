@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <table sqlName="stock_record_line" className="StockRecordLine" tableAlias="StockRecordLine" >
 
-	<column sqlName="stock_oper_detail_id" columnAlias="stockOperDetailId" javaType="java.lang.Long" 
+	<column sqlName="stock_oper_detail_id" columnAlias="业务单明细" javaType="java.lang.Long" 
 		unique="true" nullable="false" pk="true"
 		updatable="true" insertable="true"
 		enumString="" enumClassName="StockOperDetailIdEnum"
@@ -9,13 +9,15 @@
 		hasOne="" hasMany=""
 	/>
 
-	<column sqlName="stock_operation_id" columnAlias="操作ID" javaType="java.lang.Long" 
+	<column sqlName="stock_operation_id" columnAlias="业务单ID" javaType="java.lang.Long" 
 		unique="false" nullable="true" pk="false"
 		updatable="true" insertable="true"
 		enumString="" enumClassName="StockOperationIdEnum"
 		hibernateValidatorExprssion=""
 		hasOne="" hasMany=""
-	/>
+	>
+	<foreign-info refer="stock_record.stock_record_line" />
+	</column>
 
 	<column sqlName="product_id" columnAlias="产品" javaType="java.lang.Long" 
 		unique="false" nullable="true" pk="false"
@@ -23,9 +25,11 @@
 		enumString="" enumClassName="ProductIdEnum"
 		hibernateValidatorExprssion=""
 		hasOne="" hasMany=""
-	/>
+	>
+	<foreign-info refer="product.stock" />
+	</column>
 
-	<column sqlName="price" columnAlias="价格" javaType="Long" 
+	<column sqlName="price" columnAlias="价格" javaType="java.math.BigDecimal" 
 		unique="false" nullable="true" pk="false"
 		updatable="true" insertable="true"
 		enumString="" enumClassName="PriceEnum"
@@ -41,10 +45,10 @@
 		hasOne="" hasMany=""
 	/>
 
-	<column sqlName="have_invoice" columnAlias="是否有发票" javaType="java.lang.Boolean" 
+	<column sqlName="have_invoice" columnAlias="是否有发票" javaType="java.lang.Integer" 
 		unique="false" nullable="true" pk="false"
 		updatable="true" insertable="true"
-		enumString="" enumClassName="HaveInvoiceEnum"
+		enumString="Y(1,有);N(0,没有);Unlimited(-1,不限)" enumClassName="HaveInvoiceEnum"
 		hibernateValidatorExprssion=""
 		hasOne="" hasMany=""
 	/>

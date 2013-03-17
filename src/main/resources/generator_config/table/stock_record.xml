@@ -1,11 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<table sqlName="stock_record" className="StockRecord" tableAlias="StockRecord" >
+<table sqlName="stock_record" className="StockRecord" tableAlias="仓库业务单" >
 
-	<column sqlName="stock_operation_id" columnAlias="stockOperationId" javaType="java.lang.Long" 
+	<column sqlName="stock_operation_id" columnAlias="业务单ID" javaType="java.lang.Long" 
 		unique="true" nullable="false" pk="true"
 		updatable="true" insertable="true"
 		enumString="" enumClassName="StockOperationIdEnum"
 		hibernateValidatorExprssion=""
+		hasOne="" hasMany=""
+	/>
+	
+	<column sqlName="stock_operation_name" columnAlias="业务单名称" javaType="java.lang.String" 
+		unique="false" nullable="true" pk="false"
+		updatable="true" insertable="true"
+		enumString="" enumClassName="StockOperationNameEnum"
+		hibernateValidatorExprssion="@Length(max=256)"
 		hasOne="" hasMany=""
 	/>
 
@@ -15,7 +23,9 @@
 		enumString="" enumClassName="DeptIdEnum"
 		hibernateValidatorExprssion=""
 		hasOne="" hasMany=""
-	/>
+	>
+		<foreign-info refer="dept.dept" />
+	</column>
 
 	<column sqlName="staff_id" columnAlias="操作员工" javaType="java.lang.Long" 
 		unique="false" nullable="true" pk="false"
@@ -23,12 +33,14 @@
 		enumString="" enumClassName="StaffIdEnum"
 		hibernateValidatorExprssion=""
 		hasOne="" hasMany=""
-	/>
+	>
+		<foreign-info refer="staff.staff" />
+	</column>
 
 	<column sqlName="oper_type" columnAlias="业务类型" javaType="java.lang.Integer" 
 		unique="false" nullable="true" pk="false"
 		updatable="true" insertable="true"
-		enumString="" enumClassName="OperTypeEnum"
+		enumString="OUT(1,出库);IN(2,入库);RETURN(3,退货);TRANSFER(4,转存);Unlimited(-1,不限)" enumClassName="StockBusType"
 		hibernateValidatorExprssion=""
 		hasOne="" hasMany=""
 	/>
@@ -39,7 +51,9 @@
 		enumString="" enumClassName="CustIdEnum"
 		hibernateValidatorExprssion=""
 		hasOne="" hasMany=""
-	/>
+	>
+		<foreign-info refer="customer.stock" />
+	</column>
 
 	<column sqlName="oper_date" columnAlias="出货/退货日期" javaType="java.util.Date" 
 		unique="false" nullable="true" pk="false"
@@ -51,8 +65,8 @@
 
 	<column sqlName="approval_status" columnAlias="审核状态" javaType="java.lang.Integer" 
 		unique="false" nullable="true" pk="false"
-		updatable="true" insertable="true"
-		enumString="" enumClassName="ApprovalStatusEnum"
+		updatable="true" insertable="true"  enumOtherVal="-1"
+		enumString="WAIT(1,待审核);APPROVALED(2,审核通过);REJECTED(3,审核未通过);Unlimited(-1,不限)" enumClassName="ApprovalStatusEnum"
 		hibernateValidatorExprssion=""
 		hasOne="" hasMany=""
 	/>
@@ -63,7 +77,9 @@
 		enumString="" enumClassName="ApprovalIdEnum"
 		hibernateValidatorExprssion=""
 		hasOne="" hasMany=""
-	/>
+	>
+	<foreign-info refer="staff.staff" />
+	</column>
 
 	<column sqlName="stock_id" columnAlias="所在仓库" javaType="java.lang.Long" 
 		unique="false" nullable="true" pk="false"
@@ -71,7 +87,9 @@
 		enumString="" enumClassName="StockIdEnum"
 		hibernateValidatorExprssion=""
 		hasOne="" hasMany=""
-	/>
+	>
+		<foreign-info refer="stock_house.stockRecord" />
+	</column>
 
 	<column sqlName="to_stock_id" columnAlias="目标仓库" javaType="java.lang.Long" 
 		unique="false" nullable="true" pk="false"
@@ -79,7 +97,9 @@
 		enumString="" enumClassName="ToStockIdEnum"
 		hibernateValidatorExprssion=""
 		hasOne="" hasMany=""
-	/>
+	>
+	<foreign-info refer="stock_house.stockRecord" />
+	</column>
 
 	<column sqlName="remark" columnAlias="备注" javaType="java.lang.String" 
 		unique="false" nullable="true" pk="false"
@@ -88,5 +108,11 @@
 		hibernateValidatorExprssion="@Length(max=512)"
 		hasOne="" hasMany=""
 	/>
+	
+	<foreign-info id="stock_record_line" default="true" title="选择业务单">
+		<column refer="stock_operation_id" width="50" align="center" />
+		<column searchable="true" refer="stock_operation_name" width="100" align="center"/>
+		<column refer="oper_type" width="50" align="center" />
+	</foreign-info>
 
 </table>

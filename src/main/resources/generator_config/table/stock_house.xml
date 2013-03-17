@@ -50,5 +50,12 @@
 		hibernateValidatorExprssion=""
 		hasOne="" hasMany=""
 	/>
+	
+	<foreign-info id="stockRecord" default="true" title="选择仓库">
+		<column refer="stock_id" width="50" align="center" />
+		<column searchable="true" refer="stock_name" width="100" align="center"/>
+		<column refer="address" width="50" align="center" />
+		<column refer="phone" width="50" align="center" />
+	</foreign-info>
 
 </table>
