@@ -4,7 +4,7 @@ Source Host: localhost
 Source Database: yunwei
 Target Host: localhost
 Target Database: yunwei
-Date: 2013-03-16 18:12:08
+Date: 2013-03-17 15:48:38
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -200,7 +200,7 @@ CREATE TABLE `staff` (
   `cTime` datetime DEFAULT NULL COMMENT '创建时间',
   `adminId` bigint(20) DEFAULT NULL,
   PRIMARY KEY (`staff_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Table structure for stock_house
@@ -213,7 +213,7 @@ CREATE TABLE `stock_house` (
   `phone` varchar(32) DEFAULT NULL COMMENT '电话',
   `cTime` datetime DEFAULT NULL COMMENT '创建时间',
   PRIMARY KEY (`stock_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Table structure for stock_product
@@ -233,7 +233,8 @@ CREATE TABLE `stock_product` (
 -- Table structure for stock_record
 -- ----------------------------
 CREATE TABLE `stock_record` (
-  `stock_operation_id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `stock_operation_id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '业务单ID',
+  `stock_operation_name` varchar(256) DEFAULT NULL COMMENT '业务单名称',
   `dept_id` int(11) DEFAULT NULL COMMENT '责任部门',
   `staff_id` bigint(20) DEFAULT NULL COMMENT '操作员工',
   `oper_type` int(1) DEFAULT NULL COMMENT '业务类型',
@@ -245,7 +246,7 @@ CREATE TABLE `stock_record` (
   `to_stock_id` bigint(20) DEFAULT NULL COMMENT '目标仓库',
   `remark` varchar(512) DEFAULT NULL COMMENT '备注',
   PRIMARY KEY (`stock_operation_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Table structure for stock_record_line
@@ -289,6 +290,8 @@ INSERT INTO `dept` VALUES ('2', '仓库部', null, '11');
 INSERT INTO `dept` VALUES ('3', '技术部', null, '1212');
 INSERT INTO `dept` VALUES ('4', '销售部', null, '22');
 INSERT INTO `dept` VALUES ('5', '仓库质检部', '2', '质量检查');
+INSERT INTO `dept` VALUES ('6', '销售返修', '4', '');
+INSERT INTO `dept` VALUES ('7', '电话营销部', null, '');
 INSERT INTO `product` VALUES ('2', '6', '7544', 'dd', '11', '12', 'hj', '33333', '12.01', '21.00', '', '', '', '', 'fileUpload/productInfo/e94586aa-a9a8-4556-bc05-dd1b0ca4a61e.jpg', '', '', null);
 INSERT INTO `product` VALUES ('3', '4', '商品名称', '商品名称', '12', '11', 'hj', '1', '12.01', '21.00', '', '', '', '', 'fileUpload/productInfo/34a4d674-c5d3-4460-ae41-535bb622fddd.jpg', '55', '5555', null);
 INSERT INTO `product` VALUES ('5', '6', '7544', 'dd', '11', '12', 'hj', '1', '12.00', '21.00', '', '', '', '', 'fileUpload/productInfo/07e2f104-45ee-49c5-ba0b-ea2c9fc4066a.jpg', '11', '', null);
@@ -305,3 +308,10 @@ INSERT INTO `staff` VALUES ('3', '2', '小明', 'Nick', '123', '123', '1', '2013
 INSERT INTO `staff` VALUES ('4', '5', 'Jimmy', 'Jimmy', '123', 'Saler', '1', '2013-03-05', '2013-04-01', '2013-03-12', '4412254455', '12', '4412254455', '4412254455@qq.com', null, null);
 INSERT INTO `staff` VALUES ('5', '2', 'Sunny', 'Sunny', '123', 'Saler', '0', '2013-03-12', '2013-03-19', '2013-03-19', '4412254455', '4412254455', '4412254455', 'gos2@gmail.com', null, null);
 INSERT INTO `staff` VALUES ('6', '2', '小明2', 'Jack1', '123', '123', '1', '2013-02-25', '2013-03-20', '2013-03-20', '4412254455', '12', '4412254455', 'gos2@gmail.com', null, null);
+INSERT INTO `staff` VALUES ('7', '7', '小彭', '彭彭', '123', '部长', '1', '1998-03-09', '2011-02-28', '2013-03-05', '3402021988202118', '棠下村天河区', '8888899999', '409344451@QQ.com', null, null);
+INSERT INTO `staff` VALUES ('8', '3', '张工', '', '', '', '1', null, null, null, '', '', '', '', null, null);
+INSERT INTO `staff` VALUES ('9', null, '', '', '', '', '1', null, null, null, '', '', '', '', null, null);
+INSERT INTO `stock_house` VALUES ('1', '3', '天河仓库', '广州天河', '13312852122', null);
+INSERT INTO `stock_house` VALUES ('2', '3', '天河仓库2', '广州天河', '13312852122', '2013-03-17 13:44:12');
+INSERT INTO `stock_house` VALUES ('3', '7', '17楼20号', '华景新城', '34205998', '2013-03-17 13:59:47');
+INSERT INTO `stock_record` VALUES ('1', '出库', '2', '6', '1', '2', '2013-03-12 00:00:00', '1', '6', '2', '3', '仓库部');

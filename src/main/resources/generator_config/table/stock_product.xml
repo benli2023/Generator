@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <table sqlName="stock_product" className="StockProduct" tableAlias="StockProduct" >
 
-	<column sqlName="stock_product_id" columnAlias="stockProductId" javaType="java.lang.Long" 
+	<column sqlName="stock_product_id" columnAlias="仓库存量ID" javaType="java.lang.Long" 
 		unique="true" nullable="false" pk="true"
 		updatable="true" insertable="true"
 		enumString="" enumClassName="StockProductIdEnum"
@@ -15,7 +15,9 @@
 		enumString="" enumClassName="StockIdEnum"
 		hibernateValidatorExprssion=""
 		hasOne="" hasMany=""
-	/>
+	>
+	<foreign-info refer="stock_house.stockRecord" />
+	</column>
 
 	<column sqlName="product_id" columnAlias="产品名称" javaType="java.lang.Long" 
 		unique="false" nullable="true" pk="false"
@@ -23,7 +25,9 @@
 		enumString="" enumClassName="ProductIdEnum"
 		hibernateValidatorExprssion=""
 		hasOne="" hasMany=""
-	/>
+	>
+	<foreign-info refer="product.stock" />
+	</column>
 
 	<column sqlName="quantity" columnAlias="数量" javaType="java.lang.Integer" 
 		unique="false" nullable="true" pk="false"

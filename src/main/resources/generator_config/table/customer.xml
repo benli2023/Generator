@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <table sqlName="customer" className="Customer" tableAlias="Customer" >
 
-	<column sqlName="cust_id" columnAlias="custId" javaType="java.lang.Long" 
+	<column sqlName="cust_id" columnAlias="客户ID" javaType="java.lang.Long" 
 		unique="true" nullable="false" pk="true"
 		updatable="true" insertable="true"
 		enumString="" enumClassName="CustIdEnum"
@@ -176,5 +176,14 @@
 		hibernateValidatorExprssion="@Length(max=512)"
 		hasOne="" hasMany=""
 	/>
+	
+	<foreign-info id="stock" default="true" title="选择客户">
+		<column refer="cust_id" width="50" align="center" />
+		<column searchable="true" refer="cust_name" width="100" align="center"/>
+		<column refer="contact_name" searchable="true" width="50" align="center" />
+		<column refer="telephone" width="50" align="center" />
+		<column refer="email" width="50" align="center" />
+		<column refer="address" width="50" align="center" />
+	</foreign-info>
 
 </table>
