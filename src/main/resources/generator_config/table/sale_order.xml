@@ -24,6 +24,7 @@
 		hibernateValidatorExprssion=""
 		hasOne="" hasMany=""
 	>
+	<foreign-info refer="staff.staff" />
 	</column>
 
 	<column sqlName="cust_id" columnAlias="客户" javaType="java.lang.Long" 
@@ -33,8 +34,7 @@
 		hibernateValidatorExprssion=""
 		hasOne="" hasMany=""
 	>
-	
-	
+		<foreign-info refer="customer.stock" />
 	</column>
 
 	<column sqlName="order_date" columnAlias="订单日期" javaType="java.util.Date" 
@@ -45,10 +45,10 @@
 		hasOne="" hasMany=""
 	/>
 
-	<column sqlName="payment_mode" columnAlias="付款方式" javaType="java.lang.String" 
+	<column sqlName="payment_mode" columnAlias="付款方式" javaType="java.lang.Integer" 
 		unique="false" nullable="true" pk="false"
 		updatable="true" insertable="true"  searchable="true"
-		enumString="" enumClassName="PaymentModeEnum"
+		enumString="check(1,支票);cach(0,现金);Unlimited(-1,不限)" enumClassName="DiliverEnum"
 		hibernateValidatorExprssion="@Length(max=8)"
 		hasOne="" hasMany=""
 	/>
@@ -75,20 +75,22 @@
 		enumString="" enumClassName="AccountingDeptIdEnum"
 		hibernateValidatorExprssion=""
 		hasOne="" hasMany=""
-	/>
+	>
+	<foreign-info refer="dept.dept" />
+	</column>
 
-	<column sqlName="currency" columnAlias="币种" javaType="java.lang.String" 
+	<column sqlName="currency" columnAlias="币种" javaType="java.lang.Integer" 
 		unique="false" nullable="true" pk="false"
 		updatable="true" insertable="true"
-		enumString="" enumClassName="CurrencyEnum"
+		enumString="USD(1,美元);CNY(0,人民币);Unlimited(-1,不限)" enumClassName="CurrencyEnum"
 		hibernateValidatorExprssion="@Length(max=8)"
 		hasOne="" hasMany=""
 	/>
 
-	<column sqlName="delivery_method" columnAlias="交货方式" javaType="java.lang.String" 
+	<column sqlName="delivery_method" columnAlias="交货方式" javaType="java.lang.Integer" 
 		unique="false" nullable="true" pk="false"
 		updatable="true" insertable="true"
-		enumString="" enumClassName="DeliveryMethodEnum"
+		enumString="express(1,快递);freight(0,货运);Unlimited(-1,不限)" enumClassName="DiliverEnum"
 		hibernateValidatorExprssion="@Length(max=8)"
 		hasOne="" hasMany=""
 	/>
@@ -109,10 +111,10 @@
 		hasOne="" hasMany=""
 	/>
 
-	<column sqlName="is_available" columnAlias="是否可用" javaType="java.lang.Boolean" 
+	<column sqlName="is_available" columnAlias="是否可用" javaType="java.lang.Integer" 
 		unique="false" nullable="true" pk="false"
 		updatable="true" insertable="true"
-		enumString="" enumClassName="IsAvailableEnum"
+		enumString="Y(1,是);N(0,否);Unlimited(-1,不限)" enumClassName="YesNoEnum"
 		hibernateValidatorExprssion=""
 		hasOne="" hasMany=""
 	/>

@@ -139,6 +139,7 @@
 		<column searchable="true" refer="staff_name" width="100" align="center"/>
 	</foreign-info>
 	
+	
 	<foreign-info id="stock"  title="选择负责人">
 		<column refer="staff_id" width="50" align="center" />
 		<column searchable="true" refer="staff_name" width="100" align="center"/>
