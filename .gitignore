@@ -1,6 +1,5 @@
 *.class
 .externalToolBuilders
-generator_config
 # Package Files #
 *.jar
 *.war
