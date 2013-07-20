@@ -50,5 +50,10 @@
 		hibernateValidatorExprssion=""
 		hasOne="" hasMany=""
 	/>
+	
+	<foreign-info id="common" default="true" title="选择用户">
+		<column refer="userId" width="50" align="center" ftype="value" />
+		<column searchable="true" refer="userName" width="50" align="center" ftype="text" />
+	</foreign-info>
 
 </table>

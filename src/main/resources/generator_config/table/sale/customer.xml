@@ -42,5 +42,11 @@
 		hibernateValidatorExprssion="@Length(max=128)"
 		hasOne="" hasMany=""
 	/>
+	
+	<foreign-info id="sale" default="true" title="选择客户">
+		<column refer="custId" width="50" align="center"  ftype="value"/>
+		<column searchable="true" refer="custName" width="50" align="center"  ftype="text"/>
+		<column searchable="true" refer="telephone" width="100" align="center" ftype="text"/>
+	</foreign-info>
 
 </table>

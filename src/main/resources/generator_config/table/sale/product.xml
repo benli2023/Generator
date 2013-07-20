@@ -33,7 +33,9 @@
 		enumString="" enumClassName="TypeIdEnum"
 		hibernateValidatorExprssion=""
 		hasOne="" hasMany=""
-	/>
+	>
+	<foreign-info refer="producttype.product" />
+	</column>
 
 	<column sqlName="providerId" columnAlias="供应商ID" javaType="java.lang.Long" 
 		unique="false" nullable="true" pk="false"
@@ -41,7 +43,9 @@
 		enumString="" enumClassName="ProviderIdEnum"
 		hibernateValidatorExprssion=""
 		hasOne="" hasMany=""
-	/>
+	>
+	<foreign-info refer="provider.product" />
+	</column>
 
 	<column sqlName="productName" columnAlias="产品名称" javaType="java.lang.String" 
 		unique="false" nullable="true" pk="false"
@@ -58,5 +62,11 @@
 		hibernateValidatorExprssion="@Length(max=128)"
 		hasOne="" hasMany=""
 	/>
+	
+	<foreign-info id="procurement" default="true" title="选择产品">
+		<column refer="prodId" width="50" align="center"  ftype="value"/>
+		<column searchable="true" refer="productName" width="50" align="center"  ftype="text"/>
+		<column searchable="true" refer="prodctDesc" width="100" align="center" ftype="text"/>
+	</foreign-info>
 
 </table>

@@ -41,7 +41,9 @@
 		enumString="" enumClassName="ProdIdEnum"
 		hibernateValidatorExprssion=""
 		hasOne="" hasMany=""
-	/>
+	>
+	<foreign-info refer="product.procurement" />
+	</column>
 
 	<column sqlName="procurementDate" columnAlias="采购日期" javaType="java.util.Date" 
 		unique="false" nullable="true" pk="false"
@@ -67,7 +69,7 @@
 		hasOne="" hasMany=""
 	/>
 
-	<column sqlName="unitPrice" columnAlias="单价" javaType="Long" 
+	<column sqlName="unitPrice" columnAlias="单价" javaType="java.math.BigDecimal" 
 		unique="false" nullable="true" pk="false"
 		updatable="true" insertable="true"
 		enumString="" enumClassName="UnitPriceEnum"
@@ -75,7 +77,7 @@
 		hasOne="" hasMany=""
 	/>
 
-	<column sqlName="freightage" columnAlias="运费" javaType="Long" 
+	<column sqlName="freightage" columnAlias="运费" javaType="java.math.BigDecimal" 
 		unique="false" nullable="true" pk="false"
 		updatable="true" insertable="true"
 		enumString="" enumClassName="FreightageEnum"
@@ -83,7 +85,7 @@
 		hasOne="" hasMany=""
 	/>
 
-	<column sqlName="loadFee" columnAlias="卸费" javaType="Long" 
+	<column sqlName="loadFee" columnAlias="卸费" javaType="java.math.BigDecimal" 
 		unique="false" nullable="true" pk="false"
 		updatable="true" insertable="true"
 		enumString="" enumClassName="LoadFeeEnum"
@@ -116,7 +118,7 @@
 	/>
 
 	<column sqlName="updateDate" columnAlias="更新时间" javaType="java.util.Date" 
-		unique="false" nullable="true" pk="false"
+		unique="false" nullable="true" pk="false" manual="false"
 		updatable="true" insertable="true"
 		enumString="" enumClassName="UpdateDateEnum"
 		hibernateValidatorExprssion=""
@@ -124,7 +126,7 @@
 	/>
 
 	<column sqlName="createdDate" columnAlias="创建时间" javaType="java.util.Date" 
-		unique="false" nullable="true" pk="false"
+		unique="false" nullable="true" pk="false" manual="false"
 		updatable="true" insertable="true"
 		enumString="" enumClassName="CreatedDateEnum"
 		hibernateValidatorExprssion=""
@@ -132,19 +134,23 @@
 	/>
 
 	<column sqlName="updateId" columnAlias="更新人ID" javaType="java.lang.Long" 
-		unique="false" nullable="true" pk="false"
+		unique="false" nullable="true" pk="false" manual="false"
 		updatable="true" insertable="true"
 		enumString="" enumClassName="UpdateIdEnum"
 		hibernateValidatorExprssion=""
 		hasOne="" hasMany=""
-	/>
+	>
+	<foreign-info refer="user.common" />
+	</column>
 
 	<column sqlName="createId" columnAlias="创建人ID" javaType="java.lang.Long" 
-		unique="false" nullable="true" pk="false"
+		unique="false" nullable="true" pk="false" manual="false"
 		updatable="true" insertable="true"
 		enumString="" enumClassName="CreateIdEnum"
 		hibernateValidatorExprssion=""
 		hasOne="" hasMany=""
-	/>
+	>
+	<foreign-info refer="user.common" />
+	</column>
 
 </table>
