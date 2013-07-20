@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import cn.org.rapid_framework.generator.GeneratorProperties;
 import cn.org.rapid_framework.generator.provider.db.table.model.Column;
 import cn.org.rapid_framework.generator.provider.db.table.model.ForeignColumn;
 import cn.org.rapid_framework.generator.provider.db.table.model.ForeignInfo;
@@ -33,12 +34,13 @@ public  class TableOverrideValuesProvider implements Serializable {
 		return instance;
 	}
 	
-	private static final String XML_FOLDER="generator_config/table/";
+	// private static final String XML_FOLDER="generator_config/table/";
+	private static final String XML_OVERRIDE_KEY = "xmlOverride";
 	
 	public TableOverrideValuesProvider() {
 		File rootDir=null;
 		try {
-			rootDir=FileHelper.getFileByClassLoader(XML_FOLDER);
+			rootDir = FileHelper.getFileByClassLoader(GeneratorProperties.getProperty(XML_OVERRIDE_KEY));
 		} catch (IOException e) {
 			//e.printStackTrace();
 			
@@ -53,10 +55,10 @@ public  class TableOverrideValuesProvider implements Serializable {
 			}
 			/** validate the foreign reference table if exists **/
 			for (Iterator<Table> iterator = tables.iterator(); iterator.hasNext();) {
-				Table table = (Table) iterator.next();
+				Table table = iterator.next();
 				Set<Column> columnsSet=table.getColumns();
 				for (Iterator<Column> iterator2 = columnsSet.iterator(); iterator2.hasNext();) {
-					Column column = (Column) iterator2.next();
+					Column column = iterator2.next();
 					
 					//set up foreign info reference
 					if(column.getForeignInfo()!=null&&column.getForeignInfo().getRefer()!=null&&column.getForeignInfo().getRefer().trim().length()!=0) {
@@ -156,7 +158,7 @@ public  class TableOverrideValuesProvider implements Serializable {
 			xstream.processAnnotations(Table.class);
 			File file = null;
 			try {
-				file = FileHelper.getFileByClassLoader(XML_FOLDER+ tableName + ".xml");
+				file = FileHelper.getFileByClassLoader(GeneratorProperties.getProperty(XML_OVERRIDE_KEY) + tableName + ".xml");
 			} catch (IOException e) {
 				GLogger.warn("file don't exists", e);
 			}

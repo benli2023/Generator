@@ -7,12 +7,14 @@
 		2.可以引用环境变量: ${env.JAVA_HOME} or System.properties: ${user.home},property之间也可以相互引用
 	</comment>
 	
-	<entry key="basepackage">com.yunwei.order</entry>
+	<entry key="basepackage">com.longxing.sale</entry>
 	
 	<!-- jsp namespace: web/${namespace}/${className}/list.jsp -->
 	<entry key="namespace">pages</entry>
 
 	<entry key="outRoot">D:\generator-output</entry>
+	
+	<entry key="xmlOverride">generator_config/table/sale/</entry>
 	
 	<!-- 需要移除的表名前缀,使用逗号进行分隔多个前缀,示例值: t_,v_ -->
 	<entry key="tableRemovePrefixes"></entry>
@@ -34,7 +36,7 @@
 	<entry key="java_typemapping.java.sql.Clob">String</entry>
 	
 	<!-- Mysql -->
-	<entry key="jdbc.url">jdbc:mysql://localhost:3306/yunwei?useUnicode=true&amp;characterEncoding=UTF-8</entry>
+	<entry key="jdbc.url">jdbc:mysql://localhost:3306/sale?useUnicode=true&amp;characterEncoding=UTF-8</entry>
 	<entry key="jdbc.driver">com.mysql.jdbc.Driver</entry>
 
 	<!-- Oracle		jdbc:oracle:oci:@tnsname_devdb
