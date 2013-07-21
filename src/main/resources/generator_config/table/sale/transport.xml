@@ -51,11 +51,11 @@
 		hasOne="" hasMany=""
 	/>
 	
-	<foreign-info id="sale" default="true" title="选择运输">
-		<column refer="transportId" width="50" align="center" ftype="value" />
-		<column searchable="true" refer="driver" width="50" align="center" ftype="text" />
-		<column searchable="true" refer="carNumber" width="50" align="center" ftype="text" />
-		<column searchable="true" refer="driverTel" width="50" align="center" ftype="text" />
+	<foreign-info id="common" default="true" title="选择运输">
+		<column refer="transportId" width="100" align="center" ftype="value" />
+		<column searchable="true" refer="driver" width="100" align="center" ftype="text" />
+		<column searchable="true" refer="carNumber" width="100" align="center" ftype="text" />
+		<column searchable="true" refer="driverTel" width="100" align="center" ftype="text" />
 	</foreign-info>
 
 </table>

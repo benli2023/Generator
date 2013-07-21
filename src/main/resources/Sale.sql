@@ -1,6 +1,6 @@
 ﻿/*==============================================================*/
 /* DBMS name:      MySQL 5.0                                    */
-/* Created on:     2013-07-20 23:34:01                          */
+/* Created on:     2013-07-21 13:00:00                          */
 /*==============================================================*/
 
 
@@ -54,6 +54,7 @@ create table Procurement
    createdDate          datetime comment '创建时间',
    updateId             bigint comment '更新人ID',
    createId             bigint comment '创建人ID',
+   transportId          bigint comment '运输ID',
    primary key (procurementId)
 );
 
@@ -119,6 +120,7 @@ create table Sale
    profit               decimal(10,5) comment '利润',
    paymentStatus        int(1) comment '状态',
    createId             bigint comment '创建人ID',
+   transportId          bigint comment '运输ID',
    carNumber            varchar(32) comment '车牌号',
    driver               varchar(64) comment '司机',
    driverTel            varchar(32) comment '司机电话',
@@ -155,6 +157,9 @@ create table User
 alter table Procurement add constraint FK_Reference_11 foreign key (updateId)
       references User (userId) on delete restrict on update restrict;
 
+alter table Procurement add constraint FK_Reference_12 foreign key (transportId)
+      references Transport (transportId) on delete restrict on update restrict;
+
 alter table Procurement add constraint FK_Reference_30 foreign key (createId)
       references User (userId) on delete restrict on update restrict;
 
@@ -175,6 +180,9 @@ alter table Product add constraint FK_Reference_3 foreign key (providerId)
 
 alter table Sale add constraint FK_Reference_13 foreign key (createId)
       references User (userId) on delete restrict on update restrict;
+
+alter table Sale add constraint FK_Reference_14 foreign key (transportId)
+      references Transport (transportId) on delete restrict on update restrict;
 
 alter table Sale add constraint FK_Reference_7 foreign key (custId)
       references Customer (custId) on delete restrict on update restrict;

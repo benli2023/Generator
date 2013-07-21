@@ -118,7 +118,7 @@
 	/>
 
 	<column sqlName="updateDate" columnAlias="更新时间" javaType="java.util.Date" 
-		unique="false" nullable="true" pk="false" manual="false"
+		unique="false" nullable="true" pk="false" noneditable="true"
 		updatable="true" insertable="true"
 		enumString="" enumClassName="UpdateDateEnum"
 		hibernateValidatorExprssion=""
@@ -126,7 +126,7 @@
 	/>
 
 	<column sqlName="createdDate" columnAlias="创建时间" javaType="java.util.Date" 
-		unique="false" nullable="true" pk="false" manual="false"
+		unique="false" nullable="true" pk="false" noneditable="true"
 		updatable="true" insertable="true"
 		enumString="" enumClassName="CreatedDateEnum"
 		hibernateValidatorExprssion=""
@@ -134,7 +134,7 @@
 	/>
 
 	<column sqlName="updateId" columnAlias="更新人ID" javaType="java.lang.Long" 
-		unique="false" nullable="true" pk="false" manual="false"
+		unique="false" nullable="true" pk="false" noneditable="true"
 		updatable="true" insertable="true"
 		enumString="" enumClassName="UpdateIdEnum"
 		hibernateValidatorExprssion=""
@@ -144,13 +144,23 @@
 	</column>
 
 	<column sqlName="createId" columnAlias="创建人ID" javaType="java.lang.Long" 
-		unique="false" nullable="true" pk="false" manual="false"
+		unique="false" nullable="true" pk="false" noneditable="true"
 		updatable="true" insertable="true"
 		enumString="" enumClassName="CreateIdEnum"
 		hibernateValidatorExprssion=""
 		hasOne="" hasMany=""
 	>
 	<foreign-info refer="user.common" />
+	</column>
+	
+	<column sqlName="transportId" columnAlias="运输ID" javaType="java.lang.Long" 
+		unique="false" nullable="true" pk="false"
+		updatable="true" insertable="true"
+		enumString="" enumClassName="TransportIdEnum"
+		hibernateValidatorExprssion=""
+		hasOne="" hasMany=""
+	>
+	<foreign-info refer="transport.common" />
 	</column>
 
 </table>
