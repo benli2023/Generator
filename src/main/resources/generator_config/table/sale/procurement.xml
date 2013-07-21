@@ -60,7 +60,15 @@
 		hibernateValidatorExprssion=""
 		hasOne="" hasMany=""
 	/>
-
+	
+	<column sqlName="unit" columnAlias="单位" javaType="java.lang.Integer" 
+		unique="false" nullable="true" pk="false"
+		updatable="true" insertable="true"
+		enumString="TON(1,吨);BATCH(2,批);Unlimited(-1,不限)" enumClassName="UnitEnum"
+		hibernateValidatorExprssion=""
+		hasOne="" hasMany=""
+	/>
+	
 	<column sqlName="remainedAmount" columnAlias="剩余数量" javaType="java.lang.Integer" 
 		unique="false" nullable="true" pk="false"
 		updatable="true" insertable="true"
