@@ -14,6 +14,8 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import com.github.springrest.base.BaseRestSpringController;
+import com.github.springrest.base.Context;
+import com.github.springrest.base.DefaultWorkContext;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -92,7 +94,6 @@ public class ${className}Controller extends BaseRestSpringController<${className
 	@RequestMapping
 	public String index(ModelMap model,${className}Query query,HttpServletRequest request,HttpServletResponse response) {
 		Page page = this.${classNameFirstLower}Manager.findPage(query);
-		
 		model.addAllAttributes(toModelMap(page, query));
 		return "/${classNameLowerCase}/index";
 	}
@@ -120,19 +121,22 @@ public class ${className}Controller extends BaseRestSpringController<${className
 	@RequestMapping({"/save.json"})
 	@ResponseBody
 	public Response ajaxSave(ModelMap model, @Valid ${className} ${classNameFirstLower}, BindingResult errors, HttpServletRequest request, HttpServletResponse response) throws Exception {
-		return ajaxHelper.save(this.${classNameFirstLower}Manager, ${classNameFirstLower}, errors, request, response);
+		Context context = new DefaultWorkContext(request, response);
+		return ajaxHelper.save(this.${classNameFirstLower}Manager, ${classNameFirstLower}, errors, context);
 	}
 	
 	@RequestMapping({"/update.json"})
 	@ResponseBody
 	public Response ajaxUpdate(ModelMap model, @Valid ${className} ${classNameFirstLower}, BindingResult errors, HttpServletRequest request, HttpServletResponse response) throws Exception {
-		return ajaxHelper.update(this.${classNameFirstLower}Manager, ${classNameFirstLower}, errors, request, response);
+		Context context = new DefaultWorkContext(request, response);
+		return ajaxHelper.update(this.${classNameFirstLower}Manager, ${classNameFirstLower}, errors,context);
 	}
 	
 	/** 显示 */
 	@RequestMapping(value="/{id}")
-	public String show(ModelMap model,@PathVariable ${pkJavaType} id) throws Exception {
-		${className} ${classNameFirstLower} = (${className})${classNameFirstLower}Manager.getById(id);
+	public String show(ModelMap model,@PathVariable ${pkJavaType} id,HttpServletRequest request, HttpServletResponse response) throws Exception {
+		Context context = new DefaultWorkContext(request, response);
+		${className} ${classNameFirstLower} = (${className})${classNameFirstLower}Manager.getById(context,id);
 		model.addAttribute("${classNameFirstLower}",${classNameFirstLower});
 		return "/${classNameLowerCase}/show";
 	}
@@ -150,16 +154,17 @@ public class ${className}Controller extends BaseRestSpringController<${className
 		if(errors.hasErrors()) {
 			return  "/${classNameLowerCase}/new";
 		}
-		
-		${classNameFirstLower}Manager.save(${classNameFirstLower});
+		Context context = new DefaultWorkContext(request, response);
+		${classNameFirstLower}Manager.save(context,${classNameFirstLower});
 		Flash.current().success(CREATED_SUCCESS); //存放在Flash中的数据,在下一次http请求中仍然可以读取数据,error()用于显示错误消息
 		return LIST_ACTION;
 	}
 	
 	/** 编辑 */
 	@RequestMapping(value="/{id}/edit")
-	public String edit(ModelMap model,@PathVariable ${pkJavaType} id) throws Exception {
-		${className} ${classNameFirstLower} = (${className})${classNameFirstLower}Manager.getById(id);
+	public String edit(ModelMap model,@PathVariable ${pkJavaType} id,HttpServletRequest request, HttpServletResponse response) throws Exception {
+		Context context = new DefaultWorkContext(request, response);
+		${className} ${classNameFirstLower} = (${className})${classNameFirstLower}Manager.getById(context,id);
 		model.addAttribute("${classNameFirstLower}",${classNameFirstLower});
 		return "/${classNameLowerCase}/edit";
 	}
@@ -170,25 +175,27 @@ public class ${className}Controller extends BaseRestSpringController<${className
 		if(errors.hasErrors()) {
 			return "/${classNameLowerCase}/edit";
 		}
-		
-		${classNameFirstLower}Manager.update(${classNameFirstLower});
+		Context context = new DefaultWorkContext(request, response);
+		${classNameFirstLower}Manager.update(context,${classNameFirstLower});
 		Flash.current().success(UPDATE_SUCCESS);
 		return LIST_ACTION;
 	}
 	
 	/** 删除 */
 	@RequestMapping(value="/{id}",method=RequestMethod.DELETE)
-	public String delete(ModelMap model,@PathVariable ${pkJavaType} id) {
-		${classNameFirstLower}Manager.removeById(id);
+	public String delete(ModelMap model,@PathVariable ${pkJavaType} id, HttpServletRequest request, HttpServletResponse response) {
+		Context context = new DefaultWorkContext(request, response);
+		${classNameFirstLower}Manager.removeById(context,id);
 		Flash.current().success(DELETE_SUCCESS);
 		return LIST_ACTION;
 	}
 
 	/** 批量删除 */
 	@RequestMapping(method=RequestMethod.DELETE)
-	public String batchDelete(ModelMap model,@RequestParam("items") ${pkJavaType}[] items) {
+	public String batchDelete(ModelMap model,@RequestParam("items") ${pkJavaType}[] items, HttpServletRequest request, HttpServletResponse response) {
+		Context context = new DefaultWorkContext(request, response);
 		for(int i = 0; i < items.length; i++) {
-			${classNameFirstLower}Manager.removeById(items[i]);
+			${classNameFirstLower}Manager.removeById(context,items[i]);
 		}
 		Flash.current().success(DELETE_SUCCESS);
 		return LIST_ACTION;
