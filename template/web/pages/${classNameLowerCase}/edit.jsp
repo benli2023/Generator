@@ -7,6 +7,7 @@
 <%@ include file="/commons/taglibs.jsp" %>
 
 <rapid:override name="head">
+	<%@ include file="../../commons/noty-bottom-right-import.jsp" %>
 	<#if table.defineForeignKey>
 	<%@ include file="../../commons/opera-maskui-dialog-import.jsp" %>
 	<link href="<c:url value="<@jspEl 'ctx'/>/scripts/plugins/popup-input/popup-input.css"/>" type="text/css" rel="stylesheet">
@@ -21,20 +22,32 @@
 		<input type="button" value="返回列表" onclick="window.location='<@jspEl 'ctx'/>/${classNameLowerCase}'"/>
 		<input type="button" value="后退" onclick="history.back();"/>
 		
+		<c:choose>
+				<c:when test="<@jspEl 'empty postmode'/>">
+					<input type="button" value="返回列表" onclick="window.location='<@jspEl 'ctx'/>/${classNameLowerCase}'"/>
+					<input type="button" value="后退" onclick="history.back();"/>
+				</c:when>
+				<c:otherwise>
+					<input type="button" value="返回列表" onclick="window.location='<@jspEl 'ctx'/>/${classNameLowerCase}?postmode=<c:out value="<@jspEl 'postmode'/>" />'"/>
+					<input type="button" value="关闭" onclick="window.close()"/>
+				</c:otherwise>
+		</c:choose>
+		
 		<table class="formTable">
 		<%@ include file="form_include.jsp" %>
 		</table>
 	</form:form>
-	
+	<%@ include file="../../commons/ajaxpost-import.jsp" %>
 	<script>
-		
-		new Validation(document.forms[0],{onSubmit:true,onFormValidate : function(result,form) {
-			var finalResult = result;
-			
-			//在这里添加自定义验证
-			
-			return disableSubmit(finalResult,'submitButton');
-		}});
+			function getJsonUrl() {
+					return '<@jspEl 'ctx'/>/${classNameLowerCase}/save.json';
+			}
+			function getPostMethod() {
+				return '<@jspEl 'postmode'/>' ;
+			}
+			function validationCallback(form) {
+			   return true;
+			}
 	</script>
 	
 	<#if table.defineForeignKey>

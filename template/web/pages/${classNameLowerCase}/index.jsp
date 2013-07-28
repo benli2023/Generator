@@ -30,6 +30,9 @@
 
 <rapid:override name="content">
 	<form id="queryForm" name="queryForm" method="get" style="display: inline;">
+	<c:if test="<@jspEl '!empty postmode'/>">
+		<input type="hidden" name="postmode" value="<@jspEl 'postmode'/>"/>
+	</c:if>
 	<div class="queryPanel">
 		<fieldset>
 			<legend>搜索</legend>
@@ -63,9 +66,18 @@
 			</table>
 		</fieldset>
 		<div class="handleControl">
-			<input type="submit" class="stdButton" style="width:80px" value="查询" onclick="getReferenceForm(this).action='<@jspEl 'ctx'/>/${classNameLowerCase}'"/>
-			<input type="button" class="stdButton" style="width:80px" value="新增" onclick="window.location = '<@jspEl 'ctx'/>/${classNameLowerCase}/new'"/>
-			<input type="button" class="stdButton" style="width:80px" value="删除" onclick="doRestBatchDelete('<@jspEl 'ctx'/>/${classNameLowerCase}','items',document.forms.queryForm)"/>
+			<c:choose>
+			<c:when test="<@jspEl 'empty postmode'/>">
+				<input type="submit" class="stdButton" style="width:80px" value="查询" onclick="getReferenceForm(this).action='<@jspEl 'ctx'/>/${classNameLowerCase}'"/>
+				<input type="button" class="stdButton" style="width:80px" value="新增" onclick="window.location = '<@jspEl 'ctx'/>/${classNameLowerCase}/new'"/>
+				<input type="button" class="stdButton" style="width:80px" value="删除" onclick="doRestBatchDelete('<@jspEl 'ctx'/>/${classNameLowerCase}','items',document.forms.queryForm)"/>
+			</c:when>
+			<c:otherwise>
+				<input type="submit" class="stdButton" style="width:80px" value="查询" onclick="getReferenceForm(this).action='<@jspEl 'ctx'/>/${classNameLowerCase}?postmode=<c:out value="<@jspEl 'postmode'/>" />'"/>
+				<input type="button" class="stdButton" style="width:80px" value="新增" onclick="window.location = '<@jspEl 'ctx'/>/${classNameLowerCase}/new?postmode=<c:out value="<@jspEl 'postmode'/>" />'"/>
+				<input type="button" class="stdButton" style="width:80px" value="删除" onclick="doRestBatchDelete('<@jspEl 'ctx'/>/${classNameLowerCase}?postmode=<c:out value="<@jspEl 'postmode'/>" />','items',document.forms.queryForm)"/>
+			</c:otherwise>
+		</c:choose>
 		<div>
 	
 	</div>
@@ -119,9 +131,19 @@
 				</#if>
 				</#list>
 				<td>
-					<a href="<@jspEl 'ctx'/>/${classNameLowerCase}/<@jspEl 'item.'+table.idColumn.columnNameFirstLower/>">查看</a>&nbsp;&nbsp;
-					<a href="<@jspEl 'ctx'/>/${classNameLowerCase}/<@jspEl 'item.'+table.idColumn.columnNameFirstLower/>/edit">修改</a>&nbsp;&nbsp;
-					<a href="<@jspEl 'ctx'/>/${classNameLowerCase}/<@jspEl 'item.'+table.idColumn.columnNameFirstLower/>" onclick="doRestDelete(this,'你确认删除?');return false;">删除</a>
+				<c:choose>
+					<c:when test="<@jspEl 'empty postmode'/>">
+						<a href="<@jspEl 'ctx'/>/${classNameLowerCase}/<@jspEl 'item.'+table.idColumn.columnNameFirstLower/>">查看</a>&nbsp;&nbsp;
+						<a href="<@jspEl 'ctx'/>/${classNameLowerCase}/<@jspEl 'item.'+table.idColumn.columnNameFirstLower/>/edit">修改</a>&nbsp;&nbsp;
+						<a href="<@jspEl 'ctx'/>/${classNameLowerCase}/<@jspEl 'item.'+table.idColumn.columnNameFirstLower/>" onclick="doRestDelete(this,'你确认删除?');return false;">删除</a>
+					</c:when>
+					<c:otherwise >
+						<a href="<@jspEl 'ctx'/>/${classNameLowerCase}/<@jspEl 'item.'+table.idColumn.columnNameFirstLower/>?postmode=<c:out value="<@jspEl 'postmode'/>" />">查看</a>&nbsp;&nbsp;
+						<a href="<@jspEl 'ctx'/>/${classNameLowerCase}/<@jspEl 'item.'+table.idColumn.columnNameFirstLower/>/edit?postmode=<c:out value="<@jspEl 'postmode'/>" />">修改</a>&nbsp;&nbsp;
+						<a href="<@jspEl 'ctx'/>/${classNameLowerCase}/<@jspEl 'item.'+table.idColumn.columnNameFirstLower/>?postmode=<c:out value="<@jspEl 'postmode'/>" />" onclick="doRestDelete(this,'你确认删除?');return false;">删除</a>
+					</c:otherwise>
+				</c:choose>
+					
 				</td>
 			  </tr>
 			  

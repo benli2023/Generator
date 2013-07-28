@@ -23,7 +23,11 @@
 			<artifactId>xstream</artifactId>
 			<version>1.4.4</version>
 		</dependency>
-
+		<dependency>
+			<groupId>com.github.springrest</groupId>
+			<artifactId>spring-rest-pres</artifactId>
+			<version>1.0.0</version>
+		</dependency>
 
 	</dependencies>
 

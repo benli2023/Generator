@@ -35,7 +35,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 
 import com.github.springrest.base.ColModelProfile;
+import com.github.springrest.base.api.Response;
+import com.github.springrest.util.AjaxHelper;
 import com.github.springrest.util.ColModelFactory;
+import com.longxing.sale.model.Producttype;
 
 import cn.org.rapid_framework.page.Page;
 import cn.org.rapid_framework.web.scope.Flash;
@@ -55,6 +58,12 @@ public class ${className}Controller extends BaseRestSpringController<${className
 		this.colModelFactory = colModelFactory;
 	}
 	</#if>
+	
+	private AjaxHelper ajaxHelper;
+
+	public void setAjaxHelper(AjaxHelper ajaxHelper) {
+		this.ajaxHelper = ajaxHelper;
+	}
 	
 	private final String LIST_ACTION = "redirect:/${classNameLowerCase}";
 	
@@ -100,6 +109,7 @@ public class ${className}Controller extends BaseRestSpringController<${className
 	public String query(ModelMap model, String fieldId,String profileId) throws Exception {
 		model.addAttribute("fieldId", fieldId);
 		model.addAttribute("jsonURL", "/${classNameLowerCase}/index.json");
+		model.addAttribute("jsonAddURL", "/${classNameLowerCase}/new?postmode=ajax");
 		model.addAttribute("pageTitle",${className}.TABLE_ALIAS);
 		ColModelProfile colModelProfile=colModelFactory.getColModel("${className}-colmodel.xml",profileId);
 		model.addAttribute("colModelList", colModelProfile.getColModels());
@@ -107,6 +117,17 @@ public class ${className}Controller extends BaseRestSpringController<${className
 	}
 	</#if>
 	
+	@RequestMapping({"/save.json"})
+	@ResponseBody
+	public Response ajaxSave(ModelMap model, @Valid ${className} ${classNameFirstLower}, BindingResult errors, HttpServletRequest request, HttpServletResponse response) throws Exception {
+		return ajaxHelper.save(this.${classNameFirstLower}Manager, ${classNameFirstLower}, errors, request, response);
+	}
+	
+	@RequestMapping({"/update.json"})
+	@ResponseBody
+	public Response ajaxUpdate(ModelMap model, @Valid ${className} ${classNameFirstLower}, BindingResult errors, HttpServletRequest request, HttpServletResponse response) throws Exception {
+		return ajaxHelper.update(this.${classNameFirstLower}Manager, ${classNameFirstLower}, errors, request, response);
+	}
 	
 	/** 显示 */
 	@RequestMapping(value="/{id}")
