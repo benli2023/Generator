@@ -9,6 +9,7 @@ import java.util.Map;
 import java.util.Set;
 
 import cn.org.rapid_framework.generator.GeneratorProperties;
+import cn.org.rapid_framework.generator.enums.ReservePropertyName;
 import cn.org.rapid_framework.generator.provider.db.table.model.ForeignKey.ReferenceKey;
 import cn.org.rapid_framework.generator.provider.db.table.model.util.ColumnHelper;
 import cn.org.rapid_framework.generator.util.GLogger;
@@ -339,6 +340,7 @@ public class Column implements java.io.Serializable,Cloneable{
 	 * @todo-javadoc Write javadocs for method
 	 * @todo-javadoc Write javadocs for return value
 	 */
+	@Override
 	public int hashCode() {
 		if(getTable() != null) {
 			return (getTable().getSqlName() + "#" + getSqlName()).hashCode();
@@ -357,6 +359,7 @@ public class Column implements java.io.Serializable,Cloneable{
 	 * @todo-javadoc Write javadocs for method parameter
 	 * @todo-javadoc Write javadocs for return value
 	 */
+	@Override
 	public boolean equals(Object o) {
 		if(this == o) return true;
 		if(o instanceof Column) {
@@ -375,10 +378,12 @@ public class Column implements java.io.Serializable,Cloneable{
 	 * @todo-javadoc Write javadocs for method
 	 * @todo-javadoc Write javadocs for return value
 	 */
+	@Override
 	public String toString() {
 		return getSqlName();
 	}
 
+	@Override
 	public Object clone() {
 		try {
 			return super.clone();
@@ -438,6 +443,7 @@ public class Column implements java.io.Serializable,Cloneable{
      * 使用 getColumnNameFirstLower()替换
      * @deprecated use getColumnNameFirstLower() instead
      */
+	@Deprecated
 	public String getColumnNameLower() {
 		return getColumnNameFirstLower();
 	}
@@ -480,6 +486,7 @@ public class Column implements java.io.Serializable,Cloneable{
 	 * 
 	 * @deprecated
 	 */
+	@Deprecated
 	public boolean getIsNotIdOrVersionField() {
 		return !isPk();
 	}
@@ -788,9 +795,9 @@ public class Column implements java.io.Serializable,Cloneable{
 	 * @author badqiu
 	 */
 	public static class EnumMetaDada {
-		private String enumAlias;
-		private String enumKey;
-		private String enumDesc;
+		private final String enumAlias;
+		private final String enumKey;
+		private final String enumDesc;
 		public EnumMetaDada(String enumAlias, String enumKey, String enumDesc) {
 			super();
 			this.enumAlias = enumAlias;
@@ -941,6 +948,14 @@ public class Column implements java.io.Serializable,Cloneable{
 
 	public boolean isNoneditable() {
 		return noneditable;
+	}
+
+	public boolean isReserveKeyword() {
+		return ReservePropertyName.isReserveKeyword(this.getColumnNameFirstLower());
+	}
+
+	public boolean isNotReserveKeyword() {
+		return !ReservePropertyName.isReserveKeyword(this.getColumnNameFirstLower());
 	}
 
 	public void setNoneditable(boolean noneditable) {
