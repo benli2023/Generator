@@ -135,7 +135,7 @@
 
 	<column sqlName="createdDate" columnAlias="创建时间" javaType="java.util.Date" 
 		unique="false" nullable="false" pk="false" noneditable="true"
-		updatable="true" insertable="true"
+		updatable="false" insertable="true"
 		enumString="" enumClassName="CreatedDateEnum"
 		hibernateValidatorExprssion=""
 		hasOne="" hasMany=""
@@ -153,7 +153,7 @@
 
 	<column sqlName="createId" columnAlias="创建人ID" javaType="java.lang.Long" 
 		unique="false" nullable="false" pk="false" noneditable="true"
-		updatable="true" insertable="true"
+		updatable="false" insertable="true"
 		enumString="" enumClassName="CreateIdEnum"
 		hibernateValidatorExprssion=""
 		hasOne="" hasMany=""

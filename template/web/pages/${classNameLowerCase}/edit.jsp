@@ -19,9 +19,6 @@
 <rapid:override name="content">
 	<form:form method="put" action="<@jspEl 'ctx'/>/${classNameLowerCase}/<@jspEl classNameFirstLower+'.'+table.idColumn.columnNameFirstLower/>" modelAttribute="${classNameFirstLower}">
 		<input id="submitButton" name="submitButton" type="submit" value="提交" />
-		<input type="button" value="返回列表" onclick="window.location='<@jspEl 'ctx'/>/${classNameLowerCase}'"/>
-		<input type="button" value="后退" onclick="history.back();"/>
-		
 		<c:choose>
 				<c:when test="<@jspEl 'empty postmode'/>">
 					<input type="button" value="返回列表" onclick="window.location='<@jspEl 'ctx'/>/${classNameLowerCase}'"/>
@@ -40,7 +37,7 @@
 	<%@ include file="../../commons/ajaxpost-import.jsp" %>
 	<script>
 			function getJsonUrl() {
-					return '<@jspEl 'ctx'/>/${classNameLowerCase}/save.json';
+					return '<@jspEl 'ctx'/>/${classNameLowerCase}/update.json';
 			}
 			function getPostMethod() {
 				return '<@jspEl 'postmode'/>' ;
