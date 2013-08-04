@@ -28,7 +28,7 @@
 	/>
 
 	<column sqlName="procurementId" columnAlias="采购ID" javaType="java.lang.Long" 
-		unique="false" nullable="true" pk="false"
+		unique="false" nullable="false" pk="false"
 		updatable="true" insertable="true"
 		enumString="" enumClassName="ProcurementIdEnum"
 		hibernateValidatorExprssion=""
@@ -36,7 +36,7 @@
 	/>
 
 	<column sqlName="saleId" columnAlias="出售ID" javaType="java.lang.Long" 
-		unique="false" nullable="true" pk="false"
+		unique="false" nullable="false" pk="false"
 		updatable="true" insertable="true"
 		enumString="" enumClassName="SaleIdEnum"
 		hibernateValidatorExprssion=""

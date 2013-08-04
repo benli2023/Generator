@@ -44,8 +44,8 @@
 			function getPostMethod() {
 				return '<@jspEl 'postmode'/>' ;
 			}
-			function validationCallback(form) {
-			   return true;
+			function validationCallback(form,result) {
+			   return result;
 			}
 	</script>
 	

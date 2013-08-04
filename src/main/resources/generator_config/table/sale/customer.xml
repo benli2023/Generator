@@ -28,25 +28,25 @@
 	/>
 
 	<column sqlName="custName" columnAlias="客户名称" javaType="java.lang.String" 
-		unique="false" nullable="true" pk="false"
+		unique="false" nullable="false" pk="false"
 		updatable="true" insertable="true"
 		enumString="" enumClassName="CustNameEnum"
-		hibernateValidatorExprssion="@Length(max=64)"
+		hibernateValidatorExprssion="@Length(max=64)" javascriptValidatorExprssion=""
 		hasOne="" hasMany=""
 	/>
 
 	<column sqlName="telephone" columnAlias="客户电话" javaType="java.lang.String" 
-		unique="false" nullable="true" pk="false"
+		unique="false" nullable="false" pk="false"
 		updatable="true" insertable="true"
 		enumString="" enumClassName="TelephoneEnum"
-		hibernateValidatorExprssion="@Length(max=128)"
+		hibernateValidatorExprssion="@Length(max=128)" javascriptValidatorExprssion="validate-phone"
 		hasOne="" hasMany=""
 	/>
 	
 	<foreign-info id="sale" default="true" title="选择客户">
 		<column refer="custId" width="150" align="center"  ftype="value"/>
 		<column searchable="true" refer="custName" width="150" align="center"  ftype="text"/>
-		<column searchable="true" refer="telephone" width="150" align="center" ftype="text"/>
+		<column searchable="true" refer="telephone" width="150" align="center" />
 	</foreign-info>
 
 </table>

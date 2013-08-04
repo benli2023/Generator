@@ -39,6 +39,10 @@
 				<#compress>
 				<#if column.isDateTimeColumn>
 				<c:out value='<@jspEl classNameLower+"."+column.columnNameLower+"String"/>'/>
+				<#elseif column.enumType>
+				<c:choose><#list column.enumListExcludeOtherVal as current><c:when test="<@jspEl classNameLower+"." + column.columnNameLower+'=='+current.enumKey/>">${current.enumDesc}</c:when></#list></c:choose>
+				<#elseif column.defineForeignInfo>
+				<c:out value='<@jspEl classNameLower+"."+column.columnNameLower+"Txt"/>'/>&nbsp;
 				<#else>
 				<c:out value='<@jspEl classNameLower+"."+column.columnNameLower/>'/>
 				</#if>

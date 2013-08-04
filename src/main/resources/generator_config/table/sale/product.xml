@@ -28,7 +28,7 @@
 	/>
 
 	<column sqlName="typeId" columnAlias="产品类型ID" javaType="java.lang.Long" 
-		unique="false" nullable="true" pk="false"
+		unique="false" nullable="false" pk="false"
 		updatable="true" insertable="true"
 		enumString="" enumClassName="TypeIdEnum"
 		hibernateValidatorExprssion=""
@@ -38,7 +38,7 @@
 	</column>
 
 	<column sqlName="providerId" columnAlias="供应商ID" javaType="java.lang.Long" 
-		unique="false" nullable="true" pk="false"
+		unique="false" nullable="false" pk="false"
 		updatable="true" insertable="true"
 		enumString="" enumClassName="ProviderIdEnum"
 		hibernateValidatorExprssion=""
@@ -48,7 +48,7 @@
 	</column>
 
 	<column sqlName="productName" columnAlias="产品名称" javaType="java.lang.String" 
-		unique="false" nullable="true" pk="false"
+		unique="false" nullable="false" pk="false"
 		updatable="true" insertable="true"
 		enumString="" enumClassName="ProductNameEnum"
 		hibernateValidatorExprssion="@Length(max=128)"
@@ -66,7 +66,7 @@
 	<foreign-info id="procurement" default="true" title="选择产品">
 		<column refer="prodId" width="150" align="center"  ftype="value"/>
 		<column searchable="true" refer="productName" width="150" align="center"  ftype="text"/>
-		<column searchable="true" refer="prodctDesc" width="150" align="center" ftype="text"/>
+		<column searchable="true" refer="prodctDesc" width="150" align="center" />
 	</foreign-info>
 
 </table>

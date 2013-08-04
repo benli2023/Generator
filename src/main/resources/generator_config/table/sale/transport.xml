@@ -28,7 +28,7 @@
 	/>
 
 	<column sqlName="driver" columnAlias="司机" javaType="java.lang.String" 
-		unique="false" nullable="true" pk="false"
+		unique="false" nullable="false" pk="false"
 		updatable="true" insertable="true"
 		enumString="" enumClassName="DriverEnum"
 		hibernateValidatorExprssion="@Length(max=64)"
@@ -44,8 +44,8 @@
 	/>
 
 	<column sqlName="driverTel" columnAlias="电话" javaType="java.lang.String" 
-		unique="false" nullable="true" pk="false"
-		updatable="true" insertable="true"
+		unique="false" nullable="false" pk="false"
+		updatable="true" insertable="true"  javascriptValidatorExprssion="validate-mobile-phone"
 		enumString="" enumClassName="DriverTelEnum"
 		hibernateValidatorExprssion="@Length(max=32)"
 		hasOne="" hasMany=""
@@ -54,8 +54,8 @@
 	<foreign-info id="common" default="true" title="选择运输">
 		<column refer="transportId" width="100" align="center" ftype="value" />
 		<column searchable="true" refer="driver" width="100" align="center" ftype="text" />
-		<column searchable="true" refer="carNumber" width="100" align="center" ftype="text" />
-		<column searchable="true" refer="driverTel" width="100" align="center" ftype="text" />
+		<column searchable="true" refer="carNumber" width="100" align="center"  />
+		<column searchable="true" refer="driverTel" width="100" align="center"  />
 	</foreign-info>
 
 </table>

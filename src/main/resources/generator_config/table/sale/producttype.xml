@@ -28,7 +28,7 @@
 	/>
 
 	<column sqlName="name" columnAlias="产品类型名称" javaType="java.lang.String" 
-		unique="false" nullable="true" pk="false"
+		unique="false" nullable="false" pk="false"
 		updatable="true" insertable="true"
 		enumString="" enumClassName="NameEnum"
 		hibernateValidatorExprssion="@Length(max=64)"
@@ -45,7 +45,7 @@
 	
 	<foreign-info id="product" default="true" title="选择产品类型">
 		<column refer="typeId" width="150" align="center"  ftype="value"/>
-		<column searchable="true" refer="code" width="150" align="center"  ftype="text"/>
+		<column searchable="true" refer="code" width="150" align="center"  />
 		<column searchable="true" refer="name" width="150" align="center" ftype="text"/>
 	</foreign-info>
 

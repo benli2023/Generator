@@ -23,30 +23,30 @@
 		unique="true" nullable="false" pk="true"
 		updatable="true" insertable="true"
 		enumString="" enumClassName="UserIdEnum"
-		hibernateValidatorExprssion=""
+		hibernateValidatorExprssion="" javascriptValidatorExprssion=""
 		hasOne="" hasMany=""
 	/>
 
 	<column sqlName="userName" columnAlias="用户名称" javaType="java.lang.String" 
-		unique="false" nullable="true" pk="false"
+		unique="false" nullable="false" pk="false"
 		updatable="true" insertable="true"
 		enumString="" enumClassName="UserNameEnum"
-		hibernateValidatorExprssion="@Length(max=64)"
+		hibernateValidatorExprssion="@Length(max=64)" javascriptValidatorExprssion="validate-alphanum"
 		hasOne="" hasMany=""
 	/>
 
 	<column sqlName="password" columnAlias="密码" javaType="java.lang.String" 
-		unique="false" nullable="true" pk="false"
+		unique="false" nullable="false" pk="false"
 		updatable="true" insertable="true"
 		enumString="" enumClassName="PasswordEnum"
-		hibernateValidatorExprssion="@Length(max=128)"
+		hibernateValidatorExprssion="@Length(max=128)" javascriptValidatorExprssion="validate-alphanum"
 		hasOne="" hasMany=""
 	/>
 
 	<column sqlName="groupLevel" columnAlias="所属用户组" javaType="java.lang.Integer" 
-		unique="false" nullable="true" pk="false"
+		unique="false" nullable="false" pk="false"
 		updatable="true" insertable="true"
-		enumString="" enumClassName="GroupLevelEnum"
+		enumString="" enumClassName="GroupLevelEnum" javascriptValidatorExprssion=""
 		hibernateValidatorExprssion=""
 		hasOne="" hasMany=""
 	/>

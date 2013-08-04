@@ -37,17 +37,16 @@ public class ${className} extends BaseEntity implements java.io.Serializable {
 	//columns START
 	<#list table.columns as column>
 	<#if !column.reserveKeyword>
-		<#if column.defineForeignInfo> 
-		private ${column.javaType} ${column.columnNameLower};
-		private String ${column.columnNameLower}Txt;
-		<#else>
-	    /**
-	     * ${column.columnAlias!}       db_column: ${column.sqlName} 
-	     */ 	
-		${column.hibernateValidatorExprssion}
-		<#if column.foreignSearchable>@JsonProperty("${column.sqlName}")</#if>
-		<#if column.isDateTimeColumn>@JsonSerialize(using = JsonDateSerializer.class)</#if>
-		private ${column.javaType} ${column.columnNameLower};
+    <#if column.defineForeignInfo>
+    ${column.hibernateValidatorExprssion}
+	private ${column.javaType} ${column.columnNameLower};
+	private String ${column.columnNameLower}Txt;
+	<#else>
+    /**
+     * ${column.columnAlias!}       db_column: ${column.sqlName} 
+     */
+    ${column.hibernateValidatorExprssion}
+	private ${column.javaType} ${column.columnNameLower};
 		</#if>
 	</#if>
 	
@@ -91,29 +90,29 @@ public class ${className} extends BaseEntity implements java.io.Serializable {
 	<#list table.columns as column>
 	<#if !column.reserveKeyword>
 		<#if column.isDateTimeColumn>
-			public String get${column.columnName}String() {
-				return DateConvertUtils.format(get${column.columnName}(), FORMAT_${column.constantName});
-			}
-			public void set${column.columnName}String(String value) {
-				set${column.columnName}(DateConvertUtils.parse(value, FORMAT_${column.constantName},${column.javaType}.class));
-			}
+	public String get${column.columnName}String() {
+		return DateConvertUtils.format(get${column.columnName}(), FORMAT_${column.constantName});
+	}
+	public void set${column.columnName}String(String value) {
+		set${column.columnName}(DateConvertUtils.parse(value, FORMAT_${column.constantName},${column.javaType}.class));
+	}
+
+	</#if>	
+	public void set${column.columnName}(${column.javaType} value) {
+		this.${column.columnNameLower} = value;
+	}
 	
-		</#if>	
-		public void set${column.columnName}(${column.javaType} value) {
-			this.${column.columnNameLower} = value;
-		}
-		
-		public ${column.javaType} get${column.columnName}() {
-			return this.${column.columnNameLower};
-		}
-		<#if column.defineForeignInfo>
-			public String get${column.columnName}Txt() {
-				return this.${column.columnNameLower}Txt;
-			}
-			
-			public void set${column.columnName}Txt(String value) {
-				this.${column.columnNameLower}Txt = value;
-			}
+	public ${column.javaType} get${column.columnName}() {
+		return this.${column.columnNameLower};
+	}
+	<#if column.defineForeignInfo>
+	public String get${column.columnName}Txt() {
+		return this.${column.columnNameLower}Txt;
+	}
+	
+	public void set${column.columnName}Txt(String value) {
+		this.${column.columnNameLower}Txt = value;
+	}
 		</#if>
 	</#if>
 	</#list>

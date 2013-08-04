@@ -3,7 +3,7 @@
 
 	<column sqlName="providerId" columnAlias="供应商ID" javaType="java.lang.Long" unique="true" nullable="false" pk="true" updatable="true" insertable="true" enumString="" enumClassName="ProviderIdEnum" hibernateValidatorExprssion="" hasOne="" hasMany="" />
 
-	<column sqlName="provider" columnAlias="供应商名称" javaType="java.lang.String" unique="false" nullable="true" pk="false" updatable="true" insertable="true" enumString="" enumClassName="ProviderEnum" hibernateValidatorExprssion="@Length(max=64)" hasOne="" hasMany="" />
+	<column sqlName="provider" columnAlias="供应商名称" javaType="java.lang.String" unique="false" nullable="false" pk="false" updatable="true" insertable="true" enumString="" enumClassName="ProviderEnum" hibernateValidatorExprssion="@Length(max=64)" hasOne="" hasMany="" />
 
 	<foreign-info id="product" default="true" title="选择供应商">
 		<column refer="providerId" width="150" align="center" ftype="value" />
