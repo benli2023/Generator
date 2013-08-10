@@ -72,7 +72,7 @@
 	<column sqlName="unitPrice" columnAlias="售出单价" javaType="Long" 
 		unique="false" nullable="false" pk="false"
 		updatable="true" insertable="true"
-		enumString="" enumClassName="UnitPriceEnum" javascriptValidatorExprssion="validate-currency-dollar"
+		enumString="" enumClassName="UnitPriceEnum" javascriptValidatorExprssion="validate-currency-dollar" format="currency"
 		hibernateValidatorExprssion=""
 		hasOne="" hasMany=""
 	/>
@@ -80,7 +80,7 @@
 	<column sqlName="paid" columnAlias="已付金额" javaType="java.math.BigDecimal" 
 		unique="false" nullable="true" pk="false"
 		updatable="true" insertable="true"
-		enumString="" enumClassName="PaidEnum" javascriptValidatorExprssion="validate-currency-dollar"
+		enumString="" enumClassName="PaidEnum" javascriptValidatorExprssion="validate-currency-dollar" format="currency"
 		hibernateValidatorExprssion=""
 		hasOne="" hasMany=""
 	/>
@@ -88,7 +88,7 @@
 	<column sqlName="unPaid" columnAlias="未付金额" javaType="java.math.BigDecimal" 
 		unique="false" nullable="true" pk="false"
 		updatable="true" insertable="true"
-		enumString="" enumClassName="UnPaidEnum" javascriptValidatorExprssion="validate-currency-dollar"
+		enumString="" enumClassName="UnPaidEnum" javascriptValidatorExprssion="validate-currency-dollar" format="currency"
 		hibernateValidatorExprssion=""
 		hasOne="" hasMany=""
 	/>
@@ -96,7 +96,7 @@
 	<column sqlName="otherFee" columnAlias="其它费用" javaType="java.math.BigDecimal" 
 		unique="false" nullable="true" pk="false"
 		updatable="true" insertable="true"
-		enumString="" enumClassName="OtherFeeEnum" javascriptValidatorExprssion="validate-currency-dollar"
+		enumString="" enumClassName="OtherFeeEnum" javascriptValidatorExprssion="validate-currency-dollar" format="currency"
 		hibernateValidatorExprssion=""
 		hasOne="" hasMany=""
 	/>
@@ -104,7 +104,7 @@
 	<column sqlName="profit" columnAlias="利润" javaType="java.math.BigDecimal" 
 		unique="false" nullable="true" pk="false"
 		updatable="true" insertable="true"
-		enumString="" enumClassName="ProfitEnum" javascriptValidatorExprssion="validate-currency-dollar"
+		enumString="" enumClassName="ProfitEnum" javascriptValidatorExprssion="validate-currency-dollar" format="currency"
 		hibernateValidatorExprssion=""
 		hasOne="" hasMany=""
 	/>

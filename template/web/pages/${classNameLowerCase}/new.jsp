@@ -53,7 +53,7 @@
 	<script type="text/javascript">
 	 var popupOption={
 	 	<#list table.popupOptions as current>
-		 '${current.fieldId}': {url:'${current.url}',title:'${current.title}',textColumn:'${current.textColumn}',valueColumn:'${current.valueCoumn}'}<#if current_has_next>,</#if>
+		 '${current.fieldId}': {url:'${current.url}',title:'${current.title}',textColumn:'${current.textColumn}',valueColumn:'${current.valueCoumn}'<#if current.definedCopyColumn>,fields:${current.copyColumnAsString}</#if>}<#if current_has_next>,</#if>
 		</#list>
 	 };
 	 PopupSelection.initOption(popupOption); 	

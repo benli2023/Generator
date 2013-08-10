@@ -80,7 +80,7 @@
 	<column sqlName="unitPrice" columnAlias="单价" javaType="java.math.BigDecimal" 
 		unique="false" nullable="false" pk="false"
 		updatable="true" insertable="true"
-		enumString="" enumClassName="UnitPriceEnum"  javascriptValidatorExprssion="validate-currency-dollar"
+		enumString="" enumClassName="UnitPriceEnum"  javascriptValidatorExprssion="validate-currency-dollar" format="currency"
 		hibernateValidatorExprssion=""
 		hasOne="" hasMany=""
 	/>
@@ -88,7 +88,7 @@
 	<column sqlName="freightage" columnAlias="运费" javaType="java.math.BigDecimal" 
 		unique="false" nullable="false" pk="false"
 		updatable="true" insertable="true"
-		enumString="" enumClassName="FreightageEnum" javascriptValidatorExprssion="validate-currency-dollar"
+		enumString="" enumClassName="FreightageEnum" javascriptValidatorExprssion="validate-currency-dollar" format="currency"
 		hibernateValidatorExprssion=""
 		hasOne="" hasMany=""
 	/>
@@ -96,7 +96,7 @@
 	<column sqlName="loadFee" columnAlias="卸费" javaType="java.math.BigDecimal" 
 		unique="false" nullable="true" pk="false"
 		updatable="true" insertable="true"
-		enumString="" enumClassName="LoadFeeEnum" javascriptValidatorExprssion="validate-currency-dollar"
+		enumString="" enumClassName="LoadFeeEnum" javascriptValidatorExprssion="validate-currency-dollar" format="currency"
 		hibernateValidatorExprssion=""
 		hasOne="" hasMany=""
 	/>
@@ -168,7 +168,11 @@
 		hibernateValidatorExprssion=""
 		hasOne="" hasMany=""
 	>
-	<foreign-info refer="transport.common" />
+	<foreign-info refer="transport.common" >
+		<copy-column srcColumn="driver" destColumn="driver" />
+		<copy-column srcColumn="carNumber" destColumn="carNumber" />
+		<copy-column srcColumn="driverTel" destColumn="driverTel" />
+	</foreign-info>
 	</column>
 
 </table>

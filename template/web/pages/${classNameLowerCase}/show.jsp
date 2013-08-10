@@ -43,6 +43,10 @@
 				<c:choose><#list column.enumListExcludeOtherVal as current><c:when test="<@jspEl classNameLower+"." + column.columnNameLower+'=='+current.enumKey/>">${current.enumDesc}</c:when></#list></c:choose>
 				<#elseif column.defineForeignInfo>
 				<c:out value='<@jspEl classNameLower+"."+column.columnNameLower+"Txt"/>'/>&nbsp;
+				<#elseif column.defineFormat>
+						<#if column.format=='currency'>
+				<fmt:formatNumber value='<@jspEl classNameLower+"."+column.columnNameLower/>' type="currency" pattern="###,#0.00"/>
+						</#if>
 				<#else>
 				<c:out value='<@jspEl classNameLower+"."+column.columnNameLower/>'/>
 				</#if>

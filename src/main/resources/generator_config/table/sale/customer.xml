@@ -39,7 +39,7 @@
 		unique="false" nullable="false" pk="false"
 		updatable="true" insertable="true"
 		enumString="" enumClassName="TelephoneEnum"
-		hibernateValidatorExprssion="@Length(max=128)" javascriptValidatorExprssion="validate-phone"
+		hibernateValidatorExprssion="@Length(max=128)" javascriptValidatorExprssion="validate-mobile-phone"
 		hasOne="" hasMany=""
 	/>
 	

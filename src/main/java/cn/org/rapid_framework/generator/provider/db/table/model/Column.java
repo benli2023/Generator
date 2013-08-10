@@ -6,6 +6,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.springframework.util.StringUtils;
+
 import cn.org.rapid_framework.generator.GeneratorProperties;
 import cn.org.rapid_framework.generator.enums.ReservePropertyName;
 import cn.org.rapid_framework.generator.provider.db.table.model.ForeignKey.ReferenceKey;
@@ -538,6 +540,18 @@ public class Column implements java.io.Serializable, Cloneable {
 		this.javascriptValidatorExprssion = javascriptValidatorExprssion;
 	}
 
+	public String getFormat() {
+		return format;
+	}
+
+	public void setFormat(String format) {
+		this.format = format;
+	}
+
+	public boolean isDefineFormat() {
+		return StringUtils.hasLength(this.format);
+	}
+
 	/** 列是否是String类型 */
 	public boolean getIsStringColumn() {
 		return DatabaseDataTypesUtils.isString(getJavaType());
@@ -824,6 +838,10 @@ public class Column implements java.io.Serializable, Cloneable {
 	@XStreamAsAttribute
 	private String javascriptValidatorExprssion = "";
 
+	@XStreamAlias("format")
+	@XStreamAsAttribute
+	private String format;
+
 	// private String rapidValidation;
 	/**
 	 * public enum ${enumClassName} { ${enumAlias}(${enumKey},${enumDesc}); private String key; private String value; }
@@ -1018,6 +1036,7 @@ public class Column implements java.io.Serializable, Cloneable {
 		}
 		column.setTable(this.getTable());
 		column.setRuntimeColumn(this);
+		this.format = column.getFormat();
 
 		// if(column.getReferredColumn()!=null) {
 		// this.referredColumn=column.getReferredColumn();

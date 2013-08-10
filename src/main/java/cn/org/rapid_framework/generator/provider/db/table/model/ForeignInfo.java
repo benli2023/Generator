@@ -14,6 +14,9 @@ public class ForeignInfo {
 	@XStreamImplicit(itemFieldName = "column")
 	private List<ForeignColumn> foreignColumns = new LinkedList<ForeignColumn>();
 
+	@XStreamImplicit(itemFieldName = "copy-column")
+	private List<CopyColumn> copyColumns = new LinkedList<CopyColumn>();
+
 	@XStreamAlias("refer")
 	@XStreamAsAttribute
 	private String refer = null;
@@ -25,16 +28,16 @@ public class ForeignInfo {
 	@XStreamAlias("default")
 	@XStreamAsAttribute
 	private boolean _default = false;
-	
+
 	@XStreamAlias("title")
 	@XStreamAsAttribute
-	private String title=null;
-	
-	private Column parentColumn=null;
+	private String title = null;
+
+	private Column parentColumn = null;
 
 	private ForeignInfo referForeignInfo = null;
-	
-	private Table referTable=null;
+
+	private Table referTable = null;
 
 	public String getRefer() {
 		return refer;
@@ -73,6 +76,14 @@ public class ForeignInfo {
 		this.referForeignInfo = referForeignInfo;
 	}
 
+	public void setCopyColumns(List<CopyColumn> copyColumns) {
+		this.copyColumns = copyColumns;
+	}
+
+	public List<CopyColumn> getCopyColumns() {
+		return copyColumns;
+	}
+
 	public String getId() {
 		return id;
 	}
@@ -104,7 +115,7 @@ public class ForeignInfo {
 	public void setTitle(String title) {
 		this.title = title;
 	}
-	
+
 	public Column getParentColumn() {
 		return parentColumn;
 	}
@@ -114,58 +125,58 @@ public class ForeignInfo {
 	}
 
 	public ForeignColumn[] getValueTextColumns() {
-		
-		ForeignColumn[] result=new ForeignColumn[2];
-		
-		ForeignColumn textColumn=null,valueColumn=null;
-		List<ForeignColumn> foreignColumns=getForeignColumns();
-		for(Iterator<ForeignColumn> it2=foreignColumns.iterator();it2.hasNext();) {
-			ForeignColumn foreignColumn=it2.next();
-			if(foreignColumn.getFtype()!=null) {
-				if(foreignColumn.getFtype().equals("value")) {
-//					if(foreignColumn.isSearchable()) {
-//						valueCoumn=foreignColumn.getSqlName();
-//					}else {
-//						valueCoumn=foreignColumn.getColumnNameLower();
-//					}
-					valueColumn=foreignColumn;
-					
-				}else if(foreignColumn.getFtype().equals("text")){
-//					if(foreignColumn.isSearchable()) {
-//						textColumn=foreignColumn.getSqlName();
-//					}else {
-//						textColumn=foreignColumn.getColumnNameLower();
-//					}
-					textColumn=foreignColumn;
+
+		ForeignColumn[] result = new ForeignColumn[2];
+
+		ForeignColumn textColumn = null, valueColumn = null;
+		List<ForeignColumn> foreignColumns = getForeignColumns();
+		for (Iterator<ForeignColumn> it2 = foreignColumns.iterator(); it2.hasNext();) {
+			ForeignColumn foreignColumn = it2.next();
+			if (foreignColumn.getFtype() != null) {
+				if (foreignColumn.getFtype().equals("value")) {
+					// if(foreignColumn.isSearchable()) {
+					// valueCoumn=foreignColumn.getSqlName();
+					// }else {
+					// valueCoumn=foreignColumn.getColumnNameLower();
+					// }
+					valueColumn = foreignColumn;
+
+				} else if (foreignColumn.getFtype().equals("text")) {
+					// if(foreignColumn.isSearchable()) {
+					// textColumn=foreignColumn.getSqlName();
+					// }else {
+					// textColumn=foreignColumn.getColumnNameLower();
+					// }
+					textColumn = foreignColumn;
 				}
 			}
 		}
-		
-		if(textColumn==null||valueColumn==null) {
-			if(valueColumn==null) {
-				ForeignColumn foreignColumn=foreignColumns.get(0);
-//				if(foreignColumn.isSearchable()) {
-//					valueCoumn=foreignColumn.getSqlName();
-//				}else {
-//					valueCoumn=foreignColumn.getColumnNameLower();
-//				}
-				valueColumn=foreignColumn;
+
+		if (textColumn == null || valueColumn == null) {
+			if (valueColumn == null) {
+				ForeignColumn foreignColumn = foreignColumns.get(0);
+				// if(foreignColumn.isSearchable()) {
+				// valueCoumn=foreignColumn.getSqlName();
+				// }else {
+				// valueCoumn=foreignColumn.getColumnNameLower();
+				// }
+				valueColumn = foreignColumn;
 			}
-			if(textColumn==null) {
-				ForeignColumn foreignColumn=foreignColumns.get(1);
-//				if(foreignColumn.isSearchable()) {
-//					textColumn=foreignColumn.getSqlName();
-//				}else {
-//					textColumn=foreignColumn.getColumnNameLower();
-//				}
-				textColumn=foreignColumn;
+			if (textColumn == null) {
+				ForeignColumn foreignColumn = foreignColumns.get(1);
+				// if(foreignColumn.isSearchable()) {
+				// textColumn=foreignColumn.getSqlName();
+				// }else {
+				// textColumn=foreignColumn.getColumnNameLower();
+				// }
+				textColumn = foreignColumn;
 			}
 		}
-		
-		result[0]=valueColumn;
-		result[1]=textColumn;
-		
+
+		result[0] = valueColumn;
+		result[1] = textColumn;
+
 		return result;
 	}
-	
+
 }
