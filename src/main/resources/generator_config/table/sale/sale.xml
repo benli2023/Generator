@@ -37,22 +37,6 @@
 	<foreign-info refer="customer.sale" />
 	</column>
 
-	<column sqlName="amount" columnAlias="数量" javaType="java.lang.Integer" 
-		unique="false" nullable="false" pk="false"
-		updatable="true" insertable="true"
-		enumString="" enumClassName="AmountEnum"  javascriptValidatorExprssion="validate-integer"
-		hibernateValidatorExprssion=""
-		hasOne="" hasMany=""
-	/>
-	
-	<column sqlName="unit" columnAlias="单位" javaType="java.lang.Integer" 
-		unique="false" nullable="false" pk="false"
-		updatable="true" insertable="true"
-		enumString="TON(1,吨);BATCH(2,批);Unlimited(-1,不限)" enumClassName="UnitEnum"
-		hibernateValidatorExprssion=""
-		hasOne="" hasMany=""
-	/>
-
 	<column sqlName="custName" columnAlias="客户名称" javaType="java.lang.String" 
 		unique="false" nullable="false" pk="false"
 		updatable="true" insertable="true"
@@ -69,16 +53,8 @@
 		hasOne="" hasMany=""
 	/>
 
-	<column sqlName="unitPrice" columnAlias="售出单价" javaType="Long" 
-		unique="false" nullable="false" pk="false"
-		updatable="true" insertable="true"
-		enumString="" enumClassName="UnitPriceEnum" javascriptValidatorExprssion="validate-currency-dollar" format="currency"
-		hibernateValidatorExprssion=""
-		hasOne="" hasMany=""
-	/>
-
 	<column sqlName="paid" columnAlias="已付金额" javaType="java.math.BigDecimal" 
-		unique="false" nullable="true" pk="false"
+		unique="false" nullable="false" pk="false"
 		updatable="true" insertable="true"
 		enumString="" enumClassName="PaidEnum" javascriptValidatorExprssion="validate-currency-dollar" format="currency"
 		hibernateValidatorExprssion=""

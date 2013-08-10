@@ -1037,6 +1037,28 @@ public class Column implements java.io.Serializable, Cloneable {
 		column.setTable(this.getTable());
 		column.setRuntimeColumn(this);
 		this.format = column.getFormat();
+		String additionalValidatorExpr = column.getHibernateValidatorExprssion();
+
+		String[] exprs = null;
+		int addLen = additionalValidatorExpr == null ? 0 : additionalValidatorExpr.length();
+		if (StringUtils.hasLength(additionalValidatorExpr)) {
+			exprs = additionalValidatorExpr.split("\\s+");
+		}
+
+		String currentExpr = this.hibernateValidatorExprssion;
+		int curLeng = currentExpr == null ? 0 : currentExpr.length();
+		StringBuilder builder = new StringBuilder(curLeng + addLen);
+		builder.append(currentExpr);
+		if (exprs != null && exprs.length > 0 && StringUtils.hasLength(currentExpr)) {
+			for (int i = 0; i < exprs.length; i++) {
+				builder.append(ColumnHelper.BLANK);
+				String expr = exprs[i];
+				if (currentExpr.indexOf(expr) < 0) {
+					builder.append(expr.trim());
+				}
+			}
+		}
+		this.hibernateValidatorExprssion = builder.toString();
 
 		// if(column.getReferredColumn()!=null) {
 		// this.referredColumn=column.getReferredColumn();

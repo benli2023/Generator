@@ -42,5 +42,21 @@
 		hibernateValidatorExprssion=""
 		hasOne="" hasMany=""
 	/>
+	
+	<column sqlName="amount" columnAlias="出售数量" javaType="java.lang.Integer" 
+		unique="false" nullable="false" pk="false"
+		updatable="true" insertable="true"
+		enumString="" enumClassName="AmountEnum"
+		hibernateValidatorExprssion="@Min(1)" javascriptValidatorExprssion=""
+		hasOne="" hasMany="" 
+	/>
+
+	<column sqlName="unitPrice" columnAlias="出售单价" javaType="java.math.BigDecimal" 
+		unique="false" nullable="false" pk="false"
+		updatable="true" insertable="true"
+		enumString="" enumClassName="UnitPriceEnum"
+		hibernateValidatorExprssion=" " javascriptValidatorExprssion="validate-currency-dollar" format="currency"
+		hasOne="" hasMany="" 
+	/>
 
 </table>
