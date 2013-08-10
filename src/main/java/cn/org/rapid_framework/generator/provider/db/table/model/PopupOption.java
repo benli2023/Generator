@@ -54,8 +54,8 @@ public class PopupOption {
 		this.title = title;
 	}
 
-	public void putCopiedField(String src, String target) {
-		copiedFields.put(src, target);
+	public void putCopiedField(String src, String dest) {
+		copiedFields.put(src, dest);
 	}
 
 	public String getCopyColumnAsString() {
@@ -67,10 +67,13 @@ public class PopupOption {
 			if (nonFirst) {
 				builder.append(",");
 			}
+
 			Entry<String, String> entry = it.next();
-			builder.append("\"" + entry.getKey() + "\"");
+			String src = entry.getKey();
+			String dest = entry.getValue();
+			builder.append("\"" + src + "\"");
 			builder.append(":");
-			builder.append("\"" + entry.getValue() + "\"");
+			builder.append("\"" + dest + "\"");
 			if (!nonFirst) {
 				nonFirst = true;
 			}

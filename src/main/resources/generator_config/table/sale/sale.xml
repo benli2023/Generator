@@ -34,7 +34,10 @@
 		hibernateValidatorExprssion=""
 		hasOne="" hasMany=""
 	>
-	<foreign-info refer="customer.sale" />
+	<foreign-info refer="customer.sale" >
+		<copy-column srcColumn="custName" destColumn="custName" />
+		<copy-column srcColumn="telephone" destColumn="custTel"" />
+	</foreign-info>
 	</column>
 
 	<column sqlName="custName" columnAlias="客户名称" javaType="java.lang.String" 
@@ -109,7 +112,11 @@
 		hibernateValidatorExprssion=""
 		hasOne="" hasMany=""
 	>
-	<foreign-info refer="transport.common" />
+	<foreign-info refer="transport.common" >
+		<copy-column srcColumn="driver" destColumn="driver" />
+		<copy-column srcColumn="carNumber" destColumn="carNumber" />
+		<copy-column srcColumn="driverTel" destColumn="driverTel" />
+	</foreign-info>
 	</column>
 
 	<column sqlName="carNumber" columnAlias="车牌号" javaType="java.lang.String" 
