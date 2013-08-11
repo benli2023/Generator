@@ -84,7 +84,7 @@ public class ${className}Controller extends BaseRestSpringController<${className
 	public void initBinder(WebDataBinder binder) {  
 	        binder.registerCustomEditor(Date.class, new CustomDateEditor(new SimpleDateFormat("yyyy-MM-dd"), true));
 	        <#if (table.currencyFormatColumns?size>0)>
-	        binder.registerCustomEditor(BigDecimal.class, new CustomNumberEditor(BigDecimal.class, new DecimalFormat("###,#0.00;-###,#0.00"), true));
+	        binder.registerCustomEditor(BigDecimal.class, new CustomNumberEditor(BigDecimal.class, new DecimalFormat("###,##0.00;-###,##0.00"), true));
 	        </#if>
 	}
 	   

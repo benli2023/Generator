@@ -125,7 +125,7 @@
 					<c:out value='<@jspEl "item."+column.columnNameLower+"Txt"/>'/>&nbsp;
 					<#elseif column.defineFormat>
 						<#if column.format=='currency'>
-					<fmt:formatNumber value='<@jspEl "item."+column.columnNameLower/>' type="currency" pattern="###,#0.00"/>
+					<fmt:formatNumber value='<@jspEl "item."+column.columnNameLower/>' type="currency" pattern="###,##0.00;-###,##0.00"/>
 						</#if>
 					<#else>
 					<c:out value='<@jspEl "item."+column.columnNameLower/>'/>&nbsp;

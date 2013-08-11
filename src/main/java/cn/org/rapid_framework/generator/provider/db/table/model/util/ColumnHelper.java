@@ -3,6 +3,7 @@ package cn.org.rapid_framework.generator.provider.db.table.model.util;
 import org.springframework.util.StringUtils;
 
 import cn.org.rapid_framework.generator.provider.db.table.model.Column;
+import cn.org.rapid_framework.generator.provider.db.table.model.FormatterType;
 import cn.org.rapid_framework.generator.util.typemapping.DatabaseDataTypesUtils;
 
 public class ColumnHelper {
@@ -89,7 +90,7 @@ public class ColumnHelper {
 			builder.append(BLANK);
 			builder.append("validate-email");
 		}
-		if (DatabaseDataTypesUtils.isFloatNumber(c.getJavaType()) && !containJSExpression(c, "validate-number")) {
+		if (DatabaseDataTypesUtils.isFloatNumber(c.getJavaType()) && !containJSExpression(c, "validate-number") && !FormatterType.FMT_CURRENCY.equals(c.getFormat())) {
 			builder.append(BLANK);
 			builder.append("validate-number");
 		}
